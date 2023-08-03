@@ -9,7 +9,6 @@
 	#include once "mff/Form.bi"
 	#include once "mff/TextBox.bi"
 	#include once "mff/CommandButton.bi"
-	#include once "mff/Panel.bi"
 	#include once "mff/ComboBoxEdit.bi"
 	#include once "mff/TrackBar.bi"
 	#include once "mff/VScrollBar.bi"
@@ -45,7 +44,6 @@
 		pSpVoice As Afx_ISpVoice Ptr
 		
 		Dim As TextBox TextBox1, TextBox2
-		Dim As Panel Panel1
 		Dim As GroupBox GroupBox1, GroupBox2
 		Dim As ComboBoxEdit ComboBoxEdit1, ComboBoxEdit2, ComboBoxEdit3
 		Dim As CommandButton CommandButton1, CommandButton2, CommandButton3, CommandButton4
@@ -77,25 +75,11 @@
 			"and text-to-speech, making speech technology more accessible and robust " & _
 			"for a wide range of applications."
 			.TabIndex = 0
-			.Align = DockStyle.alClient
 			.Multiline = True
 			.ScrollBars = ScrollBarsType.Vertical
 			.WordWraps = True
 			.HideSelection = False
-			.ExtraMargins.Right = 10
-			.ExtraMargins.Left = 10
-			.ExtraMargins.Top = 10
-			.SetBounds 10, 0, 320, 91
-			.Designer = @This
-			.Parent = @This
-		End With
-		' Panel1
-		With Panel1
-			.Name = "Panel1"
-			.Text = "Panel1"
-			.TabIndex = 1
-			.Align = DockStyle.alBottom
-			.SetBounds 0, 91, 340, 260
+			.SetBounds 10, 10, 320, 81
 			.Designer = @This
 			.Parent = @This
 		End With
@@ -105,31 +89,32 @@
 			.Text = "Speach to Audio"
 			.TabIndex = 2
 			.Caption = "Speach to Audio"
-			.SetBounds 10, 10, 320, 130
+			.SetBounds 10, 130, 320, 100
 			.Designer = @This
-			.Parent = @Panel1
-		End With
-		' GroupBox2
-		With GroupBox2
-			.Name = "GroupBox2"
-			.Text = "Speach to File"
-			.TabIndex = 3
-			.Caption = "Speach to File"
-			.SetBounds 10, 150, 320, 100
-			.Designer = @This
-			.Parent = @Panel1
+			.Parent = @This
 		End With
 		' ComboBoxEdit1
 		With ComboBoxEdit1
 			.Name = "ComboBoxEdit1"
 			.Text = "ComboBoxEdit1"
-			.TabIndex = 4
+			.TabIndex = 3
 			.Style = ComboBoxEditStyle.cbDropDown
 			.Hint = "Voice"
-			.SetBounds 10, 20, 300, 21
+			.ControlIndex = 2
+			.SetBounds 10, 100, 320, 21
 			.Designer = @This
 			.OnSelected = @_ComboBoxEdit1_Selected
-			.Parent = @GroupBox1
+			.Parent = @This
+		End With
+		' GroupBox2
+		With GroupBox2
+			.Name = "GroupBox2"
+			.Text = "Speach to File"
+			.TabIndex = 4
+			.Caption = "Speach to File"
+			.SetBounds 10, 240, 320, 100
+			.Designer = @This
+			.Parent = @This
 		End With
 		' ComboBoxEdit2
 		With ComboBoxEdit2
@@ -138,7 +123,7 @@
 			.TabIndex = 5
 			.Style = ComboBoxEditStyle.cbDropDown
 			.Hint = "Output"
-			.SetBounds 10, 50, 300, 21
+			.SetBounds 10, 20, 300, 21
 			.Designer = @This
 			.OnSelected = @_ComboBoxEdit1_Selected
 			.Parent = @GroupBox1
@@ -150,7 +135,7 @@
 			.TabIndex = 6
 			.MinValue = -10
 			.Hint = "Rate"
-			.SetBounds 10, 85, 200, 10
+			.SetBounds 10, 55, 200, 10
 			.Designer = @This
 			.OnChange = @_TrackBar1_Change
 			.Parent = @GroupBox1
@@ -162,7 +147,7 @@
 			.TabIndex = 7
 			.MaxValue = 100
 			.Hint = "Volume"
-			.SetBounds 10, 105, 200, 10
+			.SetBounds 10, 75, 200, 10
 			.Designer = @This
 			.OnChange = @_TrackBar1_Change
 			.Parent = @GroupBox1
@@ -175,7 +160,7 @@
 			.Caption = "Speach"
 			.Align = DockStyle.alNone
 			.Anchor.Right = AnchorStyle.asNone
-			.SetBounds 220, 80, 90, 20
+			.SetBounds 220, 50, 90, 20
 			.Designer = @This
 			.OnClick = @_CommandButton1_Click
 			.Parent = @GroupBox1
@@ -189,7 +174,7 @@
 			.Align = DockStyle.alNone
 			.Anchor.Right = AnchorStyle.asNone
 			.Enabled = False
-			.SetBounds 220, 100, 90, 20
+			.SetBounds 220, 70, 90, 20
 			.Designer = @This
 			.OnClick = @_CommandButton1_Click
 			.Parent = @GroupBox1
@@ -277,18 +262,18 @@
 		With SaveFileDialog1
 			.Name = "SaveFileDialog1"
 			.Filter = "Wave file|*.wav"
-			.SetBounds 190, 139, 16, 16
+			.SetBounds 10, -1, 16, 16
 			.Designer = @This
-			.Parent = @Panel1
+			.Parent = @This
 		End With
 		' TimerComponent1
 		With TimerComponent1
 			.Name = "TimerComponent1"
 			.Interval = 100
-			.SetBounds 220, 139, 16, 16
+			.SetBounds 40, -1, 16, 16
 			.Designer = @This
 			.OnTimer = @_TimerComponent1_Timer
-			.Parent = @Panel1
+			.Parent = @This
 		End With
 	End Constructor
 	
@@ -323,7 +308,7 @@
 	Dim Shared frmSapiTTS As frmSapiTTSType
 
 	#if _MAIN_FILE_ = __FILE__
-		App.DarkMode= True
+		'App.DarkMode= True
 		frmSapiTTS.MainForm = True
 		frmSapiTTS.Show
 		App.Run
@@ -429,7 +414,7 @@ Private Sub frmSapiTTSType.CommandButton1_Click(ByRef Sender As Control)
 	Case "speach to file"
 		
 		If PathFileExists(@TextBox2.Text) Then
-			If MsgBox( !"Overwrite exist file?\r\n" & TextBox2.Text, "File overwrite confirm", mtWarning, btYesNo) <> MessageResult.mrYes Then Exit Sub
+			If MsgBox( !"Overwrite exist file?\r\n" & TextBox2.Text, "File overwrite confirmation.", mtWarning, btYesNo) <> MessageResult.mrYes Then Exit Sub
 		End If
 		
 		ComboBoxEdit1.Enabled = False
