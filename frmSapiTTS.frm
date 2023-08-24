@@ -25,19 +25,12 @@
 	Const MSG_SAPI_EVENT = WM_USER + 1024   ' --> change me
 	
 	Type frmSapiTTSType Extends Form
-		Declare Static Sub _Form_Create(ByRef Sender As Control)
 		Declare Sub Form_Create(ByRef Sender As Control)
-		Declare Static Sub _CommandButton1_Click(ByRef Sender As Control)
 		Declare Sub CommandButton1_Click(ByRef Sender As Control)
-		Declare Static Sub _Form_Message(ByRef Sender As Control, ByRef MSG As Message)
 		Declare Sub Form_Message(ByRef Sender As Control, ByRef MSG As Message)
-		Declare Static Sub _Form_Destroy(ByRef Sender As Control)
 		Declare Sub Form_Destroy(ByRef Sender As Control)
-		Declare Static Sub _ComboBoxEdit1_Selected(ByRef Sender As ComboBoxEdit, ItemIndex As Integer)
 		Declare Sub ComboBoxEdit1_Selected(ByRef Sender As ComboBoxEdit, ItemIndex As Integer)
-		Declare Static Sub _TrackBar1_Change(ByRef Sender As TrackBar, Position As Integer)
 		Declare Sub TrackBar1_Change(ByRef Sender As TrackBar, Position As Integer)
-		Declare Static Sub _TimerComponent1_Timer(ByRef Sender As TimerComponent)
 		Declare Sub TimerComponent1_Timer(ByRef Sender As TimerComponent)
 		Declare Constructor
 		
@@ -57,12 +50,12 @@
 		With This
 			.Name = "frmSapiTTS"
 			.Text = "SAPI Text-to-Speech"
-			.Designer = @This
-			.OnCreate = @_Form_Create
-			.OnMessage = @_Form_Message
 			.Caption = "SAPI Text-to-Speech"
 			.StartPosition = FormStartPosition.CenterScreen
-			.OnDestroy = @_Form_Destroy
+			.Designer = @This
+			.OnCreate = Cast(Sub(ByRef Designer As My.Sys.Object, ByRef Sender As Control), @Form_Create)
+			.OnMessage = Cast(Sub(ByRef Designer As My.Sys.Object, ByRef Sender As Control, ByRef Msg As Message), @Form_Message)
+			.OnDestroy = Cast(Sub(ByRef Designer As My.Sys.Object, ByRef Sender As Control), @Form_Destroy)
 			.BorderStyle = FormBorderStyle.FixedDialog
 			.SetBounds 0, 0, 346, 380
 		End With
@@ -103,7 +96,7 @@
 			.ControlIndex = 2
 			.SetBounds 10, 100, 320, 21
 			.Designer = @This
-			.OnSelected = @_ComboBoxEdit1_Selected
+			.OnSelected = Cast(Sub(ByRef Designer As My.Sys.Object, ByRef Sender As ComboBoxEdit, ItemIndex As Integer), @ComboBoxEdit1_Selected)
 			.Parent = @This
 		End With
 		' GroupBox2
@@ -125,7 +118,7 @@
 			.Hint = "Output"
 			.SetBounds 10, 20, 300, 21
 			.Designer = @This
-			.OnSelected = @_ComboBoxEdit1_Selected
+			.OnSelected = Cast(Sub(ByRef Designer As My.Sys.Object, ByRef Sender As ComboBoxEdit, ItemIndex As Integer), @ComboBoxEdit1_Selected)
 			.Parent = @GroupBox1
 		End With
 		' TrackBar1
@@ -137,7 +130,7 @@
 			.Hint = "Rate"
 			.SetBounds 10, 55, 200, 10
 			.Designer = @This
-			.OnChange = @_TrackBar1_Change
+			.OnChange = Cast(Sub(ByRef Designer As My.Sys.Object, ByRef Sender As TrackBar, Position As Integer), @TrackBar1_Change)
 			.Parent = @GroupBox1
 		End With
 		' TrackBar2
@@ -149,7 +142,7 @@
 			.Hint = "Volume"
 			.SetBounds 10, 75, 200, 10
 			.Designer = @This
-			.OnChange = @_TrackBar1_Change
+			.OnChange = Cast(Sub(ByRef Designer As My.Sys.Object, ByRef Sender As TrackBar, Position As Integer), @TrackBar1_Change)
 			.Parent = @GroupBox1
 		End With
 		' CommandButton1
@@ -162,7 +155,7 @@
 			.Anchor.Right = AnchorStyle.asNone
 			.SetBounds 220, 50, 90, 20
 			.Designer = @This
-			.OnClick = @_CommandButton1_Click
+			.OnClick = Cast(Sub(ByRef Designer As My.Sys.Object, ByRef Sender As Control), @CommandButton1_Click)
 			.Parent = @GroupBox1
 		End With
 		' CommandButton2
@@ -176,7 +169,7 @@
 			.Enabled = False
 			.SetBounds 220, 70, 90, 20
 			.Designer = @This
-			.OnClick = @_CommandButton1_Click
+			.OnClick = Cast(Sub(ByRef Designer As My.Sys.Object, ByRef Sender As Control), @CommandButton1_Click)
 			.Parent = @GroupBox1
 		End With
 		' TextBox2
@@ -196,7 +189,7 @@
 			.Hint = "Audio Format"
 			.SetBounds 10, 55, 200, 21
 			.Designer = @This
-			.OnSelected = @_ComboBoxEdit1_Selected
+			.OnSelected = Cast(Sub(ByRef Designer As My.Sys.Object, ByRef Sender As ComboBoxEdit, ItemIndex As Integer), @ComboBoxEdit1_Selected)
 			.AddItem "8kHz 8Bit Mono"
 			.AddItem "8kHz 8Bit Stereo"
 			.AddItem "8kHz 16Bit Mono"
@@ -244,7 +237,7 @@
 			.Caption = "Select"
 			.SetBounds 220, 49, 90, 20
 			.Designer = @This
-			.OnClick = @_CommandButton1_Click
+			.OnClick = Cast(Sub(ByRef Designer As My.Sys.Object, ByRef Sender As Control), @CommandButton1_Click)
 			.Parent = @GroupBox2
 		End With
 		' CommandButton4
@@ -255,7 +248,7 @@
 			.Caption = "Speach to file"
 			.SetBounds 220, 69, 90, 20
 			.Designer = @This
-			.OnClick = @_CommandButton1_Click
+			.OnClick = Cast(Sub(ByRef Designer As My.Sys.Object, ByRef Sender As Control), @CommandButton1_Click)
 			.Parent = @GroupBox2
 		End With
 		' SaveFileDialog1
@@ -272,38 +265,10 @@
 			.Interval = 100
 			.SetBounds 40, -1, 16, 16
 			.Designer = @This
-			.OnTimer = @_TimerComponent1_Timer
+			.OnTimer = Cast(Sub(ByRef Designer As My.Sys.Object, ByRef Sender As TimerComponent), @TimerComponent1_Timer)
 			.Parent = @This
 		End With
 	End Constructor
-	
-	Private Sub frmSapiTTSType._TimerComponent1_Timer(ByRef Sender As TimerComponent)
-		(*Cast(frmSapiTTSType Ptr, Sender.Designer)).TimerComponent1_Timer(Sender)
-	End Sub
-	
-	Private Sub frmSapiTTSType._TrackBar1_Change(ByRef Sender As TrackBar, Position As Integer)
-		(*Cast(frmSapiTTSType Ptr, Sender.Designer)).TrackBar1_Change(Sender, Position)
-	End Sub
-	
-	Private Sub frmSapiTTSType._ComboBoxEdit1_Selected(ByRef Sender As ComboBoxEdit, ItemIndex As Integer)
-		(*Cast(frmSapiTTSType Ptr, Sender.Designer)).ComboBoxEdit1_Selected(Sender, ItemIndex)
-	End Sub
-	
-	Private Sub frmSapiTTSType._Form_Destroy(ByRef Sender As Control)
-		(*Cast(frmSapiTTSType Ptr, Sender.Designer)).Form_Destroy(Sender)
-	End Sub
-	
-	Private Sub frmSapiTTSType._Form_Message(ByRef Sender As Control, ByRef MSG As Message)
-		(*Cast(frmSapiTTSType Ptr, Sender.Designer)).Form_Message(Sender, MSG)
-	End Sub
-	
-	Private Sub frmSapiTTSType._CommandButton1_Click(ByRef Sender As Control)
-		(*Cast(frmSapiTTSType Ptr, Sender.Designer)).CommandButton1_Click(Sender)
-	End Sub
-	
-	Private Sub frmSapiTTSType._Form_Create(ByRef Sender As Control)
-		(*Cast(frmSapiTTSType Ptr, Sender.Designer)).Form_Create(Sender)
-	End Sub
 	
 	Dim Shared frmSapiTTS As frmSapiTTSType
 
@@ -320,8 +285,8 @@ Private Sub frmSapiTTSType.Form_Create(ByRef Sender As Control)
 	' // Create an instance of the SpVoice object
 	
 	Dim classID As IID, riid As IID
-	CLSIDFromString(AFX_CLSID_SpVoice, @classID)
-	IIDFromString(AFX_IID_ISpVoice, @riid)
+	CLSIDFromString(Afx_CLSID_SpVoice, @classID)
+	IIDFromString(Afx_IID_ISpVoice, @riid)
 	CoCreateInstance(@classID, NULL, CLSCTX_ALL, @riid, @pSpVoice)
 	
 	If pSpVoice Then
