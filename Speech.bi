@@ -1,32 +1,16 @@
-﻿' ########################################################################################
-' Microsoft Windows
-' File: AfxSAPI.bi
-' Portions Copyright (c) Microsoft Corporation.
-' Compiler: Free Basic 32 & 64 bit
+﻿'Speech.bi
+' Copyright (c) 2024 CM.Wang. Freeware. Use at your own risk.
 ' Copyright (c) 2017 José Roca. Freeware. Use at your own risk.
-' THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
-' EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
-' MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
-' ########################################################################################
 
-' ########################################################################################
-' Library name: SpeechLib
-' Documentation string: Microsoft Speech Object Library
-' GUID: {C866CA3A-32F7-11D2-9602-00C04F8EE628}
-' Version: 5.4, Locale ID = 0
-' Path: C:\Windows\System32\Speech\Common\SAPI.dll
-' Attributes: 8 [&h00000008]  [HasDiskImage]
-' ########################################################################################
-
-' Modify by CM.Wang 2023/7/18
+' https://learn.microsoft.com/en-us/previous-versions/windows/desktop/ee125663(v=vs.85)
 
 #pragma once
 
-#include once "win/ole2.bi"
-#include once "win/unknwnbase.bi"
-#include once "win/ocidl.bi"
-
 Namespace Speech
+	
+	#include once "win/ole2.bi"
+	#include once "win/unknwnbase.bi"
+	#include once "win/ocidl.bi"
 	
 	#ifndef ___IUnknown_INTERFACE_DEFINED__
 		#define ___IUnknown_INTERFACE_DEFINED__
@@ -36,7 +20,7 @@ Namespace Speech
 			Declare Abstract Function AddRef () As ULong
 			Declare Abstract Function Release () As ULong
 		End Type
-		Type AFX_LPUNKNOWN As Afx_IUnknown Ptr
+		Type Afx_LpIUnknown As Afx_IUnknown Ptr
 	#endif
 	
 	#ifndef ___IDispatch_INTERFACE_DEFINED__
@@ -48,288 +32,283 @@ Namespace Speech
 			Declare Abstract Function GetIDsOfNames (ByVal riid As Const IID Const Ptr, ByVal rgszNames As LPOLESTR Ptr, ByVal cNames As UINT, ByVal lcid As LCID, ByVal rgDispId As DISPID Ptr) As HRESULT
 			Declare Abstract Function Invoke (ByVal dispIdMember As DISPID, ByVal riid As Const IID Const Ptr, ByVal lcid As LCID, ByVal wFlags As WORD, ByVal pDispParams As DISPPARAMS Ptr, ByVal pVarResult As VARIANT Ptr, ByVal pExcepInfo As EXCEPINFO Ptr, ByVal puArgErr As UINT Ptr) As HRESULT
 		End Type
-		Type AFX_LPDISPATCH As Afx_IDispatch Ptr
+		Type Afx_LpIDispatch As Afx_IDispatch Ptr
 	#endif
 	
-	' // The definition for BSTR in the FreeBASIC headers was inconveniently changed to WCHAR
-	#ifndef Afx_BSTR
-		#define Afx_BSTR WString Ptr
-	#endif
-	
-	Const AFX_LIBID_SpeechLib = "{C866CA3A-32F7-11D2-9602-00C04F8EE628}"
+	Const LIBID_SpeechLib = "{C866CA3A-32F7-11D2-9602-00C04F8EE628}"
 	
 	' ========================================================================================
 	' ProgIDs (Program identifiers)
 	' ========================================================================================
 	
 	' CLSID = {9EF96870-E160-4792-820D-48CF0649E4EC}
-	Const Afx_PROGID_SAPI_SpAudioFormat_1 = "SAPI.SpAudioFormat.1"
+	Const PROGID_SAPI_SpAudioFormat_1 = "SAPI.SpAudioFormat.1"
 	' CLSID = {90903716-2F42-11D3-9C26-00C04F8EF87C}
-	Const Afx_PROGID_SAPI_SpCompressedLexicon_1 = "SAPI.SpCompressedLexicon.1"
+	Const PROGID_SAPI_SpCompressedLexicon_1 = "SAPI.SpCompressedLexicon.1"
 	' CLSID = {8DBEF13F-1948-4AA8-8CF0-048EEBED95D8}
-	Const Afx_PROGID_SAPI_SpCustomStream_1 = "SAPI.SpCustomStream.1"
+	Const PROGID_SAPI_SpCustomStream_1 = "SAPI.SpCustomStream.1"
 	' CLSID = {947812B3-2AE1-4644-BA86-9E90DED7EC91}
-	Const Afx_PROGID_SAPI_SpFileStream_1 = "SAPI.SpFileStream.1"
+	Const PROGID_SAPI_SpFileStream_1 = "SAPI.SpFileStream.1"
 	' CLSID = {73AD6842-ACE0-45E8-A4DD-8795881A2C2A}
-	Const Afx_PROGID_SAPI_SpInProcRecoContext_1 = "SAPI.SpInProcRecoContext.1"
+	Const PROGID_SAPI_SpInProcRecoContext_1 = "SAPI.SpInProcRecoContext.1"
 	' CLSID = {41B89B6B-9399-11D2-9623-00C04F8EE628}
-	Const Afx_PROGID_SAPI_SpInprocRecognizer_1 = "SAPI.SpInprocRecognizer.1"
+	Const PROGID_SAPI_SpInprocRecognizer_1 = "SAPI.SpInprocRecognizer.1"
 	' CLSID = {0655E396-25D0-11D3-9C26-00C04F8EF87C}
-	Const Afx_PROGID_SAPI_SpLexicon_1 = "SAPI.SpLexicon.1"
+	Const PROGID_SAPI_SpLexicon_1 = "SAPI.SpLexicon.1"
 	' CLSID = {5FB7EF7D-DFF4-468A-B6B7-2FCBD188F994}
-	Const Afx_PROGID_SAPI_SpMemoryStream_1 = "SAPI.SpMemoryStream.1"
+	Const PROGID_SAPI_SpMemoryStream_1 = "SAPI.SpMemoryStream.1"
 	' CLSID = {AB1890A0-E91F-11D2-BB91-00C04F8EE6C0}
-	Const Afx_PROGID_SAPI_SpMMAudioEnum_1 = "SAPI.SpMMAudioEnum.1"
+	Const PROGID_SAPI_SpMMAudioEnum_1 = "SAPI.SpMMAudioEnum.1"
 	' CLSID = {CF3D2E50-53F2-11D2-960C-00C04F8EE628}
-	Const Afx_PROGID_SAPI_SpMMAudioIn_1 = "SAPI.SpMMAudioIn.1"
+	Const PROGID_SAPI_SpMMAudioIn_1 = "SAPI.SpMMAudioIn.1"
 	' CLSID = {A8C680EB-3D32-11D2-9EE7-00C04F797396}
-	Const Afx_PROGID_SAPI_SpMMAudioOut_1 = "SAPI.SpMMAudioOut.1"
+	Const PROGID_SAPI_SpMMAudioOut_1 = "SAPI.SpMMAudioOut.1"
 	' CLSID = {E2AE5372-5D40-11D2-960E-00C04F8EE628}
-	Const Afx_PROGID_SAPI_SpNotifyTranslator_1 = "SAPI.SpNotifyTranslator.1"
+	Const PROGID_SAPI_SpNotifyTranslator_1 = "SAPI.SpNotifyTranslator.1"
 	' CLSID = {455F24E9-7396-4A16-9715-7C0FDBE3EFE3}
-	Const Afx_PROGID_SAPI_SpNullPhoneConverter_1 = "SAPI.SpNullPhoneConverter.1"
+	Const PROGID_SAPI_SpNullPhoneConverter_1 = "SAPI.SpNullPhoneConverter.1"
 	' CLSID = {EF411752-3736-4CB4-9C8C-8EF4CCB58EFE}
-	Const Afx_PROGID_SAPI_SpObjectToken_1 = "SAPI.SpObjectToken.1"
+	Const PROGID_SAPI_SpObjectToken_1 = "SAPI.SpObjectToken.1"
 	' CLSID = {A910187F-0C7A-45AC-92CC-59EDAFB77B53}
-	Const Afx_PROGID_SAPI_SpObjectTokenCategory_1 = "SAPI.SpObjectTokenCategory.1"
+	Const PROGID_SAPI_SpObjectTokenCategory_1 = "SAPI.SpObjectTokenCategory.1"
 	' CLSID = {9185F743-1143-4C28-86B5-BFF14F20E5C8}
-	Const Afx_PROGID_SAPI_SpPhoneConverter_1 = "SAPI.SpPhoneConverter.1"
+	Const PROGID_SAPI_SpPhoneConverter_1 = "SAPI.SpPhoneConverter.1"
 	' CLSID = {C23FC28D-C55F-4720-8B32-91F73C2BD5D1}
-	Const Afx_PROGID_SAPI_SpPhraseInfoBuilder_1 = "SAPI.SpPhraseInfoBuilder.1"
+	Const PROGID_SAPI_SpPhraseInfoBuilder_1 = "SAPI.SpPhraseInfoBuilder.1"
 	' CLSID = {96749373-3391-11D2-9EE3-00C04F797396}
-	Const Afx_PROGID_SAPI_SpResourceManager_1 = "SAPI.SpResourceManager.1"
+	Const PROGID_SAPI_SpResourceManager_1 = "SAPI.SpResourceManager.1"
 	' CLSID = {47206204-5ECA-11D2-960F-00C04F8EE628}
-	Const Afx_PROGID_SAPI_SpSharedRecoContext_1 = "SAPI.SpSharedRecoContext.1"
+	Const PROGID_SAPI_SpSharedRecoContext_1 = "SAPI.SpSharedRecoContext.1"
 	' CLSID = {3BEE4890-4FE9-4A37-8C1E-5E7E12791C1F}
-	Const Afx_PROGID_SAPI_SpSharedRecognizer_1 = "SAPI.SpSharedRecognizer.1"
+	Const PROGID_SAPI_SpSharedRecognizer_1 = "SAPI.SpSharedRecognizer.1"
 	' CLSID = {0D722F1A-9FCF-4E62-96D8-6DF8F01A26AA}
-	Const Afx_PROGID_SAPI_SpShortcut_1 = "SAPI.SpShortcut.1"
+	Const PROGID_SAPI_SpShortcut_1 = "SAPI.SpShortcut.1"
 	' CLSID = {715D9C59-4442-11D2-9605-00C04F8EE628}
-	Const Afx_PROGID_SAPI_SpStream_1 = "SAPI.SpStream.1"
+	Const PROGID_SAPI_SpStream_1 = "SAPI.SpStream.1"
 	' CLSID = {7013943A-E2EC-11D2-A086-00C04F8EF9B5}
-	Const Afx_PROGID_SAPI_SpStreamFormatConverter_1 = "SAPI.SpStreamFormatConverter.1"
+	Const PROGID_SAPI_SpStreamFormatConverter_1 = "SAPI.SpStreamFormatConverter.1"
 	' CLSID = {0F92030A-CBFD-4AB8-A164-FF5985547FF6}
-	Const Afx_PROGID_SAPI_SpTextSelectionInformation_1 = "SAPI.SpTextSelectionInformation.1"
+	Const PROGID_SAPI_SpTextSelectionInformation_1 = "SAPI.SpTextSelectionInformation.1"
 	' CLSID = {C9E37C15-DF92-4727-85D6-72E5EEB6995A}
-	Const Afx_PROGID_SAPI_SpUncompressedLexicon_1 = "SAPI.SpUncompressedLexicon.1"
+	Const PROGID_SAPI_SpUncompressedLexicon_1 = "SAPI.SpUncompressedLexicon.1"
 	' CLSID = {96749377-3391-11D2-9EE3-00C04F797396}
-	Const Afx_PROGID_SAPI_SpVoice_1 = "SAPI.SpVoice.1"
+	Const PROGID_SAPI_SpVoice_1 = "SAPI.SpVoice.1"
 	' CLSID = {C79A574C-63BE-44B9-801F-283F87F898BE}
-	Const Afx_PROGID_SAPI_SpWaveFormatEx_1 = "SAPI.SpWaveFormatEx.1"
+	Const PROGID_SAPI_SpWaveFormatEx_1 = "SAPI.SpWaveFormatEx.1"
 	
 	' ========================================================================================
 	' Version Independent ProgIDs
 	' ========================================================================================
 	
 	' CLSID = {9EF96870-E160-4792-820D-48CF0649E4EC}
-	Const Afx_PROGID_SAPI_SpAudioFormat = "SAPI.SpAudioFormat"
+	Const PROGID_SAPI_SpAudioFormat = "SAPI.SpAudioFormat"
 	' CLSID = {90903716-2F42-11D3-9C26-00C04F8EF87C}
-	Const Afx_PROGID_SAPI_SpCompressedLexicon = "SAPI.SpCompressedLexicon"
+	Const PROGID_SAPI_SpCompressedLexicon = "SAPI.SpCompressedLexicon"
 	' CLSID = {8DBEF13F-1948-4AA8-8CF0-048EEBED95D8}
-	Const Afx_PROGID_SAPI_SpCustomStream = "SAPI.SpCustomStream"
+	Const PROGID_SAPI_SpCustomStream = "SAPI.SpCustomStream"
 	' CLSID = {947812B3-2AE1-4644-BA86-9E90DED7EC91}
-	Const Afx_PROGID_SAPI_SpFileStream = "SAPI.SpFileStream"
+	Const PROGID_SAPI_SpFileStream = "SAPI.SpFileStream"
 	' CLSID = {73AD6842-ACE0-45E8-A4DD-8795881A2C2A}
-	Const Afx_PROGID_SAPI_SpInProcRecoContext = "SAPI.SpInProcRecoContext"
+	Const PROGID_SAPI_SpInProcRecoContext = "SAPI.SpInProcRecoContext"
 	' CLSID = {41B89B6B-9399-11D2-9623-00C04F8EE628}
-	Const Afx_PROGID_SAPI_SpInprocRecognizer = "SAPI.SpInprocRecognizer"
+	Const PROGID_SAPI_SpInprocRecognizer = "SAPI.SpInprocRecognizer"
 	' CLSID = {0655E396-25D0-11D3-9C26-00C04F8EF87C}
-	Const Afx_PROGID_SAPI_SpLexicon = "SAPI.SpLexicon"
+	Const PROGID_SAPI_SpLexicon = "SAPI.SpLexicon"
 	' CLSID = {5FB7EF7D-DFF4-468A-B6B7-2FCBD188F994}
-	Const Afx_PROGID_SAPI_SpMemoryStream = "SAPI.SpMemoryStream"
+	Const PROGID_SAPI_SpMemoryStream = "SAPI.SpMemoryStream"
 	' CLSID = {AB1890A0-E91F-11D2-BB91-00C04F8EE6C0}
-	Const Afx_PROGID_SAPI_SpMMAudioEnum = "SAPI.SpMMAudioEnum"
+	Const PROGID_SAPI_SpMMAudioEnum = "SAPI.SpMMAudioEnum"
 	' CLSID = {CF3D2E50-53F2-11D2-960C-00C04F8EE628}
-	Const Afx_PROGID_SAPI_SpMMAudioIn = "SAPI.SpMMAudioIn"
+	Const PROGID_SAPI_SpMMAudioIn = "SAPI.SpMMAudioIn"
 	' CLSID = {A8C680EB-3D32-11D2-9EE7-00C04F797396}
-	Const Afx_PROGID_SAPI_SpMMAudioOut = "SAPI.SpMMAudioOut"
+	Const PROGID_SAPI_SpMMAudioOut = "SAPI.SpMMAudioOut"
 	' CLSID = {E2AE5372-5D40-11D2-960E-00C04F8EE628}
-	Const Afx_PROGID_SAPI_SpNotifyTranslator = "SAPI.SpNotifyTranslator"
+	Const PROGID_SAPI_SpNotifyTranslator = "SAPI.SpNotifyTranslator"
 	' CLSID = {455F24E9-7396-4A16-9715-7C0FDBE3EFE3}
-	Const Afx_PROGID_SAPI_SpNullPhoneConverter = "SAPI.SpNullPhoneConverter"
+	Const PROGID_SAPI_SpNullPhoneConverter = "SAPI.SpNullPhoneConverter"
 	' CLSID = {EF411752-3736-4CB4-9C8C-8EF4CCB58EFE}
-	Const Afx_PROGID_SAPI_SpObjectToken = "SAPI.SpObjectToken"
+	Const PROGID_SAPI_SpObjectToken = "SAPI.SpObjectToken"
 	' CLSID = {A910187F-0C7A-45AC-92CC-59EDAFB77B53}
-	Const Afx_PROGID_SAPI_SpObjectTokenCategory = "SAPI.SpObjectTokenCategory"
+	Const PROGID_SAPI_SpObjectTokenCategory = "SAPI.SpObjectTokenCategory"
 	' CLSID = {9185F743-1143-4C28-86B5-BFF14F20E5C8}
-	Const Afx_PROGID_SAPI_SpPhoneConverter = "SAPI.SpPhoneConverter"
+	Const PROGID_SAPI_SpPhoneConverter = "SAPI.SpPhoneConverter"
 	' CLSID = {C23FC28D-C55F-4720-8B32-91F73C2BD5D1}
-	Const Afx_PROGID_SAPI_SpPhraseInfoBuilder = "SAPI.SpPhraseInfoBuilder"
+	Const PROGID_SAPI_SpPhraseInfoBuilder = "SAPI.SpPhraseInfoBuilder"
 	' CLSID = {96749373-3391-11D2-9EE3-00C04F797396}
-	Const Afx_PROGID_SAPI_SpResourceManager = "SAPI.SpResourceManager"
+	Const PROGID_SAPI_SpResourceManager = "SAPI.SpResourceManager"
 	' CLSID = {47206204-5ECA-11D2-960F-00C04F8EE628}
-	Const Afx_PROGID_SAPI_SpSharedRecoContext = "SAPI.SpSharedRecoContext"
+	Const PROGID_SAPI_SpSharedRecoContext = "SAPI.SpSharedRecoContext"
 	' CLSID = {3BEE4890-4FE9-4A37-8C1E-5E7E12791C1F}
-	Const Afx_PROGID_SAPI_SpSharedRecognizer = "SAPI.SpSharedRecognizer"
+	Const PROGID_SAPI_SpSharedRecognizer = "SAPI.SpSharedRecognizer"
 	' CLSID = {0D722F1A-9FCF-4E62-96D8-6DF8F01A26AA}
-	Const Afx_PROGID_SAPI_SpShortcut = "SAPI.SpShortcut"
+	Const PROGID_SAPI_SpShortcut = "SAPI.SpShortcut"
 	' CLSID = {715D9C59-4442-11D2-9605-00C04F8EE628}
-	Const Afx_PROGID_SAPI_SpStream = "SAPI.SpStream"
+	Const PROGID_SAPI_SpStream = "SAPI.SpStream"
 	' CLSID = {7013943A-E2EC-11D2-A086-00C04F8EF9B5}
-	Const Afx_PROGID_SAPI_SpStreamFormatConverter = "SAPI.SpStreamFormatConverter"
+	Const PROGID_SAPI_SpStreamFormatConverter = "SAPI.SpStreamFormatConverter"
 	' CLSID = {0F92030A-CBFD-4AB8-A164-FF5985547FF6}
-	Const Afx_PROGID_SAPI_SpTextSelectionInformation = "SAPI.SpTextSelectionInformation"
+	Const PROGID_SAPI_SpTextSelectionInformation = "SAPI.SpTextSelectionInformation"
 	' CLSID = {C9E37C15-DF92-4727-85D6-72E5EEB6995A}
-	Const Afx_PROGID_SAPI_SpUncompressedLexicon = "SAPI.SpUncompressedLexicon"
+	Const PROGID_SAPI_SpUncompressedLexicon = "SAPI.SpUncompressedLexicon"
 	' CLSID = {96749377-3391-11D2-9EE3-00C04F797396}
-	Const Afx_PROGID_SAPI_SpVoice = "SAPI.SpVoice"
+	Const PROGID_SAPI_SpVoice = "SAPI.SpVoice"
 	' CLSID = {C79A574C-63BE-44B9-801F-283F87F898BE}
-	Const Afx_PROGID_SAPI_SpWaveFormatEx = "SAPI.SpWaveFormatEx"
+	Const PROGID_SAPI_SpWaveFormatEx = "SAPI.SpWaveFormatEx"
 	
 	' ========================================================================================
 	' ClsIDs (Class identifiers)
 	' ========================================================================================
 	
-	Const Afx_CLSID_SpAudioFormat = "{9EF96870-E160-4792-820D-48CF0649E4EC}"
-	Const Afx_CLSID_SpCompressedLexicon = "{90903716-2F42-11D3-9C26-00C04F8EF87C}"
-	Const Afx_CLSID_SpCustomStream = "{8DBEF13F-1948-4AA8-8CF0-048EEBED95D8}"
-	Const Afx_CLSID_SpFileStream = "{947812B3-2AE1-4644-BA86-9E90DED7EC91}"
-	Const Afx_CLSID_SpInProcRecoContext = "{73AD6842-ACE0-45E8-A4DD-8795881A2C2A}"
-	Const Afx_CLSID_SpInprocRecognizer = "{41B89B6B-9399-11D2-9623-00C04F8EE628}"
-	Const Afx_CLSID_SpLexicon = "{0655E396-25D0-11D3-9C26-00C04F8EF87C}"
-	Const Afx_CLSID_SpMemoryStream = "{5FB7EF7D-DFF4-468A-B6B7-2FCBD188F994}"
-	Const Afx_CLSID_SpMMAudioEnum = "{AB1890A0-E91F-11D2-BB91-00C04F8EE6C0}"
-	Const Afx_CLSID_SpMMAudioIn = "{CF3D2E50-53F2-11D2-960C-00C04F8EE628}"
-	Const Afx_CLSID_SpMMAudioOut = "{A8C680EB-3D32-11D2-9EE7-00C04F797396}"
-	Const Afx_CLSID_SpNotifyTranslator = "{E2AE5372-5D40-11D2-960E-00C04F8EE628}"
-	Const Afx_CLSID_SpNullPhoneConverter = "{455F24E9-7396-4A16-9715-7C0FDBE3EFE3}"
-	Const Afx_CLSID_SpObjectToken = "{EF411752-3736-4CB4-9C8C-8EF4CCB58EFE}"
-	Const Afx_CLSID_SpObjectTokenCategory = "{A910187F-0C7A-45AC-92CC-59EDAFB77B53}"
-	Const Afx_CLSID_SpPhoneConverter = "{9185F743-1143-4C28-86B5-BFF14F20E5C8}"
-	Const Afx_CLSID_SpPhoneticAlphabetConverter = "{4F414126-DFE3-4629-99EE-797978317EAD}"
-	Const Afx_CLSID_SpPhraseInfoBuilder = "{C23FC28D-C55F-4720-8B32-91F73C2BD5D1}"
-	Const Afx_CLSID_SpResourceManager = "{96749373-3391-11D2-9EE3-00C04F797396}"
-	Const Afx_CLSID_SpSharedRecoContext = "{47206204-5ECA-11D2-960F-00C04F8EE628}"
-	Const Afx_CLSID_SpSharedRecognizer = "{3BEE4890-4FE9-4A37-8C1E-5E7E12791C1F}"
-	Const Afx_CLSID_SpShortcut = "{0D722F1A-9FCF-4E62-96D8-6DF8F01A26AA}"
-	Const Afx_CLSID_SpStream = "{715D9C59-4442-11D2-9605-00C04F8EE628}"
-	Const Afx_CLSID_SpStreamFormatConverter = "{7013943A-E2EC-11D2-A086-00C04F8EF9B5}"
-	Const Afx_CLSID_SpTextSelectionInformation = "{0F92030A-CBFD-4AB8-A164-FF5985547FF6}"
-	Const Afx_CLSID_SpUnCompressedLexicon = "{C9E37C15-DF92-4727-85D6-72E5EEB6995A}"
-	Const Afx_CLSID_SpVoice = "{96749377-3391-11D2-9EE3-00C04F797396}"
-	Const Afx_CLSID_SpWaveFormatEx = "{C79A574C-63BE-44B9-801F-283F87F898BE}"
+	Const CLSID_SpAudioFormat = "{9EF96870-E160-4792-820D-48CF0649E4EC}"
+	Const CLSID_SpCompressedLexicon = "{90903716-2F42-11D3-9C26-00C04F8EF87C}"
+	Const CLSID_SpCustomStream = "{8DBEF13F-1948-4AA8-8CF0-048EEBED95D8}"
+	Const CLSID_SpFileStream = "{947812B3-2AE1-4644-BA86-9E90DED7EC91}"
+	Const CLSID_SpInProcRecoContext = "{73AD6842-ACE0-45E8-A4DD-8795881A2C2A}"
+	Const CLSID_SpInprocRecognizer = "{41B89B6B-9399-11D2-9623-00C04F8EE628}"
+	Const CLSID_SpLexicon = "{0655E396-25D0-11D3-9C26-00C04F8EF87C}"
+	Const CLSID_SpMemoryStream = "{5FB7EF7D-DFF4-468A-B6B7-2FCBD188F994}"
+	Const CLSID_SpMMAudioEnum = "{AB1890A0-E91F-11D2-BB91-00C04F8EE6C0}"
+	Const CLSID_SpMMAudioIn = "{CF3D2E50-53F2-11D2-960C-00C04F8EE628}"
+	Const CLSID_SpMMAudioOut = "{A8C680EB-3D32-11D2-9EE7-00C04F797396}"
+	Const CLSID_SpNotifyTranslator = "{E2AE5372-5D40-11D2-960E-00C04F8EE628}"
+	Const CLSID_SpNullPhoneConverter = "{455F24E9-7396-4A16-9715-7C0FDBE3EFE3}"
+	Const CLSID_SpObjectToken = "{EF411752-3736-4CB4-9C8C-8EF4CCB58EFE}"
+	Const CLSID_SpObjectTokenCategory = "{A910187F-0C7A-45AC-92CC-59EDAFB77B53}"
+	Const CLSID_SpPhoneConverter = "{9185F743-1143-4C28-86B5-BFF14F20E5C8}"
+	Const CLSID_SpPhoneticAlphabetConverter = "{4F414126-DFE3-4629-99EE-797978317EAD}"
+	Const CLSID_SpPhraseInfoBuilder = "{C23FC28D-C55F-4720-8B32-91F73C2BD5D1}"
+	Const CLSID_SpResourceManager = "{96749373-3391-11D2-9EE3-00C04F797396}"
+	Const CLSID_SpSharedRecoContext = "{47206204-5ECA-11D2-960F-00C04F8EE628}"
+	Const CLSID_SpSharedRecognizer = "{3BEE4890-4FE9-4A37-8C1E-5E7E12791C1F}"
+	Const CLSID_SpShortcut = "{0D722F1A-9FCF-4E62-96D8-6DF8F01A26AA}"
+	Const CLSID_SpStream = "{715D9C59-4442-11D2-9605-00C04F8EE628}"
+	Const CLSID_SpStreamFormatConverter = "{7013943A-E2EC-11D2-A086-00C04F8EF9B5}"
+	Const CLSID_SpTextSelectionInformation = "{0F92030A-CBFD-4AB8-A164-FF5985547FF6}"
+	Const CLSID_SpUnCompressedLexicon = "{C9E37C15-DF92-4727-85D6-72E5EEB6995A}"
+	Const CLSID_SpVoice = "{96749377-3391-11D2-9EE3-00C04F797396}"
+	Const CLSID_SpWaveFormatEx = "{C79A574C-63BE-44B9-801F-283F87F898BE}"
 	
 	' ========================================================================================
 	' IIDs (Interface identifiers)
 	' ========================================================================================
 	
-	Const Afx_IID_IEnumSpObjectTokens = "{06B64F9E-7FDA-11D2-B4F2-00C04F797396}"
-	Const Afx_IID_ISpAudio = "{C05C768F-FAE8-4EC2-8E07-338321C12452}"
-	Const Afx_IID_ISpDataKey = "{14056581-E16C-11D2-BB90-00C04F8EE6C0}"
-	Const Afx_IID_ISpeechAudio = "{CFF8E175-019E-11D3-A08E-00C04F8EF9B5}"
-	Const Afx_IID_ISpeechAudioBufferInfo = "{11B103D8-1142-4EDF-A093-82FB3915F8CC}"
-	Const Afx_IID_ISpeechAudioFormat = "{E6E9C590-3E18-40E3-8299-061F98BDE7C7}"
-	Const Afx_IID_ISpeechAudioStatus = "{C62D9C91-7458-47F6-862D-1EF86FB0B278}"
-	Const Afx_IID_ISpeechBaseStream = "{6450336F-7D49-4CED-8097-49D6DEE37294}"
-	Const Afx_IID_ISpeechCustomStream = "{1A9E9F4F-104F-4DB8-A115-EFD7FD0C97AE}"
-	Const Afx_IID_ISpeechDataKey = "{CE17C09B-4EFA-44D5-A4C9-59D9585AB0CD}"
-	Const Afx_IID_ISpeechFileStream = "{AF67F125-AB39-4E93-B4A2-CC2E66E182A7}"
-	Const Afx_IID_ISpeechGrammarRule = "{AFE719CF-5DD1-44F2-999C-7A399F1CFCCC}"
-	Const Afx_IID_ISpeechGrammarRules = "{6FFA3B44-FC2D-40D1-8AFC-32911C7F1AD1}"
-	Const Afx_IID_ISpeechGrammarRuleState = "{D4286F2C-EE67-45AE-B928-28D695362EDA}"
-	Const Afx_IID_ISpeechGrammarRuleStateTransition = "{CAFD1DB1-41D1-4A06-9863-E2E81DA17A9A}"
-	Const Afx_IID_ISpeechGrammarRuleStateTransitions = "{EABCE657-75BC-44A2-AA7F-C56476742963}"
-	Const Afx_IID_ISpeechLexicon = "{3DA7627A-C7AE-4B23-8708-638C50362C25}"
-	Const Afx_IID_ISpeechLexiconPronunciation = "{95252C5D-9E43-4F4A-9899-48EE73352F9F}"
-	Const Afx_IID_ISpeechLexiconPronunciations = "{72829128-5682-4704-A0D4-3E2BB6F2EAD3}"
-	Const Afx_IID_ISpeechLexiconWord = "{4E5B933C-C9BE-48ED-8842-1EE51BB1D4FF}"
-	Const Afx_IID_ISpeechLexiconWords = "{8D199862-415E-47D5-AC4F-FAA608B424E6}"
-	Const Afx_IID_ISpeechMemoryStream = "{EEB14B68-808B-4ABE-A5EA-B51DA7588008}"
-	Const Afx_IID_ISpeechMMSysAudio = "{3C76AF6D-1FD7-4831-81D1-3B71D5A13C44}"
-	Const Afx_IID_ISpeechObjectToken = "{C74A3ADC-B727-4500-A84A-B526721C8B8C}"
-	Const Afx_IID_ISpeechObjectTokenCategory = "{CA7EAC50-2D01-4145-86D4-5AE7D70F4469}"
-	Const Afx_IID_ISpeechObjectTokens = "{9285B776-2E7B-4BC0-B53E-580EB6FA967F}"
-	Const Afx_IID_ISpeechPhoneConverter = "{C3E4F353-433F-43D6-89A1-6A62A7054C3D}"
-	Const Afx_IID_ISpeechPhraseAlternate = "{27864A2A-2B9F-4CB8-92D3-0D2722FD1E73}"
-	Const Afx_IID_ISpeechPhraseAlternates = "{B238B6D5-F276-4C3D-A6C1-2974801C3CC2}"
-	Const Afx_IID_ISpeechPhraseElement = "{E6176F96-E373-4801-B223-3B62C068C0B4}"
-	Const Afx_IID_ISpeechPhraseElements = "{0626B328-3478-467D-A0B3-D0853B93DDA3}"
-	Const Afx_IID_ISpeechPhraseInfo = "{961559CF-4E67-4662-8BF0-D93F1FCD61B3}"
-	Const Afx_IID_ISpeechPhraseInfoBuilder = "{3B151836-DF3A-4E0A-846C-D2ADC9334333}"
-	Const Afx_IID_ISpeechPhraseProperties = "{08166B47-102E-4B23-A599-BDB98DBFD1F4}"
-	Const Afx_IID_ISpeechPhraseProperty = "{CE563D48-961E-4732-A2E1-378A42B430BE}"
-	Const Afx_IID_ISpeechPhraseReplacement = "{2890A410-53A7-4FB5-94EC-06D4998E3D02}"
-	Const Afx_IID_ISpeechPhraseReplacements = "{38BC662F-2257-4525-959E-2069D2596C05}"
-	Const Afx_IID_ISpeechPhraseRule = "{A7BFE112-A4A0-48D9-B602-C313843F6964}"
-	Const Afx_IID_ISpeechPhraseRules = "{9047D593-01DD-4B72-81A3-E4A0CA69F407}"
-	Const Afx_IID_ISpeechRecoContext = "{580AA49D-7E1E-4809-B8E2-57DA806104B8}"
-	Const Afx_IID_ISpeechRecognizer = "{2D5F1C0C-BD75-4B08-9478-3B11FEA2586C}"
-	Const Afx_IID_ISpeechRecognizerStatus = "{BFF9E781-53EC-484E-BB8A-0E1B5551E35C}"
-	Const Afx_IID_ISpeechRecoGrammar = "{B6D6F79F-2158-4E50-B5BC-9A9CCD852A09}"
-	Const Afx_IID_ISpeechRecoResult = "{ED2879CF-CED9-4EE6-A534-DE0191D5468D}"
-	Const Afx_IID_ISpeechRecoResult2 = "{8E0A246D-D3C8-45DE-8657-04290C458C3C}"
-	Const Afx_IID_ISpeechRecoResultDispatch = "{6D60EB64-ACED-40A6-BBF3-4E557F71DEE2}"
-	Const Afx_IID_ISpeechRecoResultTimes = "{62B3B8FB-F6E7-41BE-BDCB-056B1C29EFC0}"
-	Const Afx_IID_ISpeechResourceLoader = "{B9AC5783-FCD0-4B21-B119-B4F8DA8FD2C3}"
-	Const Afx_IID_ISpeechTextSelectionInformation = "{3B9C7E7A-6EEE-4DED-9092-11657279ADBE}"
-	Const Afx_IID_ISpeechVoice = "{269316D8-57BD-11D2-9EEE-00C04F797396}"
-	Const Afx_IID_ISpeechVoiceStatus = "{8BE47B07-57F6-11D2-9EEE-00C04F797396}"
-	Const Afx_IID_ISpeechWaveFormatEx = "{7A1EF0D5-1581-4741-88E4-209A49F11A10}"
-	Const Afx_IID_ISpeechXMLRecoResult = "{AAEC54AF-8F85-4924-944D-B79D39D72E19}"
-	Const Afx_IID_ISpEventSink = "{BE7A9CC9-5F9E-11D2-960F-00C04F8EE628}"
-	Const Afx_IID_ISpEventSource = "{BE7A9CCE-5F9E-11D2-960F-00C04F8EE628}"
-	Const Afx_IID_ISpGrammarBuilder = "{8137828F-591A-4A42-BE58-49EA7EBAAC68}"
-	Const Afx_IID_ISpLexicon = "{DA41A7C2-5383-4DB2-916B-6C1719E3DB58}"
-	Const Afx_IID_ISpMMSysAudio = "{15806F6E-1D70-4B48-98E6-3B1A007509AB}"
-	Const Afx_IID_ISpNotifySink = "{259684DC-37C3-11D2-9603-00C04F8EE628}"
-	Const Afx_IID_ISpNotifySource = "{5EFF4AEF-8487-11D2-961C-00C04F8EE628}"
-	Const Afx_IID_ISpNotifyTranslator = "{ACA16614-5D3D-11D2-960E-00C04F8EE628}"
-	Const Afx_IID_ISpObjectToken = "{14056589-E16C-11D2-BB90-00C04F8EE6C0}"
-	Const Afx_IID_ISpObjectTokenCategory = "{2D3D3845-39AF-4850-BBF9-40B49780011D}"
-	Const Afx_IID_ISpObjectWithToken = "{5B559F40-E952-11D2-BB91-00C04F8EE6C0}"
-	Const Afx_IID_ISpPhoneConverter = "{8445C581-0CAC-4A38-ABFE-9B2CE2826455}"
-	Const Afx_IID_ISpPhoneticAlphabetConverter = "{133ADCD4-19B4-4020-9FDC-842E78253B17}"
-	Const Afx_IID_ISpPhoneticAlphabetSelection = "{B2745EFD-42CE-48CA-81F1-A96E02538A90}"
-	Const Afx_IID_ISpPhrase = "{1A5C0354-B621-4B5A-8791-D306ED379E53}"
-	Const Afx_IID_ISpPhraseAlt = "{8FCEBC98-4E49-4067-9C6C-D86A0E092E3D}"
-	Const Afx_IID_ISpProperties = "{5B4FB971-B115-4DE1-AD97-E482E3BF6EE4}"
-	Const Afx_IID_ISpRecoCategory = "{DA0CD0F9-14A2-4F09-8C2A-85CC48979345}"
-	Const Afx_IID_ISpRecoContext = "{F740A62F-7C15-489E-8234-940A33D9272D}"
-	Const Afx_IID_ISpRecoContext2 = "{BEAD311C-52FF-437F-9464-6B21054CA73D}"
-	Const Afx_IID_ISpRecognizer = "{C2B5F241-DAA0-4507-9E16-5A1EAA2B7A5C}"
-	Const Afx_IID_ISpRecognizer2 = "{8FC6D974-C81E-4098-93C5-0147F61ED4D3}"
-	Const Afx_IID_ISpRecognizer3 = "{DF1B943C-5838-4AA2-8706-D7CD5B333499}"
-	Const Afx_IID_ISpRecoGrammar = "{2177DB29-7F45-47D0-8554-067E91C80502}"
-	Const Afx_IID_ISpRecoGrammar2 = "{4B37BC9E-9ED6-44A3-93D3-18F022B79EC3}"
-	Const Afx_IID_ISpRecoResult = "{20B053BE-E235-43CD-9A2A-8D17A48B7842}"
-	Const Afx_IID_ISpResourceManager = "{93384E18-5014-43D5-ADBB-A78E055926BD}"
-	Const Afx_IID_ISpSerializeState = "{21B501A0-0EC7-46C9-92C3-A2BC784C54B9}"
-	Const Afx_IID_ISpShortcut = "{3DF681E2-EA56-11D9-8BDE-F66BAD1E3F3A}"
-	Const Afx_IID_ISpStream = "{12E3CCA9-7518-44C5-A5E7-BA5A79CB929E}"
-	Const Afx_IID_ISpStreamFormat = "{BED530BE-2606-4F4D-A1C0-54C5CDA5566F}"
-	Const Afx_IID_ISpStreamFormatConverter = "{678A932C-EA71-4446-9B41-78FDA6280A29}"
-	Const Afx_IID_ISpVoice = "{6C44DF74-72B9-4992-A1EC-EF996E0422D4}"
-	Const Afx_IID_ISpXMLRecoResult = "{AE39362B-45A8-4074-9B9E-CCF49AA2D0B6}"
-	Const Afx_IID__Afx_ISpeechRecoContextEvents = "{7B8FCB42-0E9D-4F00-A048-7B04D6179D3D}"
-	Const Afx_IID__Afx_ISpeechVoiceEvents = "{A372ACD1-3BEF-4BBD-8FFB-CB3E2B416AF8}"
+	Const IID_IEnumSpObjectTokens = "{06B64F9E-7FDA-11D2-B4F2-00C04F797396}"
+	Const IID_ISpAudio = "{C05C768F-FAE8-4EC2-8E07-338321C12452}"
+	Const IID_ISpDataKey = "{14056581-E16C-11D2-BB90-00C04F8EE6C0}"
+	Const IID_ISpeechAudio = "{CFF8E175-019E-11D3-A08E-00C04F8EF9B5}"
+	Const IID_ISpeechAudioBufferInfo = "{11B103D8-1142-4EDF-A093-82FB3915F8CC}"
+	Const IID_ISpeechAudioFormat = "{E6E9C590-3E18-40E3-8299-061F98BDE7C7}"
+	Const IID_ISpeechAudioStatus = "{C62D9C91-7458-47F6-862D-1EF86FB0B278}"
+	Const IID_ISpeechBaseStream = "{6450336F-7D49-4CED-8097-49D6DEE37294}"
+	Const IID_ISpeechCustomStream = "{1A9E9F4F-104F-4DB8-A115-EFD7FD0C97AE}"
+	Const IID_ISpeechDataKey = "{CE17C09B-4EFA-44D5-A4C9-59D9585AB0CD}"
+	Const IID_ISpeechFileStream = "{AF67F125-AB39-4E93-B4A2-CC2E66E182A7}"
+	Const IID_ISpeechGrammarRule = "{AFE719CF-5DD1-44F2-999C-7A399F1CFCCC}"
+	Const IID_ISpeechGrammarRules = "{6FFA3B44-FC2D-40D1-8AFC-32911C7F1AD1}"
+	Const IID_ISpeechGrammarRuleState = "{D4286F2C-EE67-45AE-B928-28D695362EDA}"
+	Const IID_ISpeechGrammarRuleStateTransition = "{CAFD1DB1-41D1-4A06-9863-E2E81DA17A9A}"
+	Const IID_ISpeechGrammarRuleStateTransitions = "{EABCE657-75BC-44A2-AA7F-C56476742963}"
+	Const IID_ISpeechLexicon = "{3DA7627A-C7AE-4B23-8708-638C50362C25}"
+	Const IID_ISpeechLexiconPronunciation = "{95252C5D-9E43-4F4A-9899-48EE73352F9F}"
+	Const IID_ISpeechLexiconPronunciations = "{72829128-5682-4704-A0D4-3E2BB6F2EAD3}"
+	Const IID_ISpeechLexiconWord = "{4E5B933C-C9BE-48ED-8842-1EE51BB1D4FF}"
+	Const IID_ISpeechLexiconWords = "{8D199862-415E-47D5-AC4F-FAA608B424E6}"
+	Const IID_ISpeechMemoryStream = "{EEB14B68-808B-4ABE-A5EA-B51DA7588008}"
+	Const IID_ISpeechMMSysAudio = "{3C76AF6D-1FD7-4831-81D1-3B71D5A13C44}"
+	Const IID_ISpeechObjectToken = "{C74A3ADC-B727-4500-A84A-B526721C8B8C}"
+	Const IID_ISpeechObjectTokenCategory = "{CA7EAC50-2D01-4145-86D4-5AE7D70F4469}"
+	Const IID_ISpeechObjectTokens = "{9285B776-2E7B-4BC0-B53E-580EB6FA967F}"
+	Const IID_ISpeechPhoneConverter = "{C3E4F353-433F-43D6-89A1-6A62A7054C3D}"
+	Const IID_ISpeechPhraseAlternate = "{27864A2A-2B9F-4CB8-92D3-0D2722FD1E73}"
+	Const IID_ISpeechPhraseAlternates = "{B238B6D5-F276-4C3D-A6C1-2974801C3CC2}"
+	Const IID_ISpeechPhraseElement = "{E6176F96-E373-4801-B223-3B62C068C0B4}"
+	Const IID_ISpeechPhraseElements = "{0626B328-3478-467D-A0B3-D0853B93DDA3}"
+	Const IID_ISpeechPhraseInfo = "{961559CF-4E67-4662-8BF0-D93F1FCD61B3}"
+	Const IID_ISpeechPhraseInfoBuilder = "{3B151836-DF3A-4E0A-846C-D2ADC9334333}"
+	Const IID_ISpeechPhraseProperties = "{08166B47-102E-4B23-A599-BDB98DBFD1F4}"
+	Const IID_ISpeechPhraseProperty = "{CE563D48-961E-4732-A2E1-378A42B430BE}"
+	Const IID_ISpeechPhraseReplacement = "{2890A410-53A7-4FB5-94EC-06D4998E3D02}"
+	Const IID_ISpeechPhraseReplacements = "{38BC662F-2257-4525-959E-2069D2596C05}"
+	Const IID_ISpeechPhraseRule = "{A7BFE112-A4A0-48D9-B602-C313843F6964}"
+	Const IID_ISpeechPhraseRules = "{9047D593-01DD-4B72-81A3-E4A0CA69F407}"
+	Const IID_ISpeechRecoContext = "{580AA49D-7E1E-4809-B8E2-57DA806104B8}"
+	Const IID_ISpeechRecognizer = "{2D5F1C0C-BD75-4B08-9478-3B11FEA2586C}"
+	Const IID_ISpeechRecognizerStatus = "{BFF9E781-53EC-484E-BB8A-0E1B5551E35C}"
+	Const IID_ISpeechRecoGrammar = "{B6D6F79F-2158-4E50-B5BC-9A9CCD852A09}"
+	Const IID_ISpeechRecoResult = "{ED2879CF-CED9-4EE6-A534-DE0191D5468D}"
+	Const IID_ISpeechRecoResult2 = "{8E0A246D-D3C8-45DE-8657-04290C458C3C}"
+	Const IID_ISpeechRecoResultDispatch = "{6D60EB64-ACED-40A6-BBF3-4E557F71DEE2}"
+	Const IID_ISpeechRecoResultTimes = "{62B3B8FB-F6E7-41BE-BDCB-056B1C29EFC0}"
+	Const IID_ISpeechResourceLoader = "{B9AC5783-FCD0-4B21-B119-B4F8DA8FD2C3}"
+	Const IID_ISpeechTextSelectionInformation = "{3B9C7E7A-6EEE-4DED-9092-11657279ADBE}"
+	Const IID_ISpeechVoice = "{269316D8-57BD-11D2-9EEE-00C04F797396}"
+	Const IID_ISpeechVoiceStatus = "{8BE47B07-57F6-11D2-9EEE-00C04F797396}"
+	Const IID_ISpeechWaveFormatEx = "{7A1EF0D5-1581-4741-88E4-209A49F11A10}"
+	Const IID_ISpeechXMLRecoResult = "{AAEC54AF-8F85-4924-944D-B79D39D72E19}"
+	Const IID_ISpEventSink = "{BE7A9CC9-5F9E-11D2-960F-00C04F8EE628}"
+	Const IID_ISpEventSource = "{BE7A9CCE-5F9E-11D2-960F-00C04F8EE628}"
+	Const IID_ISpGrammarBuilder = "{8137828F-591A-4A42-BE58-49EA7EBAAC68}"
+	Const IID_ISpLexicon = "{DA41A7C2-5383-4DB2-916B-6C1719E3DB58}"
+	Const IID_ISpMMSysAudio = "{15806F6E-1D70-4B48-98E6-3B1A007509AB}"
+	Const IID_ISpNotifySink = "{259684DC-37C3-11D2-9603-00C04F8EE628}"
+	Const IID_ISpNotifySource = "{5EFF4AEF-8487-11D2-961C-00C04F8EE628}"
+	Const IID_ISpNotifyTranslator = "{ACA16614-5D3D-11D2-960E-00C04F8EE628}"
+	Const IID_ISpObjectToken = "{14056589-E16C-11D2-BB90-00C04F8EE6C0}"
+	Const IID_ISpObjectTokenCategory = "{2D3D3845-39AF-4850-BBF9-40B49780011D}"
+	Const IID_ISpObjectWithToken = "{5B559F40-E952-11D2-BB91-00C04F8EE6C0}"
+	Const IID_ISpPhoneConverter = "{8445C581-0CAC-4A38-ABFE-9B2CE2826455}"
+	Const IID_ISpPhoneticAlphabetConverter = "{133ADCD4-19B4-4020-9FDC-842E78253B17}"
+	Const IID_ISpPhoneticAlphabetSelection = "{B2745EFD-42CE-48CA-81F1-A96E02538A90}"
+	Const IID_ISpPhrase = "{1A5C0354-B621-4B5A-8791-D306ED379E53}"
+	Const IID_ISpPhraseAlt = "{8FCEBC98-4E49-4067-9C6C-D86A0E092E3D}"
+	Const IID_ISpProperties = "{5B4FB971-B115-4DE1-AD97-E482E3BF6EE4}"
+	Const IID_ISpRecoCategory = "{DA0CD0F9-14A2-4F09-8C2A-85CC48979345}"
+	Const IID_ISpRecoContext = "{F740A62F-7C15-489E-8234-940A33D9272D}"
+	Const IID_ISpRecoContext2 = "{BEAD311C-52FF-437F-9464-6B21054CA73D}"
+	Const IID_ISpRecognizer = "{C2B5F241-DAA0-4507-9E16-5A1EAA2B7A5C}"
+	Const IID_ISpRecognizer2 = "{8FC6D974-C81E-4098-93C5-0147F61ED4D3}"
+	Const IID_ISpRecognizer3 = "{DF1B943C-5838-4AA2-8706-D7CD5B333499}"
+	Const IID_ISpRecoGrammar = "{2177DB29-7F45-47D0-8554-067E91C80502}"
+	Const IID_ISpRecoGrammar2 = "{4B37BC9E-9ED6-44A3-93D3-18F022B79EC3}"
+	Const IID_ISpRecoResult = "{20B053BE-E235-43CD-9A2A-8D17A48B7842}"
+	Const IID_ISpResourceManager = "{93384E18-5014-43D5-ADBB-A78E055926BD}"
+	Const IID_ISpSerializeState = "{21B501A0-0EC7-46C9-92C3-A2BC784C54B9}"
+	Const IID_ISpShortcut = "{3DF681E2-EA56-11D9-8BDE-F66BAD1E3F3A}"
+	Const IID_ISpStream = "{12E3CCA9-7518-44C5-A5E7-BA5A79CB929E}"
+	Const IID_ISpStreamFormat = "{BED530BE-2606-4F4D-A1C0-54C5CDA5566F}"
+	Const IID_ISpStreamFormatConverter = "{678A932C-EA71-4446-9B41-78FDA6280A29}"
+	Const IID_ISpVoice = "{6C44DF74-72B9-4992-A1EC-EF996E0422D4}"
+	Const IID_ISpXMLRecoResult = "{AE39362B-45A8-4074-9B9E-CCF49AA2D0B6}"
+	Const IID__ISpeechRecoContextEvents = "{7B8FCB42-0E9D-4F00-A048-7B04D6179D3D}"
+	Const IID__ISpeechVoiceEvents = "{A372ACD1-3BEF-4BBD-8FFB-CB3E2B416AF8}"
 	
-	' // Additional interfaces not included in the Type library
-	Const Afx_IID_ISpContainerLexicon = "{8565572F-C094-41CC-B56E-10BD9C3FF044}"
-	Const Afx_IID_ISpEnginePronunciation = "{C360CE4B-76D1-4214-AD68-52657D5083DA}"
-	Const Afx_IID_ISpEventSource2 = "{2373A435-6A4B-429E-A6AC-D4231A61975B}"
-	Const Afx_IID_ISpGrammarBuilder2 = "{8AB10026-20CC-4B20-8C22-A49C9BA78F60}"
-	Const Afx_IID_ISpObjectTokenInit = "{B8AAB0CF-346F-49D8-9499-C8B03F161D51}"
-	Const Afx_IID_ISpPhrase2 = "{F264DA52-E457-4696-B856-A737B717AF79}"
-	Const Afx_IID_ISpRecoResult2 = "{27CAC6C4-88F2-41F2-8817-0C95E59F1E6E}"
-	Const Afx_IID_ISpRegDataKey = "{92A66E2B-C830-4149-83DF-6FC2BA1E7A5B}"
-	Const Afx_IID_ISPtranscript = "{10F63BCE-201A-11D3-AC70-00C04F8EE6C0}"
+	' Additional interfaces not included in the Type library
+	Const IID_ISpContainerLexicon = "{8565572F-C094-41CC-B56E-10BD9C3FF044}"
+	Const IID_ISpEnginePronunciation = "{C360CE4B-76D1-4214-AD68-52657D5083DA}"
+	Const IID_ISpEventSource2 = "{2373A435-6A4B-429E-A6AC-D4231A61975B}"
+	Const IID_ISpGrammarBuilder2 = "{8AB10026-20CC-4B20-8C22-A49C9BA78F60}"
+	Const IID_ISpObjectTokenInit = "{B8AAB0CF-346F-49D8-9499-C8B03F161D51}"
+	Const IID_ISpPhrase2 = "{F264DA52-E457-4696-B856-A737B717AF79}"
+	Const IID_ISpRecoResult2 = "{27CAC6C4-88F2-41F2-8817-0C95E59F1E6E}"
+	Const IID_ISpRegDataKey = "{92A66E2B-C830-4149-83DF-6FC2BA1E7A5B}"
+	Const IID_ISPtranscript = "{10F63BCE-201A-11D3-AC70-00C04F8EE6C0}"
 	
 	' ========================================================================================
 	' Aliases
 	' ========================================================================================
 	
-	Type SPAUDIOSTATE AS _SPAUDIOSTATE
-	Type SPPROPERTYINFO AS tagSPPROPERTYINFO
-	Type SPSTREAMFORMATType AS SPWAVEFORMATType
-	Type SPTEXTSELECTIONINFO AS tagSPTEXTSELECTIONINFO
+	Type SPAUDIOSTATE As _SPAUDIOSTATE
+	Type SPPROPERTYINFO As tagSPPROPERTYINFO
+	Type SPSTREAMFORMATType As SPWAVEFORMATType
+	Type SPTEXTSELECTIONINFO As tagSPTEXTSELECTIONINFO
 	
 	' ========================================================================================
 	' Enumerations
 	' ========================================================================================
 	
 	Enum _SPAUDIOSTATE
-		' // Documentation string: Afx_ISpAudio Interface
-		' // Number of Constants: 4
+		' Documentation string: ISpAudio Interface
+		' Number of Constants: 4
 		SPAS_CLOSED = 0   ' (&h00000000)
 		SPAS_STOP = 1   ' (&h00000001)
 		SPAS_PAUSE = 2   ' (&h00000002)
@@ -337,8 +316,8 @@ Namespace Speech
 	End Enum
 	
 	Enum DISPID_SpeechAudio
-		' // Documentation string: Afx_ISpeechLexiconPronunciation Interface
-		' // Number of Constants: 7
+		' Documentation string: ISpeechLexiconPronunciation Interface
+		' Number of Constants: 7
 		DISPID_SAStatus = 200   ' (&h000000C8)
 		DISPID_SABufferInfo = 201   ' (&h000000C9)
 		DISPID_SADefaultFormat = 202   ' (&h000000CA)
@@ -349,16 +328,16 @@ Namespace Speech
 	End Enum
 	
 	Enum DISPID_SpeechAudioBufferInfo
-		' // Documentation string: Afx_ISpeechLexiconPronunciation Interface
-		' // Number of Constants: 3
+		' Documentation string: ISpeechLexiconPronunciation Interface
+		' Number of Constants: 3
 		DISPID_SABIMinNotification = 1   ' (&h00000001)
 		DISPID_SABIBufferSize = 2   ' (&h00000002)
 		DISPID_SABIEventBias = 3   ' (&h00000003)
 	End Enum
 	
 	Enum DISPID_SpeechAudioFormat
-		' // Documentation string: Afx_ISpeechLexiconPronunciation Interface
-		' // Number of Constants: 4
+		' Documentation string: ISpeechLexiconPronunciation Interface
+		' Number of Constants: 4
 		DISPID_SAFType = 1   ' (&h00000001)
 		DISPID_SAFGuid = 2   ' (&h00000002)
 		DISPID_SAFGetWaveFormatEx = 3   ' (&h00000003)
@@ -366,8 +345,8 @@ Namespace Speech
 	End Enum
 	
 	Enum DISPID_SpeechAudioStatus
-		' // Documentation string: Afx_ISpeechLexiconPronunciation Interface
-		' // Number of Constants: 5
+		' Documentation string: ISpeechLexiconPronunciation Interface
+		' Number of Constants: 5
 		DISPID_SASFreeBufferSpace = 1   ' (&h00000001)
 		DISPID_SASNonBlockingIO = 2   ' (&h00000002)
 		DISPID_SASState = 3   ' (&h00000003)
@@ -376,8 +355,8 @@ Namespace Speech
 	End Enum
 	
 	Enum DISPID_SpeechBaseStream
-		' // Documentation string: Afx_ISpeechLexiconPronunciation Interface
-		' // Number of Constants: 4
+		' Documentation string: ISpeechLexiconPronunciation Interface
+		' Number of Constants: 4
 		DISPID_SBSFormat = 1   ' (&h00000001)
 		DISPID_SBSRead = 2   ' (&h00000002)
 		DISPID_SBSWrite = 3   ' (&h00000003)
@@ -385,16 +364,16 @@ Namespace Speech
 	End Enum
 	
 	Enum DISPID_SpeechCustomStream
-		' // Documentation string: Afx_ISpeechLexiconPronunciation Interface
-		' // Number of Constants: 1
+		' Documentation string: ISpeechLexiconPronunciation Interface
+		' Number of Constants: 1
 		DISPID_SCSBaseStream = 100   ' (&h00000064)
 	End Enum
 	
 	'Typedef Long SpeechLanguageId;
 	
 	Enum DISPID_SpeechDataKey
-		' // Documentation string: Afx_ISpeechLexiconPronunciation Interface
-		' // Number of Constants: 12
+		' Documentation string: ISpeechLexiconPronunciation Interface
+		' Number of Constants: 12
 		DISPID_SDKSetBinaryValue = 1   ' (&h00000001)
 		DISPID_SDKGetBinaryValue = 2   ' (&h00000002)
 		DISPID_SDKSetStringValue = 3   ' (&h00000003)
@@ -409,16 +388,16 @@ Namespace Speech
 		DISPID_SDKEnumValues = 12   ' (&h0000000C)
 	End Enum
 	
-	ENUM DISPID_SpeechFileStream
-		' // Documentation string: Afx_ISpeechLexiconPronunciation Interface
-		' // Number of Constants: 2
+	Enum DISPID_SpeechFileStream
+		' Documentation string: ISpeechLexiconPronunciation Interface
+		' Number of Constants: 2
 		DISPID_SFSOpen = 100   ' (&h00000064)
 		DISPID_SFSClose = 101   ' (&h00000065)
-	END ENUM
+	End Enum
 	
-	ENUM DISPID_SpeechGrammarRule
-		' // Documentation string: Afx_ISpeechLexiconPronunciation Interface
-		' // Number of Constants: 7
+	Enum DISPID_SpeechGrammarRule
+		' Documentation string: ISpeechLexiconPronunciation Interface
+		' Number of Constants: 7
 		DISPID_SGRAttributes = 1   ' (&h00000001)
 		DISPID_SGRInitialState = 2   ' (&h00000002)
 		DISPID_SGRName = 3   ' (&h00000003)
@@ -426,11 +405,11 @@ Namespace Speech
 		DISPID_SGRClear = 5   ' (&h00000005)
 		DISPID_SGRAddResource = 6   ' (&h00000006)
 		DISPID_SGRAddState = 7   ' (&h00000007)
-	END ENUM
+	End Enum
 	
-	ENUM DISPID_SpeechGrammarRules
-		' // Documentation string: Afx_ISpeechLexiconPronunciation Interface
-		' // Number of Constants: 8
+	Enum DISPID_SpeechGrammarRules
+		' Documentation string: ISpeechLexiconPronunciation Interface
+		' Number of Constants: 8
 		DISPID_SGRsCount = 1   ' (&h00000001)
 		DISPID_SGRsDynamic = 2   ' (&h00000002)
 		DISPID_SGRsAdd = 3   ' (&h00000003)
@@ -442,8 +421,8 @@ Namespace Speech
 	End Enum
 	
 	Enum DISPID_SpeechGrammarRuleState
-		' // Documentation string: Afx_ISpeechLexiconPronunciation Interface
-		' // Number of Constants: 5
+		' Documentation string: ISpeechLexiconPronunciation Interface
+		' Number of Constants: 5
 		DISPID_SGRSRule = 1   ' (&h00000001)
 		DISPID_SGRSTransitions = 2   ' (&h00000002)
 		DISPID_SGRSAddWordTransition = 3   ' (&h00000003)
@@ -452,8 +431,8 @@ Namespace Speech
 	End Enum
 	
 	Enum DISPID_SpeechGrammarRuleStateTransition
-		' // Documentation string: Afx_ISpeechLexiconPronunciation Interface
-		' // Number of Constants: 8
+		' Documentation string: ISpeechLexiconPronunciation Interface
+		' Number of Constants: 8
 		DISPID_SGRSTType = 1   ' (&h00000001)
 		DISPID_SGRSTText = 2   ' (&h00000002)
 		DISPID_SGRSTRule = 3   ' (&h00000003)
@@ -465,16 +444,16 @@ Namespace Speech
 	End Enum
 	
 	Enum DISPID_SpeechGrammarRuleStateTransitions
-		' // Documentation string: Afx_ISpeechLexiconPronunciation Interface
-		' // Number of Constants: 3
+		' Documentation string: ISpeechLexiconPronunciation Interface
+		' Number of Constants: 3
 		DISPID_SGRSTsCount = 1   ' (&h00000001)
 		DISPID_SGRSTsItem = 0   ' (&h00000000)
 		DISPID_SGRSTs_NewEnum = -4   ' (&hFFFFFFFC)
 	End Enum
 	
-	ENUM DISPID_SpeechLexicon
-		' // Documentation string: Afx_ISpeechPhraseInfoBuilder Interface
-		' // Number of Constants: 8
+	Enum DISPID_SpeechLexicon
+		' Documentation string: ISpeechPhraseInfoBuilder Interface
+		' Number of Constants: 8
 		DISPID_SLGenerationId = 1   ' (&h00000001)
 		DISPID_SLGetWords = 2   ' (&h00000002)
 		DISPID_SLAddPronunciation = 3   ' (&h00000003)
@@ -483,61 +462,61 @@ Namespace Speech
 		DISPID_SLRemovePronunciationByPhoneIds = 6   ' (&h00000006)
 		DISPID_SLGetPronunciations = 7   ' (&h00000007)
 		DISPID_SLGetGenerationChange = 8   ' (&h00000008)
-	END ENUM
+	End Enum
 	
-	ENUM DISPID_SpeechLexiconProns
-		' // Documentation string: Afx_ISpeechPhraseInfoBuilder Interface
-		' // Number of Constants: 3
+	Enum DISPID_SpeechLexiconProns
+		' Documentation string: ISpeechPhraseInfoBuilder Interface
+		' Number of Constants: 3
 		DISPID_SLPsCount = 1   ' (&h00000001)
 		DISPID_SLPsItem = 0   ' (&h00000000) DISPID_VALUE
 		DISPID_SLPs_NewEnum = -4   ' (&hFFFFFFFC) DISPID_NEWENUM
-	END ENUM
+	End Enum
 	
-	ENUM DISPID_SpeechLexiconPronunciation
-		' // Documentation string: Afx_ISpeechPhraseInfoBuilder Interface
-		' // Number of Constants: 5
+	Enum DISPID_SpeechLexiconPronunciation
+		' Documentation string: ISpeechPhraseInfoBuilder Interface
+		' Number of Constants: 5
 		DISPID_SLPType = 1   ' (&h00000001)
 		DISPID_SLPLangId = 2   ' (&h00000002)
 		DISPID_SLPPartOfSpeech = 3   ' (&h00000003)
 		DISPID_SLPPhoneIds = 4   ' (&h00000004)
 		DISPID_SLPSymbolic = 5   ' (&h00000005)
-	END ENUM
+	End Enum
 	
-	ENUM DISPID_SpeechLexiconWord
-		' // Documentation string: Afx_ISpeechPhraseInfoBuilder Interface
-		' // Number of Constants: 4
+	Enum DISPID_SpeechLexiconWord
+		' Documentation string: ISpeechPhraseInfoBuilder Interface
+		' Number of Constants: 4
 		DISPID_SLWLangId = 1   ' (&h00000001)
 		DISPID_SLWType = 2   ' (&h00000002)
 		DISPID_SLWWord = 3   ' (&h00000003)
 		DISPID_SLWPronunciations = 4   ' (&h00000004)
-	END ENUM
+	End Enum
 	
-	ENUM DISPID_SpeechLexiconWords
-		' // Documentation string: Afx_ISpeechPhraseInfoBuilder Interface
-		' // Number of Constants: 3
+	Enum DISPID_SpeechLexiconWords
+		' Documentation string: ISpeechPhraseInfoBuilder Interface
+		' Number of Constants: 3
 		DISPID_SLWsCount = 1   ' (&h00000001)
 		DISPID_SLWsItem = 0   ' (&h00000000) DISPID_VALUE
 		DISPID_SLWs_NewEnum = -4   ' (&hFFFFFFFC) DISPID_NEWENUM
 	End Enum
 	
 	Enum DISPID_SpeechMemoryStream
-		' // Documentation string: Afx_ISpeechLexiconPronunciation Interface
-		' // Number of Constants: 2
+		' Documentation string: ISpeechLexiconPronunciation Interface
+		' Number of Constants: 2
 		DISPID_SMSSetData = 100   ' (&h00000064)
 		DISPID_SMSGetData = 101   ' (&h00000065)
 	End Enum
 	
 	Enum DISPID_SpeechMMSysAudio
-		' // Documentation string: Afx_ISpeechLexiconPronunciation Interface
-		' // Number of Constants: 3
+		' Documentation string: ISpeechLexiconPronunciation Interface
+		' Number of Constants: 3
 		DISPID_SMSADeviceId = 300   ' (&h0000012C)
 		DISPID_SMSALineId = 301   ' (&h0000012D)
 		DISPID_SMSAMMHandle = 302   ' (&h0000012E)
 	End Enum
 	
 	Enum DISPID_SpeechObjectToken
-		' // Documentation string: Afx_ISpeechLexiconPronunciation Interface
-		' // Number of Constants: 13
+		' Documentation string: ISpeechLexiconPronunciation Interface
+		' Number of Constants: 13
 		DISPID_SOTId = 1   ' (&h00000001)
 		DISPID_SOTDataKey = 2   ' (&h00000002)
 		DISPID_SOTCategory = 3   ' (&h00000003)
@@ -553,59 +532,59 @@ Namespace Speech
 		DISPID_SOTMatchesAttributes = 13   ' (&h0000000D)
 	End Enum
 	
-	ENUM DISPID_SpeechObjectTokenCategory
-		' // Documentation string: Afx_ISpeechLexiconPronunciation Interface
-		' // Number of Constants: 5
+	Enum DISPID_SpeechObjectTokenCategory
+		' Documentation string: ISpeechLexiconPronunciation Interface
+		' Number of Constants: 5
 		DISPID_SOTCId = 1   ' (&h00000001)
 		DISPID_SOTCDefault = 2   ' (&h00000002)
 		DISPID_SOTCSetId = 3   ' (&h00000003)
 		DISPID_SOTCGetDataKey = 4   ' (&h00000004)
 		DISPID_SOTCEnumerateTokens = 5   ' (&h00000005)
-	END ENUM
+	End Enum
 	
-	ENUM DISPID_SpeechObjectTokens
-		' // Documentation string: Afx_ISpeechLexiconPronunciation Interface
-		' // Number of Constants: 3
+	Enum DISPID_SpeechObjectTokens
+		' Documentation string: ISpeechLexiconPronunciation Interface
+		' Number of Constants: 3
 		DISPID_SOTsCount = 1   ' (&h00000001)
 		DISPID_SOTsItem = 0   ' (&h00000000)
 		DISPID_SOTs_NewEnum = -4   ' (&hFFFFFFFC)
-	END ENUM
+	End Enum
 	
-	ENUM DISPID_SpeechPhoneConverter
-		' // Documentation string: Afx_ISpeechPhraseInfoBuilder Interface
-		' // Number of Constants: 3
+	Enum DISPID_SpeechPhoneConverter
+		' Documentation string: ISpeechPhraseInfoBuilder Interface
+		' Number of Constants: 3
 		DISPID_SPCLangId = 1   ' (&h00000001)
 		DISPID_SPCPhoneToId = 2   ' (&h00000002)
 		DISPID_SPCIdToPhone = 3   ' (&h00000003)
-	END ENUM
+	End Enum
 	
-	ENUM DISPID_SpeechPhraseAlternate
-		' // Documentation string: Afx_ISpeechPhraseInfoBuilder Interface
-		' // Number of Constants: 5
+	Enum DISPID_SpeechPhraseAlternate
+		' Documentation string: ISpeechPhraseInfoBuilder Interface
+		' Number of Constants: 5
 		DISPID_SPARecoResult = 1   ' (&h00000001)
 		DISPID_SPAStartElementInResult = 2   ' (&h00000002)
 		DISPID_SPANumberOfElementsInResult = 3   ' (&h00000003)
 		DISPID_SPAPhraseInfo = 4   ' (&h00000004)
 		DISPID_SPACommit = 5   ' (&h00000005)
-	END ENUM
+	End Enum
 	
-	ENUM DISPID_SpeechPhraseAlternates
-		' // Documentation string: Afx_ISpeechPhraseInfoBuilder Interface
-		' // Number of Constants: 3
+	Enum DISPID_SpeechPhraseAlternates
+		' Documentation string: ISpeechPhraseInfoBuilder Interface
+		' Number of Constants: 3
 		DISPID_SPAsCount = 1   ' (&h00000001)
 		DISPID_SPAsItem = 0   ' (&h00000000)
 		DISPID_SPAs_NewEnum = -4   ' (&hFFFFFFFC)
-	END ENUM
+	End Enum
 	
-	ENUM DISPID_SpeechPhraseBuilder
-		' // Documentation string: Afx_ISpeechRecoResultDispatch Interface
-		' // Number of Constants: 1
+	Enum DISPID_SpeechPhraseBuilder
+		' Documentation string: ISpeechRecoResultDispatch Interface
+		' Number of Constants: 1
 		DISPID_SPPBRestorePhraseFromMemory = 1   ' (&h00000001)
-	END ENUM
+	End Enum
 	
-	ENUM DISPID_SpeechPhraseElement
-		' // Documentation string: Afx_ISpeechPhraseInfoBuilder Interface
-		' // Number of Constants: 13
+	Enum DISPID_SpeechPhraseElement
+		' Documentation string: ISpeechPhraseInfoBuilder Interface
+		' Number of Constants: 13
 		DISPID_SPEAudioTimeOffset = 1   ' (&h00000001)
 		DISPID_SPEAudioSizeTime = 2   ' (&h00000002)
 		DISPID_SPEAudioStreamOffset = 3   ' (&h00000003)
@@ -619,19 +598,19 @@ Namespace Speech
 		DISPID_SPERequiredConfidence = 11   ' (&h0000000B)
 		DISPID_SPEActualConfidence = 12   ' (&h0000000C)
 		DISPID_SPEEngineConfidence = 13   ' (&h0000000D)
-	END ENUM
+	End Enum
 	
-	ENUM DISPID_SpeechPhraseElements
-		' // Documentation string: Afx_ISpeechPhraseInfoBuilder Interface
-		' // Number of Constants: 3
+	Enum DISPID_SpeechPhraseElements
+		' Documentation string: ISpeechPhraseInfoBuilder Interface
+		' Number of Constants: 3
 		DISPID_SPEsCount = 1   ' (&h00000001)
 		DISPID_SPEsItem = 0   ' (&h00000000)
 		DISPID_SPEs_NewEnum = -4   ' (&hFFFFFFFC)
-	END ENUM
+	End Enum
 	
 	Enum DISPID_SpeechPhraseInfo
-		' // Documentation string: Afx_ISpeechPhraseInfoBuilder Interface
-		' // Number of Constants: 16
+		' Documentation string: ISpeechPhraseInfoBuilder Interface
+		' Number of Constants: 16
 		DISPID_SPILanguageId = 1   ' (&h00000001)
 		DISPID_SPIGrammarId = 2   ' (&h00000002)
 		DISPID_SPIStartTime = 3   ' (&h00000003)
@@ -651,16 +630,16 @@ Namespace Speech
 	End Enum
 	
 	Enum DISPID_SpeechPhraseProperties
-		' // Documentation string: Afx_ISpeechPhraseInfoBuilder Interface
-		' // Number of Constants: 3
+		' Documentation string: ISpeechPhraseInfoBuilder Interface
+		' Number of Constants: 3
 		DISPID_SPPsCount = 1   ' (&h00000001)
 		DISPID_SPPsItem = 0   ' (&h00000000)
 		DISPID_SPPs_NewEnum = -4   ' (&hFFFFFFFC)
 	End Enum
 	
 	Enum DISPID_SpeechPhraseProperty
-		' // Documentation string: Afx_ISpeechPhraseInfoBuilder Interface
-		' // Number of Constants: 9
+		' Documentation string: ISpeechPhraseInfoBuilder Interface
+		' Number of Constants: 9
 		DISPID_SPPName = 1   ' (&h00000001)
 		DISPID_SPPId = 2   ' (&h00000002)
 		DISPID_SPPValue = 3   ' (&h00000003)
@@ -670,11 +649,11 @@ Namespace Speech
 		DISPID_SPPConfidence = 7   ' (&h00000007)
 		DISPID_SPPParent = 8   ' (&h00000008)
 		DISPID_SPPChildren = 9   ' (&h00000009)
-	END ENUM
+	End Enum
 	
-	ENUM DISPID_SpeechPhraseReplacement
-		' // Documentation string: Afx_ISpeechPhraseInfoBuilder Interface
-		' // Number of Constants: 4
+	Enum DISPID_SpeechPhraseReplacement
+		' Documentation string: ISpeechPhraseInfoBuilder Interface
+		' Number of Constants: 4
 		DISPID_SPRDisplayAttributes = 1   ' (&h00000001)
 		DISPID_SPRText = 2   ' (&h00000002)
 		DISPID_SPRFirstElement = 3   ' (&h00000003)
@@ -682,16 +661,16 @@ Namespace Speech
 	End Enum
 	
 	Enum DISPID_SpeechPhraseReplacements
-		' // Documentation string: Afx_ISpeechPhraseInfoBuilder Interface
-		' // Number of Constants: 3
+		' Documentation string: ISpeechPhraseInfoBuilder Interface
+		' Number of Constants: 3
 		DISPID_SPRsCount = 1   ' (&h00000001)
 		DISPID_SPRsItem = 0   ' (&h00000000)
 		DISPID_SPRs_NewEnum = -4   ' (&hFFFFFFFC)
 	End Enum
 	
 	Enum DISPID_SpeechPhraseRule
-		' // Documentation string: Afx_ISpeechPhraseInfoBuilder Interface
-		' // Number of Constants: 8
+		' Documentation string: ISpeechPhraseInfoBuilder Interface
+		' Number of Constants: 8
 		DISPID_SPRuleName = 1   ' (&h00000001)
 		DISPID_SPRuleId = 2   ' (&h00000002)
 		DISPID_SPRuleFirstElement = 3   ' (&h00000003)
@@ -703,16 +682,16 @@ Namespace Speech
 	End Enum
 	
 	Enum DISPID_SpeechPhraseRules
-		' // Documentation string: Afx_ISpeechPhraseInfoBuilder Interface
-		' // Number of Constants: 3
+		' Documentation string: ISpeechPhraseInfoBuilder Interface
+		' Number of Constants: 3
 		DISPID_SPRulesCount = 1   ' (&h00000001)
 		DISPID_SPRulesItem = 0   ' (&h00000000)
 		DISPID_SPRules_NewEnum = -4   ' (&hFFFFFFFC)
 	End Enum
 	
 	Enum DISPID_SpeechRecoContext
-		' // Documentation string: Afx_ISpeechLexiconPronunciation Interface
-		' // Number of Constants: 17
+		' Documentation string: ISpeechLexiconPronunciation Interface
+		' Number of Constants: 17
 		DISPID_SRCRecognizer = 1   ' (&h00000001)
 		DISPID_SRCAudioInInterferenceStatus = 2   ' (&h00000002)
 		DISPID_SRCRequestedUIType = 3   ' (&h00000003)
@@ -730,11 +709,11 @@ Namespace Speech
 		DISPID_SRCCreateResultFromMemory = 15   ' (&h0000000F)
 		DISPID_SRCBookmark = 16   ' (&h00000010)
 		DISPID_SRCSetAdaptationData = 17   ' (&h00000011)
-	END ENUM
+	End Enum
 	
-	ENUM DISPID_SpeechRecoContextEvents
-		' // Documentation string: Afx_ISpeechLexiconPronunciation Interface
-		' // Number of Constants: 18
+	Enum DISPID_SpeechRecoContextEvents
+		' Documentation string: ISpeechLexiconPronunciation Interface
+		' Number of Constants: 18
 		DISPID_SRCEStartStream = 1   ' (&h00000001)
 		DISPID_SRCEEndStream = 2   ' (&h00000002)
 		DISPID_SRCEBookmark = 3   ' (&h00000003)
@@ -755,9 +734,9 @@ Namespace Speech
 		DISPID_SRCEEnginePrivate = 18   ' (&h00000012)
 	END ENUM
 	
-	ENUM DISPID_SpeechRecognizer
-		' // Documentation string: Afx_ISpeechLexiconPronunciation Interface
-		' // Number of Constants: 20
+	Enum DISPID_SpeechRecognizer
+		' Documentation string: ISpeechLexiconPronunciation Interface
+		' Number of Constants: 20
 		DISPID_SRRecognizer = 1   ' (&h00000001)
 		DISPID_SRAllowAudioInputFormatChangesOnNextSet = 2   ' (&h00000002)
 		DISPID_SRAudioInput = 3   ' (&h00000003)
@@ -778,22 +757,22 @@ Namespace Speech
 		DISPID_SRGetRecognizers = 18   ' (&h00000012)
 		DISPID_SVGetAudioInputs = 19   ' (&h00000013)
 		DISPID_SVGetProfiles = 20   ' (&h00000014)
-	END ENUM
+	End Enum
 	
-	ENUM DISPID_SpeechRecognizerStatus
-		' // Documentation string: Afx_ISpeechLexiconPronunciation Interface
-		' // Number of Constants: 6
+	Enum DISPID_SpeechRecognizerStatus
+		' Documentation string: ISpeechLexiconPronunciation Interface
+		' Number of Constants: 6
 		DISPID_SRSAudioStatus = 1   ' (&h00000001)
 		DISPID_SRSCurrentStreamPosition = 2   ' (&h00000002)
 		DISPID_SRSCurrentStreamNumber = 3   ' (&h00000003)
 		DISPID_SRSNumberOfActiveRules = 4   ' (&h00000004)
 		DISPID_SRSClsidEngine = 5   ' (&h00000005)
 		DISPID_SRSSupportedLanguages = 6   ' (&h00000006)
-	END ENUM
+	End Enum
 	
-	ENUM DISPID_SpeechRecoResult
-		' // Documentation string: Afx_ISpeechLexiconPronunciation Interface
-		' // Number of Constants: 9
+	Enum DISPID_SpeechRecoResult
+		' Documentation string: ISpeechLexiconPronunciation Interface
+		' Number of Constants: 9
 		DISPID_SRRRecoContext = 1   ' (&h00000001)
 		DISPID_SRRTimes = 2   ' (&h00000002)
 		DISPID_SRRAudioFormat = 3   ' (&h00000003)
@@ -803,26 +782,26 @@ Namespace Speech
 		DISPID_SRRSpeakAudio = 7   ' (&h00000007)
 		DISPID_SRRSaveToMemory = 8   ' (&h00000008)
 		DISPID_SRRDiscardResultInfo = 9   ' (&h00000009)
-	END ENUM
+	End Enum
 	
-	ENUM DISPID_SpeechRecoResult2
-		' // Documentation string: Afx_ISpeechXMLRecoResult Interface
-		' // Number of Constants: 1
+	Enum DISPID_SpeechRecoResult2
+		' Documentation string: ISpeechXMLRecoResult Interface
+		' Number of Constants: 1
 		DISPID_SRRSetTextFeedback = 12   ' (&h0000000C)
-	END ENUM
+	End Enum
 	
-	ENUM DISPID_SpeechRecoResultTimes
-		' // Documentation string: Afx_ISpeechPhraseInfoBuilder Interface
-		' // Number of Constants: 4
+	Enum DISPID_SpeechRecoResultTimes
+		' Documentation string: ISpeechPhraseInfoBuilder Interface
+		' Number of Constants: 4
 		DISPID_SRRTStreamTime = 1   ' (&h00000001)
 		DISPID_SRRTLength = 2   ' (&h00000002)
 		DISPID_SRRTTickCount = 3   ' (&h00000003)
 		DISPID_SRRTOffsetFromStart = 4   ' (&h00000004)
-	END ENUM
+	End Enum
 	
-	ENUM DISPID_SpeechVoice
-		' // Documentation string: Afx_ISpeechLexiconPronunciation Interface
-		' // Number of Constants: 22
+	Enum DISPID_SpeechVoice
+		' Documentation string: ISpeechLexiconPronunciation Interface
+		' Number of Constants: 22
 		DISPID_SVStatus = 1   ' (&h00000001)
 		DISPID_SVVoice = 2   ' (&h00000002)
 		DISPID_SVAudioOutput = 3   ' (&h00000003)
@@ -848,8 +827,8 @@ Namespace Speech
 	End Enum
 	
 	Enum DISPID_SpeechVoiceEvent
-		' // Documentation string: Afx_ISpeechLexiconPronunciation Interface
-		' // Number of Constants: 10
+		' Documentation string: ISpeechLexiconPronunciation Interface
+		' Number of Constants: 10
 		DISPID_SVEStreamStart = 1   ' (&h00000001)
 		DISPID_SVEStreamEnd = 2   ' (&h00000002)
 		DISPID_SVEVoiceChange = 3   ' (&h00000003)
@@ -863,8 +842,8 @@ Namespace Speech
 	End Enum
 	
 	Enum DISPID_SpeechVoiceStatus
-		' // Documentation string: Afx_ISpeechLexiconPronunciation Interface
-		' // Number of Constants: 12
+		' Documentation string: ISpeechLexiconPronunciation Interface
+		' Number of Constants: 12
 		DISPID_SVSCurrentStreamNumber = 1   ' (&h00000001)
 		DISPID_SVSLastStreamNumberQueued = 2   ' (&h00000002)
 		DISPID_SVSLastResult = 3   ' (&h00000003)
@@ -880,8 +859,8 @@ Namespace Speech
 	End Enum
 	
 	Enum DISPID_SpeechWaveFormatEx
-		' // Documentation string: Afx_ISpeechLexiconPronunciation Interface
-		' // Number of Constants: 7
+		' Documentation string: ISpeechLexiconPronunciation Interface
+		' Number of Constants: 7
 		DISPID_SWFEFormatTag = 1   ' (&h00000001)
 		DISPID_SWFEChannels = 2   ' (&h00000002)
 		DISPID_SWFESamplesPerSec = 3   ' (&h00000003)
@@ -889,18 +868,18 @@ Namespace Speech
 		DISPID_SWFEBlockAlign = 5   ' (&h00000005)
 		DISPID_SWFEBitsPerSample = 6   ' (&h00000006)
 		DISPID_SWFEExtraData = 7   ' (&h00000007)
-	END ENUM
+	End Enum
 	
-	ENUM DISPID_SpeechXMLRecoResult
-		' // Documentation string: Afx_ISpeechLexiconPronunciation Interface
-		' // Number of Constants: 2
+	Enum DISPID_SpeechXMLRecoResult
+		' Documentation string: ISpeechLexiconPronunciation Interface
+		' Number of Constants: 2
 		DISPID_SRRGetXMLResult = 10   ' (&h0000000A)
 		DISPID_SRRGetXMLErrorInfo = 11   ' (&h0000000B)
-	END ENUM
+	End Enum
 	
-	ENUM DISPIDSPRG
-		' // Documentation string: Afx_ISpeechLexiconPronunciation Interface
-		' // Number of Constants: 19
+	Enum DISPIDSPRG
+		' Documentation string: ISpeechLexiconPronunciation Interface
+		' Number of Constants: 19
 		DISPID_SRGId = 1   ' (&h00000001)
 		DISPID_SRGRecoContext = 2   ' (&h00000002)
 		DISPID_SRGState = 3   ' (&h00000003)
@@ -920,45 +899,45 @@ Namespace Speech
 		DISPID_SRGSetWordSequenceData = 17   ' (&h00000011)
 		DISPID_SRGSetTextSelection = 18   ' (&h00000012)
 		DISPID_SRGIsPronounceable = 19   ' (&h00000013)
-	END ENUM
+	End Enum
 	
-	ENUM DISPIDSPTSI
-		' // Documentation string: Afx_ISpeechLexiconPronunciation Interface
-		' // Number of Constants: 4
+	Enum DISPIDSPTSI
+		' Documentation string: ISpeechLexiconPronunciation Interface
+		' Number of Constants: 4
 		DISPIDSPTSI_ActiveOffset = 1   ' (&h00000001)
 		DISPIDSPTSI_ActiveLength = 2   ' (&h00000002)
 		DISPIDSPTSI_SelectionOffset = 3   ' (&h00000003)
 		DISPIDSPTSI_SelectionLength = 4   ' (&h00000004)
-	END ENUM
+	End Enum
 	
-	ENUM SPADAPTATIONRELEVANCE
-		' // Documentation string: Afx_ISpRecoContext2 Interface
-		' // Number of Constants: 4
+	Enum SPADAPTATIONRELEVANCE
+		' Documentation string: ISpRecoContext2 Interface
+		' Number of Constants: 4
 		SPAR_Unknown = 0   ' (&h00000000)
 		SPAR_Low = 1   ' (&h00000001)
 		SPAR_Medium = 2   ' (&h00000002)
 		SPAR_High = 3   ' (&h00000003)
-	END ENUM
+	End Enum
 	
-	ENUM SPAUDIOOPTIONS
-		' // Documentation string: Afx_ISpGrammarBuilder Interface
-		' // Number of Constants: 2
+	Enum SPAUDIOOPTIONS
+		' Documentation string: ISpGrammarBuilder Interface
+		' Number of Constants: 2
 		SPAO_NONE = 0   ' (&h00000000)
 		SPAO_RETAIN_AUDIO = 1   ' (&h00000001)
-	END ENUM
+	End Enum
 	
-	ENUM SPBOOKMARKOPTIONS
-		' // Documentation string: Afx_ISpPhraseAlt Interface
-		' // Number of Constants: 4
+	Enum SPBOOKMARKOPTIONS
+		' Documentation string: ISpPhraseAlt Interface
+		' Number of Constants: 4
 		SPBO_NONE = 0   ' (&h00000000)
 		SPBO_PAUSE = 1   ' (&h00000001)
 		SPBO_AHEAD = 2   ' (&h00000002)
 		SPBO_TIME_UNITS = 4   ' (&h00000004)
-	END ENUM
+	End Enum
 	
-	ENUM SPCATEGORYType
-		' // Documentation string: Afx_ISpRecognizer3 Interface
-		' // Number of Constants: 5
+	Enum SPCATEGORYType
+		' Documentation string: ISpRecognizer3 Interface
+		' Number of Constants: 5
 		SPCT_COMMAND = 0   ' (&h00000000)
 		SPCT_DICTATION = 1   ' (&h00000001)
 		SPCT_SLEEP = 2   ' (&h00000002)
@@ -967,15 +946,15 @@ Namespace Speech
 	End Enum
 	
 	Enum SPCONTEXTSTATE
-		' // Documentation string: Afx_ISpPhraseAlt Interface
-		' // Number of Constants: 2
+		' Documentation string: ISpPhraseAlt Interface
+		' Number of Constants: 2
 		SPCS_DISABLED = 0   ' (&h00000000)
 		SPCS_ENABLED = 1   ' (&h00000001)
 	End Enum
 	
 	Enum SPDATAKEYLOCATION
-		' // Documentation string: Afx_ISpDataKey Interface
-		' // Number of Constants: 4
+		' Documentation string: ISpDataKey Interface
+		' Number of Constants: 4
 		SPDKL_DefaultLocation = 0   ' (&h00000000)
 		SPDKL_CurrentUser = 1   ' (&h00000001)
 		SPDKL_LocalMachine = 2   ' (&h00000002)
@@ -983,8 +962,8 @@ Namespace Speech
 	End Enum
 	
 	Enum SpeechAudioFormatType
-		' // Documentation string: Afx_ISpeechAudioFormat Interface
-		' // Number of Constants: 70
+		' Documentation string: ISpeechAudioFormat Interface
+		' Number of Constants: 70
 		SAFTDefault = -1   ' (&hFFFFFFFF)
 		SAFTNoAssignedFormat = 0   ' (&h00000000)
 		SAFTText = 1   ' (&h00000001)
@@ -1058,33 +1037,33 @@ Namespace Speech
 	End Enum
 	
 	Enum SpeechAudioState
-		' // Documentation string: Afx_ISpeechAudioStatus Interface
-		' // Number of Constants: 4
+		' Documentation string: ISpeechAudioStatus Interface
+		' Number of Constants: 4
 		SASClosed = 0   ' (&h00000000)
 		SASStop = 1   ' (&h00000001)
 		SASPause = 2   ' (&h00000002)
 		SASRun = 3   ' (&h00000003)
-	END ENUM
+	End Enum
 	
-	ENUM SpeechBookmarkOptions
-		' // Documentation string: Afx_ISpeechPhraseAlternate Interface
-		' // Number of Constants: 2
+	Enum SpeechBookmarkOptions
+		' Documentation string: ISpeechPhraseAlternate Interface
+		' Number of Constants: 2
 		SBONone = 0   ' (&h00000000)
 		SBOPause = 1   ' (&h00000001)
-	END ENUM
+	End Enum
 	
-	ENUM SpeechDataKeyLocation
-		' // Documentation string: Afx_ISpeechObjectTokenCategory Interface
-		' // Number of Constants: 4
+	Enum SpeechDataKeyLocation
+		' Documentation string: ISpeechObjectTokenCategory Interface
+		' Number of Constants: 4
 		SDKLDefaultLocation = 0   ' (&h00000000)
 		SDKLCurrentUser = 1   ' (&h00000001)
 		SDKLLocalMachine = 2   ' (&h00000002)
 		SDKLCurrentConfig = 5   ' (&h00000005)
-	END ENUM
+	End Enum
 	
-	ENUM SpeechDiscardType
-		' // Documentation string: Afx_ISpeechPhraseAlternate Interface
-		' // Number of Constants: 9
+	Enum SpeechDiscardType
+		' Documentation string: ISpeechPhraseAlternate Interface
+		' Number of Constants: 9
 		SDTProperty = 1   ' (&h00000001)
 		SDTReplacement = 2   ' (&h00000002)
 		SDTRule = 4   ' (&h00000004)
@@ -1094,74 +1073,74 @@ Namespace Speech
 		SDTAudio = 64   ' (&h00000040)
 		SDTAlternates = 128   ' (&h00000080)
 		SDTAll = 255   ' (&h000000FF)
-	END ENUM
+	End Enum
 	
-	ENUM SpeechDisplayAttributes
-		' // Documentation string: Afx_ISpeechPhraseElement Interface
-		' // Number of Constants: 4
+	Enum SpeechDisplayAttributes
+		' Documentation string: ISpeechPhraseElement Interface
+		' Number of Constants: 4
 		SDA_No_Trailing_Space = 0   ' (&h00000000)
 		SDA_One_Trailing_Space = 2   ' (&h00000002)
 		SDA_Two_Trailing_Spaces = 4   ' (&h00000004)
 		SDA_Consume_Leading_Spaces = 8   ' (&h00000008)
-	END ENUM
+	End Enum
 	
-	ENUM SpeechEmulationCompareFlags
-		' // Documentation string: Afx_ISpeechLexiconPronunciation Interface
-		' // Number of Constants: 6
+	Enum SpeechEmulationCompareFlags
+		' Documentation string: ISpeechLexiconPronunciation Interface
+		' Number of Constants: 6
 		SECFIgnoreCase = 1   ' (&h00000001)
 		SECFIgnoreKanaType = 65536   ' (&h00010000)
 		SECFIgnoreWidth = 131072   ' (&h00020000)
 		SECFNoSpecialChars = 536870912   ' (&h20000000)
 		SECFEmulateResult = 1073741824   ' (&h40000000)
 		SECFDefault = 196609   ' (&h00030001) ((SECFIgnoreCase OR SECFIgnoreKanaType) OR SECFIgnoreWidth)
-	END ENUM
+	End Enum
 	
-	ENUM SpeechEngineConfidence
-		' // Documentation string: Afx_ISpeechPhraseRules Interface
-		' // Number of Constants: 3
+	Enum SpeechEngineConfidence
+		' Documentation string: ISpeechPhraseRules Interface
+		' Number of Constants: 3
 		SECLowConfidence = -1   ' (&hFFFFFFFF)
 		SECNormalConfidence = 0   ' (&h00000000)
 		SECHighConfidence = 1   ' (&h00000001)
-	END ENUM
+	End Enum
 	
-	ENUM SpeechFormatType
-		' // Documentation string: Afx_ISpeechPhraseAlternate Interface
-		' // Number of Constants: 2
+	Enum SpeechFormatType
+		' Documentation string: ISpeechPhraseAlternate Interface
+		' Number of Constants: 2
 		SFTInput = 0   ' (&h00000000) SPWF_INPUT
 		SFTSREngine = 1   ' (&h00000001) SPWF_SRENGINE
-	END ENUM
+	End Enum
 	
-	ENUM SpeechGrammarRuleStateTransitionType
-		' // Documentation string: Afx_ISpeechGrammarRuleStateTransition Interface
-		' // Number of Constants: 6
+	Enum SpeechGrammarRuleStateTransitionType
+		' Documentation string: ISpeechGrammarRuleStateTransition Interface
+		' Number of Constants: 6
 		SGRSTTEpsilon = 0   ' (&h00000000)
 		SGRSTTWord = 1   ' (&h00000001)
 		SGRSTTRule = 2   ' (&h00000002)
 		SGRSTTDictation = 3   ' (&h00000003)
 		SGRSTTWildcard = 4   ' (&h00000004)
 		SGRSTTTextBuffer = 5   ' (&h00000005)
-	END ENUM
+	End Enum
 	
-	ENUM SpeechGrammarState
-		' // Documentation string: Afx_ISpeechRecoGrammar Interface
-		' // Number of Constants: 3
+	Enum SpeechGrammarState
+		' Documentation string: ISpeechRecoGrammar Interface
+		' Number of Constants: 3
 		SGSEnabled = 1   ' (&h00000001) SPGS_ENABLED
 		SGSDisabled = 0   ' (&h00000000) SPGS_DISABLED
 		SGSExclusive = 3   ' (&h00000003) SPGS_EXCLUSIVE
-	END ENUM
+	End Enum
 	
-	ENUM SpeechGrammarWordType
-		' // Documentation string: Afx_ISpeechGrammarRuleStateTransition Interface
-		' // Number of Constants: 4
+	Enum SpeechGrammarWordType
+		' Documentation string: ISpeechGrammarRuleStateTransition Interface
+		' Number of Constants: 4
 		SGDisplay = 0   ' (&h00000000) SPWT_DISPLAY
 		SGLexical = 1   ' (&h00000001) SPWT_LEXICAL
 		SGPronounciation = 2   ' (&h00000002) SPWT_PRONUNCIATION
 		SGLexicalNoSpecialChars = 3   ' (&h00000003) SPWT_LEXICAL_NO_SPECIAL_CHARS
-	END ENUM
+	End Enum
 	
-	ENUM SpeechInterference
-		' // Documentation string: Afx_ISpeechRecoContext Interface
-		' // Number of Constants: 7
+	Enum SpeechInterference
+		' Documentation string: ISpeechRecoContext Interface
+		' Number of Constants: 7
 		SINone = 0   ' (&h00000000) SPINTERFERENCE_NONE
 		SINoise = 1   ' (&h00000001) SPINTERFERENCE_NOISE
 		SINoSignal = 2   ' (&h00000002) SPINTERFERENCE_NOSIGNAL
@@ -1169,25 +1148,25 @@ Namespace Speech
 		SITooQuiet = 4   ' (&h00000004) SPINTERFERENCE_TOOQUIET
 		SITooFast = 5   ' (&h00000005) SPINTERFERENCE_TOOFAST
 		SITooSlow = 6   ' (&h00000006) SPINTERFERENCE_TOOSLOW
-	END ENUM
+	End Enum
 	
-	ENUM SpeechLexiconType
-		' // Documentation string: Afx_ISpeechLexicon Interface
-		' // Number of Constants: 2
+	Enum SpeechLexiconType
+		' Documentation string: ISpeechLexicon Interface
+		' Number of Constants: 2
 		SLTUser = 1   ' (&h00000001) eLEXType_USER
 		SLTApp = 2   ' (&h00000002) eLEXType_APP
 	End Enum
 	
 	Enum SpeechLoadOption
-		' // Documentation string: Afx_ISpeechGrammarRuleStateTransition Interface
-		' // Number of Constants: 2
+		' Documentation string: ISpeechGrammarRuleStateTransition Interface
+		' Number of Constants: 2
 		SLOStatic = 0   ' (&h00000000) SPLO_STATIC
 		SLODynamic = 1   ' (&h00000001) SPLO_DYNAMIC
 	End Enum
 	
 	Enum SpeechPartOfSpeech
-		' // Documentation string: Afx_ISpeechLexiconPronunciation Interface
-		' // Number of Constants: 9
+		' Documentation string: ISpeechLexiconPronunciation Interface
+		' Number of Constants: 9
 		SPSNotOverriden = -1   ' (&hFFFFFFFF) SPPS_NotOverriden
 		SPSUnknown = 0   ' (&h00000000) SPPS_Unknown
 		SPSNoun = 4096   ' (&h00001000) SPPS_Noun
@@ -1200,15 +1179,15 @@ Namespace Speech
 	End Enum
 	
 	Enum SpeechRecoContextState
-		' // Documentation string: Afx_ISpeechRecoContext Interface
-		' // Number of Constants: 2
+		' Documentation string: ISpeechRecoContext Interface
+		' Number of Constants: 2
 		SRCS_Disabled = 0   ' (&h00000000) SPCS_DISABLED
 		SRCS_Enabled = 1   ' (&h00000001) SPCS_ENABLED
 	End Enum
 	
 	Enum SpeechRecoEvents
-		' // Documentation string: Afx_ISpeechRecoContext Interface
-		' // Number of Constants: 19
+		' Documentation string: ISpeechRecoContext Interface
+		' Number of Constants: 19
 		SREStreamEnd = 1   ' (&h00000001)
 		SRESoundStart = 2   ' (&h00000002)
 		SRESoundEnd = 4   ' (&h00000004)
@@ -1231,8 +1210,8 @@ Namespace Speech
 	End Enum
 	
 	Enum SpeechRecognitionType
-		' // Documentation string: Afx_ISpeechPhraseAlternate Interface
-		' // Number of Constants: 6
+		' Documentation string: ISpeechPhraseAlternate Interface
+		' Number of Constants: 6
 		SRTStandard = 0   ' (&h00000000)
 		SRTAutopause = 1   ' (&h00000001)
 		SRTEmulated = 2   ' (&h00000002)
@@ -1242,8 +1221,8 @@ Namespace Speech
 	End Enum
 	
 	Enum SpeechRecognizerState
-		' // Documentation string: Afx_ISpeechRecognizer Interface
-		' // Number of Constants: 4
+		' Documentation string: ISpeechRecognizer Interface
+		' Number of Constants: 4
 		SRSInactive = 0   ' (&h00000000)
 		SRSActive = 1   ' (&h00000001)
 		SRSActiveAlways = 2   ' (&h00000002)
@@ -1251,15 +1230,15 @@ Namespace Speech
 	End Enum
 	
 	Enum SpeechRetainedAudioOptions
-		' // Documentation string: Afx_ISpeechRecoContext Interface
-		' // Number of Constants: 2
+		' Documentation string: ISpeechRecoContext Interface
+		' Number of Constants: 2
 		SRAONone = 0   ' (&h00000000)
 		SRAORetainAudio = 1   ' (&h00000001)
-	END ENUM
+	End Enum
 	
-	ENUM SpeechRuleAttributes
-		' // Documentation string: Afx_ISpeechGrammarRule Interface
-		' // Number of Constants: 7
+	Enum SpeechRuleAttributes
+		' Documentation string: ISpeechGrammarRule Interface
+		' Number of Constants: 7
 		SRATopLevel = 1   ' (&h00000001) SPRAF_TopLevel
 		SRADefaultToActive = 2   ' (&h00000002) SPRAF_Active
 		SRAExport = 4   ' (&h00000004) SPRAF_Export
@@ -1267,79 +1246,79 @@ Namespace Speech
 		SRAInterpreter = 16   ' (&h00000010) SPRAF_Interpreter
 		SRADynamic = 32   ' (&h00000020) SPRAF_Dynamic
 		SRARoot = 64   ' (&h00000040) SPRAF_Root
-	END ENUM
+	End Enum
 	
-	ENUM SpeechRuleState
-		' // Documentation string: Afx_ISpeechGrammarRuleStateTransition Interface
-		' // Number of Constants: 4
+	Enum SpeechRuleState
+		' Documentation string: ISpeechGrammarRuleStateTransition Interface
+		' Number of Constants: 4
 		SGDSInactive = 0   ' (&h00000000) SPRS_INACTIVE
 		SGDSActive = 1   ' (&h00000001) SPRS_ACTIVE
 		SGDSActiveWithAutoPause = 3   ' (&h00000003) SPRS_ACTIVE_WITH_AUTO_PAUSE
 		SGDSActiveUserDelimited = 4   ' (&h00000004) SPRS_ACTIVE_USER_DELIMITED
-	END ENUM
+	End Enum
 	
-	ENUM SpeechRunState
-		' // Documentation string: Afx_ISpeechVoiceStatus Interface
-		' // Number of Constants: 2
+	Enum SpeechRunState
+		' Documentation string: ISpeechVoiceStatus Interface
+		' Number of Constants: 2
 		SRSEDone = 1   ' (&h00000001) SPRS_DONE
 		SRSEIsSpeaking = 2   ' (&h00000002) SPRS_IS_SPEAKING
-	END ENUM
+	End Enum
 	
-	ENUM SpeechSpecialTransitionType
-		' // Documentation string: Afx_ISpeechGrammarRuleStateTransition Interface
-		' // Number of Constants: 3
+	Enum SpeechSpecialTransitionType
+		' Documentation string: ISpeechGrammarRuleStateTransition Interface
+		' Number of Constants: 3
 		SSTTWildcard = 1   ' (&h00000001)
 		SSTTDictation = 2   ' (&h00000002)
 		SSTTTextBuffer = 3   ' (&h00000003)
-	END ENUM
+	End Enum
 	
-	ENUM SpeechStreamFileMode
-		' // Documentation string: Afx_ISpeechFileStream Interface
-		' // Number of Constants: 4
+	Enum SpeechStreamFileMode
+		' Documentation string: ISpeechFileStream Interface
+		' Number of Constants: 4
 		SSFMOpenForRead = 0   ' (&h00000000)
 		SSFMOpenReadWrite = 1   ' (&h00000001)
 		SSFMCreate = 2   ' (&h00000002)
 		SSFMCreateForWrite = 3   ' (&h00000003)
-	END ENUM
+	End Enum
 	
-	ENUM SpeechStreamSeekPositionType
-		' // Documentation string: Afx_ISpeechBaseStream Interface
-		' // Number of Constants: 3
+	Enum SpeechStreamSeekPositionType
+		' Documentation string: ISpeechBaseStream Interface
+		' Number of Constants: 3
 		SSSPtrelativeToStart = 0   ' (&h00000000) STREAM_SEEK_SET
 		SSSPtrelativeToCurrentPosition = 1   ' (&h00000001) STREAM_SEEK_CUR
 		SSSPtrelativeToEnd = 2   ' (&h00000002) STREAM_SEEK_END
-	END ENUM
+	End Enum
 	
-	ENUM SpeechTokenContext
-		' // Documentation string: Afx_ISpeechObjectTokens Interface
-		' // Number of Constants: 5
+	Enum SpeechTokenContext
+		' Documentation string: ISpeechObjectTokens Interface
+		' Number of Constants: 5
 		STCInprocServer = 1   ' (&h00000001)
 		STCInprocHandler = 2   ' (&h00000002)
 		STCLocalServer = 4   ' (&h00000004)
 		STCRemoteServer = 16   ' (&h00000010)
 		STCAll = 23   ' (&h00000017)
-	END ENUM
+	End Enum
 	
-	ENUM SpeechTokenShellFolder
-		' // Documentation string: Afx_ISpeechObjectTokens Interface
-		' // Number of Constants: 4
+	Enum SpeechTokenShellFolder
+		' Documentation string: ISpeechObjectTokens Interface
+		' Number of Constants: 4
 		STSF_AppData = 26   ' (&h0000001A)
 		STSF_LocalAppData = 28   ' (&h0000001C)
 		STSF_CommonAppData = 35   ' (&h00000023)
 		STSF_FlagCreate = 32768   ' (&h00008000)
-	END ENUM
+	End Enum
 	
-	ENUM SpeechVisemeFeature
-		' // Documentation string: Afx_ISpeechVoiceStatus Interface
-		' // Number of Constants: 3
+	Enum SpeechVisemeFeature
+		' Documentation string: ISpeechVoiceStatus Interface
+		' Number of Constants: 3
 		SVF_None = 0   ' (&h00000000)
 		SVF_Stressed = 1   ' (&h00000001) SPVFEATURE_STRESSED
 		SVF_Emphasis = 2   ' (&h00000002) SPVFEATURE_EMPHASIS
-	END ENUM
+	End Enum
 	
-	ENUM SpeechVisemeType
-		' // Documentation string: Afx_ISpeechVoiceStatus Interface
-		' // Number of Constants: 22
+	Enum SpeechVisemeType
+		' Documentation string: ISpeechVoiceStatus Interface
+		' Number of Constants: 22
 		SVP_0 = 0   ' (&h00000000)
 		SVP_1 = 1   ' (&h00000001)
 		SVP_2 = 2   ' (&h00000002)
@@ -1365,8 +1344,8 @@ Namespace Speech
 	End Enum
 	
 	Enum SpeechVoiceEvents
-		' // Documentation string: Afx_ISpeechVoiceStatus Interface
-		' // Number of Constants: 11
+		' Documentation string: ISpeechVoiceStatus Interface
+		' Number of Constants: 11
 		SVEStartInputStream = 2   ' (&h00000002)
 		SVEEndInputStream = 4   ' (&h00000004)
 		SVEVoiceChange = 8   ' (&h00000008)
@@ -1381,16 +1360,16 @@ Namespace Speech
 	End Enum
 	
 	Enum SpeechVoicePriority
-		' // Documentation string: Afx_ISpeechVoiceStatus Interface
-		' // Number of Constants: 3
+		' Documentation string: ISpeechVoiceStatus Interface
+		' Number of Constants: 3
 		SVPNormal = 0   ' (&h00000000) SPVPRI_NORMAL
 		SVPAlert = 1   ' (&h00000001) SPVPRI_ALERT
 		SVPOver = 2   ' (&h00000002) SPVPRI_OVER
 	End Enum
 	
 	Enum SpeechVoiceSpeakFlags
-		' // Documentation string: Afx_ISpeechVoiceStatus Interface
-		' // Number of Constants: 15
+		' Documentation string: ISpeechVoiceStatus Interface
+		' Number of Constants: 15
 		SVSFDefault = 0   ' (&h00000000) SPF_DEFAULT
 		SVSFlagsAsync = 1   ' (&h00000001) SPF_ASYNC
 		SVSFPurgeBeforeSpeak = 2   ' (&h00000002) SPF_PURGEBEFORESPEAK
@@ -1406,26 +1385,26 @@ Namespace Speech
 		SVSFParseMask = 384   ' (&h00000180)
 		SVSFVoiceMask = 511   ' (&h000001FF) SPF_VOICE_MASK
 		SVSFUnusedFlags = -512   ' (&hFFFFFE00) SPF_UNUSED_FLAGS
-	END ENUM
+	End Enum
 	
-	ENUM SpeechWordPronounceable
-		' // Documentation string: Afx_ISpeechTextSelectionInformation Interface
-		' // Number of Constants: 3
+	Enum SpeechWordPronounceable
+		' Documentation string: ISpeechTextSelectionInformation Interface
+		' Number of Constants: 3
 		SWPUnknownWordUnpronounceable = 0   ' (&h00000000)
 		SWPUnknownWordPronounceable = 1   ' (&h00000001)
 		SWPKnownWordPronounceable = 2   ' (&h00000002)
-	END ENUM
+	End Enum
 	
-	ENUM SpeechWordType
-		' // Documentation string: Afx_ISpeechLexiconWord Interface
-		' // Number of Constants: 2
+	Enum SpeechWordType
+		' Documentation string: ISpeechLexiconWord Interface
+		' Number of Constants: 2
 		SWTAdded = 1   ' (&h00000001) eWORDType_ADDED
 		SWTDeleted = 2   ' (&h00000002) eWORDType_DELETED
-	END ENUM
+	End Enum
 	
-	ENUM SPEVENTENUM
-		' // Documentation string: Afx_ISpVoice Interface
-		' // Number of Constants: 40
+	Enum SPEVENTENUM
+		' Documentation string: ISpVoice Interface
+		' Number of Constants: 40
 		SPEI_UNDEFINED = 0   ' (&h00000000)
 		SPEI_START_INPUT_STREAM = 1   ' (&h00000001)
 		SPEI_END_INPUT_STREAM = 2   ' (&h00000002)
@@ -1469,8 +1448,8 @@ Namespace Speech
 	End Enum
 	
 	Enum SPFILEMODE
-		' // Documentation string: Afx_ISpStream Interface
-		' // Number of Constants: 5
+		' Documentation string: ISpStream Interface
+		' Number of Constants: 5
 		SPFM_OPEN_READONLY = 0   ' (&h00000000)
 		SPFM_OPEN_READWRITE = 1   ' (&h00000001)
 		SPFM_CREATE = 2   ' (&h00000002)
@@ -1479,25 +1458,25 @@ Namespace Speech
 	End Enum
 	
 	Enum SPGRAMMARSTATE
-		' // Documentation string: Afx_ISpGrammarBuilder Interface
-		' // Number of Constants: 3
+		' Documentation string: ISpGrammarBuilder Interface
+		' Number of Constants: 3
 		SPGS_DISABLED = 0   ' (&h00000000)
 		SPGS_ENABLED = 1   ' (&h00000001)
 		SPGS_EXCLUSIVE = 3   ' (&h00000003)
 	End Enum
 	
 	Enum SPGRAMMARWORDType
-		' // Documentation string: Afx_ISpGrammarBuilder Interface
-		' // Number of Constants: 4
+		' Documentation string: ISpGrammarBuilder Interface
+		' Number of Constants: 4
 		SPWT_DISPLAY = 0   ' (&h00000000)
 		SPWT_LEXICAL = 1   ' (&h00000001)
 		SPWT_PRONUNCIATION = 2   ' (&h00000002)
 		SPWT_LEXICAL_NO_SPECIAL_CHARS = 3   ' (&h00000003)
 	End Enum
 	
-	ENUM SPINTERFERENCE
-		' // Documentation string: Afx_ISpGrammarBuilder Interface
-		' // Number of Constants: 7
+	Enum SPINTERFERENCE
+		' Documentation string: ISpGrammarBuilder Interface
+		' Number of Constants: 7
 		SPINTERFERENCE_NONE = 0   ' (&h00000000)
 		SPINTERFERENCE_NOISE = 1   ' (&h00000001)
 		SPINTERFERENCE_NOSIGNAL = 2   ' (&h00000002)
@@ -1505,11 +1484,11 @@ Namespace Speech
 		SPINTERFERENCE_TOOQUIET = 4   ' (&h00000004)
 		SPINTERFERENCE_TOOFAST = 5   ' (&h00000005)
 		SPINTERFERENCE_TOOSLOW = 6   ' (&h00000006)
-	END ENUM
+	End Enum
 	
-	ENUM SPLEXICONType
-		' // Documentation string: Afx_ISpLexicon Interface
-		' // Number of Constants: 32
+	Enum SPLEXICONType
+		' Documentation string: ISpLexicon Interface
+		' Number of Constants: 32
 		eLEXType_USER = 1   ' (&h00000001)
 		eLEXType_APP = 2   ' (&h00000002)
 		eLEXType_VENDORLEXICON = 4   ' (&h00000004)
@@ -1545,15 +1524,15 @@ Namespace Speech
 	End Enum
 	
 	Enum SPLOADOPTIONS
-		' // Documentation string: Afx_ISpGrammarBuilder Interface
-		' // Number of Constants: 2
+		' Documentation string: ISpGrammarBuilder Interface
+		' Number of Constants: 2
 		SPLO_STATIC = 0   ' (&h00000000)
 		SPLO_DYNAMIC = 1   ' (&h00000001)
 	End Enum
 	
 	Enum SPPARTOFSPEECH
-		' // Documentation string: Afx_ISpLexicon Interface
-		' // Number of Constants: 10
+		' Documentation string: ISpLexicon Interface
+		' Number of Constants: 10
 		SPPS_NotOverriden = -1   ' (&hFFFFFFFF)
 		SPPS_Unknown = 0   ' (&h00000000)
 		SPPS_Noun = 4096   ' (&h00001000)
@@ -1567,8 +1546,8 @@ Namespace Speech
 	End Enum
 	
 	Enum SPRECOSTATE
-		' // Documentation string: Afx_ISpProperties Interface
-		' // Number of Constants: 5
+		' Documentation string: ISpProperties Interface
+		' Number of Constants: 5
 		SPRST_INACTIVE = 0   ' (&h00000000)
 		SPRST_ACTIVE = 1   ' (&h00000001)
 		SPRST_ACTIVE_ALWAYS = 2   ' (&h00000002)
@@ -1577,8 +1556,8 @@ Namespace Speech
 	End Enum
 	
 	Enum SPRULESTATE
-		' // Documentation string: Afx_ISpGrammarBuilder Interface
-		' // Number of Constants: 4
+		' Documentation string: ISpGrammarBuilder Interface
+		' Number of Constants: 4
 		SPRS_INACTIVE = 0   ' (&h00000000)
 		SPRS_ACTIVE = 1   ' (&h00000001)
 		SPRS_ACTIVE_WITH_AUTO_PAUSE = 3   ' (&h00000003)
@@ -1586,8 +1565,8 @@ Namespace Speech
 	End Enum
 	
 	Enum SPSEMANTICFORMAT
-		' // Documentation string: Afx_ISpPhrase Interface
-		' // Number of Constants: 5
+		' Documentation string: ISpPhrase Interface
+		' Number of Constants: 5
 		SPSMF_SAPI_PROPERTIES = 0   ' (&h00000000)
 		SPSMF_SRGS_SEMANTICINTERPRETATION_MS = 1   ' (&h00000001)
 		SPSMF_SRGS_SAPIPROPERTIES = 2   ' (&h00000002)
@@ -1596,8 +1575,8 @@ Namespace Speech
 	End Enum
 	
 	Enum SPSHORTCUTType
-		' // Documentation string: Afx_ISpShortcut Interface
-		' // Number of Constants: 8
+		' Documentation string: ISpShortcut Interface
+		' Number of Constants: 8
 		SPSHT_NotOverriden = -1   ' (&hFFFFFFFF)
 		SPSHT_Unknown = 0   ' (&h00000000)
 		SPSHT_EMAIL = 4096   ' (&h00001000)
@@ -1609,8 +1588,8 @@ Namespace Speech
 	End Enum
 	
 	Enum SPVISEMES
-		' // Documentation string: Afx_ISpVoice Interface
-		' // Number of Constants: 22
+		' Documentation string: ISpVoice Interface
+		' Number of Constants: 22
 		SP_VISEME_0 = 0   ' (&h00000000)
 		SP_VISEME_1 = 1   ' (&h00000001)
 		SP_VISEME_2 = 2   ' (&h00000002)
@@ -1633,47 +1612,47 @@ Namespace Speech
 		SP_VISEME_19 = 19   ' (&h00000013)
 		SP_VISEME_20 = 20   ' (&h00000014)
 		SP_VISEME_21 = 21   ' (&h00000015)
-	END ENUM
+	End Enum
 	
 	Enum SPVPRIORITY
-		' // Documentation string: Afx_ISpVoice Interface
-		' // Number of Constants: 3
+		' Documentation string: ISpVoice Interface
+		' Number of Constants: 3
 		SPVPRI_NORMAL = 0   ' (&h00000000)
 		SPVPRI_ALERT = 1   ' (&h00000001)
 		SPVPRI_OVER = 2   ' (&h00000002)
 	End Enum
 	
 	Enum SPWAVEFORMATType
-		' // Documentation string: Afx_ISpProperties Interface
-		' // Number of Constants: 2
+		' Documentation string: ISpProperties Interface
+		' Number of Constants: 2
 		SPWF_INPUT = 0   ' (&h00000000)
 		SPWF_SRENGINE = 1   ' (&h00000001)
 	End Enum
 	
 	Enum SPWORDPRONOUNCEABLE
-		' // Documentation string: Afx_ISpGrammarBuilder Interface
-		' // Number of Constants: 3
+		' Documentation string: ISpGrammarBuilder Interface
+		' Number of Constants: 3
 		SPWP_UNKNOWN_WORD_UNPRONOUNCEABLE = 0   ' (&h00000000)
 		SPWP_UNKNOWN_WORD_PRONOUNCEABLE = 1   ' (&h00000001)
 		SPWP_KNOWN_WORD_PRONOUNCEABLE = 2   ' (&h00000002)
 	End Enum
 	
 	Enum SPWORDType
-		' // Documentation string: Afx_ISpLexicon Interface
-		' // Number of Constants: 2
+		' Documentation string: ISpLexicon Interface
+		' Number of Constants: 2
 		eWORDType_ADDED = 1   ' (&h00000001)
 		eWORDType_DELETED = 2   ' (&h00000002)
 	End Enum
 	
 	Enum SPXMLRESULTOPTIONS
-		' // Documentation string: Afx_ISpeechXMLRecoResult Interface
-		' // Number of Constants: 2
+		' Documentation string: ISpeechXMLRecoResult Interface
+		' Number of Constants: 2
 		SPXRO_SML = 0   ' (&h00000000)
 		SPXRO_Alternates_SML = 1   ' (&h00000001)
 	End Enum
 	
 	' enum SPSTREAMFORMAT
-	Type SPSTREAMFORMAT AS Long
+	Type SPSTREAMFORMAT As Long
 	Const SPSF_Default                 = -1
 	Const SPSF_NoAssignedFormat        = 0
 	Const SPSF_Text                    = SPSF_NoAssignedFormat        + 1
@@ -1799,7 +1778,7 @@ Namespace Speech
 	'SUB SPNOTIFYCALLBACK (ByVal wParam AS DWORD, ByVal lParam AS Long)
 	
 	' enum SPEVENTLPARAMType
-	Type SPEVENTLPARAMType AS Long
+	Type SPEVENTLPARAMType As Long
 	Const SPET_LPARAM_IS_UNDEFINED = 0
 	Const SPET_LPARAM_IS_TOKEN     = SPET_LPARAM_IS_UNDEFINED + 1
 	Const SPET_LPARAM_IS_OBJECT    = SPET_LPARAM_IS_TOKEN     + 1
@@ -1818,50 +1797,50 @@ Namespace Speech
 	Const SPFEI_ALL_EVENTS = &HEFFFFFFFFFFFFFFFull
 	#define SPFEI(SPEI_ord) ((1ull Shl SPEI_ord) Or SPFEI_FLAGCHECK)
 	
-	' // Size = 24 bytes
+	' Size = 24 bytes
 	Type SPSERIALIZEDEVENT   ' Must be 8 byte aligned
 		eEventId             As WORD    ' SPEVENTENUM
 		elParamType          As WORD    ' SPEVENTLPARAMType
 		ulStreamNum          As ULong
-		ullAudioStreamOffset As ULongLong
+		ullAudioStreamOffset As ULONGLONG
 		SerializedwParam     As ULong
 		SerializedlParam     As Long
 	End Type
 	
-	' // Size = 32 bytes
+	' Size = 32 bytes
 	Type SPSERIALIZEDEVENT64   ' Must be 8 byte aligned
 		eEventId             As WORD    ' SPEVENTENUM
 		elParamType          As WORD    ' SPEVENTLPARAMType
 		ulStreamNum          As ULong   ' ULong
-		ullAudioStreamOffset As ULongLong
-		SerializedwParam     As ULongLong
-		SerializedlParam     As LongLong
+		ullAudioStreamOffset As ULONGLONG
+		SerializedwParam     As ULONGLONG
+		SerializedlParam     As LONGLONG
 	End Type
 	
-	' // Size = 32 bytes
+	' Size = 32 bytes
 	Type SPEVENTEX   ' Must be 8 byte aligned
 		eEventId             As WORD    ' SPEVENTENUM
 		elParamType          As WORD    ' SPEVENTLPARAMType
 		ulStreamNum          As ULong
-		ullAudioStreamOffset As ULongLong
+		ullAudioStreamOffset As ULONGLONG
 		wParam               As WPARAM
 		lParam               As LPARAM
-		ullAudioTimeOffset   AS ULongLong
-	END Type
+		ullAudioTimeOffset   As ULONGLONG
+	End Type
 	
 	' enum SPENDSRSTREAMFLAGS
-	Type SPENDSRSTREAMFLAGS AS Long
+	Type SPENDSRSTREAMFLAGS As Long
 	Const SPESF_NONE            = 0
 	Const SPESF_STREAM_RELEASED = 1   ' 1 << 0
 	Const SPESF_EMULATED        =  2   ' 1 << 1
 	
 	' enum SPVFEATURE
-	Type SPVFEATURE AS Long
+	Type SPVFEATURE As Long
 	Const SPVFEATURE_STRESSED   = 1   ' 1L << 0
 	Const SPVFEATURE_EMPHASIS   = 2   ' 1L << 1
 	
 	' enum SPDISPLYATTRIBUTES
-	Type SPDISPLYATTRIBUTES AS Long
+	Type SPDISPLYATTRIBUTES As Long
 	Const SPAF_ONE_TRAILING_SPACE     = &h2
 	Const SPAF_TWO_TRAILING_SPACES    = &h4
 	Const SPAF_CONSUME_LEADING_SPACES = &h8
@@ -1871,12 +1850,12 @@ Namespace Speech
 	'Typedef WCHAR SPPHONEID;
 	'Typedef LPWStr PSPPHONEID;
 	'Typedef LPCWStr PCSPPHONEID;
-	Type SPPHONEID AS WCHAR
-	Type PSPPHONEID AS LPWStr
-	Type PCSPPHONEID AS LPCWStr
+	Type SPPHONEID As WCHAR
+	Type PSPPHONEID As LPWSTR
+	Type PCSPPHONEID As LPCWSTR
 	
 	' enum SPPHRASEPROPERTYUNIONType
-	Type SPPHRASEPROPERTYUNIONType AS Long
+	Type SPPHRASEPROPERTYUNIONType As Long
 	Const SPPPUT_UNUSED      = 0
 	Const SPPPUT_ARRAY_INDEX = SPPPUT_UNUSED + 1
 	
@@ -2046,12 +2025,12 @@ Namespace Speech
 		ppszzNormalizedList As WCHAR Ptr Ptr  ' WCHAR **
 	End Type
 	
-	' // Modules
+	' Modules
 	
-	' // Module: SpeechConstants
-	' // IID: {F3E092B2-6BDC-410F-BCB2-4C5ED4424180}
-	' // Documentation string: Afx_ISpeechLexiconPronunciation Interface
-	' // Number of Constants: 6
+	' Module: SpeechConstants
+	' IID: {F3E092B2-6BDC-410F-BCB2-4C5ED4424180}
+	' Documentation string: ISpeechLexiconPronunciation Interface
+	' Number of Constants: 6
 	Const Speech_Default_Weight = 1   ' DEFAULT_WEIGHT
 	Const Speech_Max_Word_Length = 128   ' (&h00000080) SP_MAX_WORD_LENGTH
 	Const Speech_Max_Pron_Length = 384   ' (&h00000180) SP_MAX_PRON_LENGTH
@@ -2059,10 +2038,10 @@ Namespace Speech
 	Const Speech_StreamPos_RealTime = -1   ' (&hFFFFFFFF) SP_STREAMPOS_REALTIME
 	Const SpeechAllElements = -1   ' (&hFFFFFFFF) SPPR_ALL_ELEMENTS
 	
-	' // Module: SpeechStringConstants
-	' // IID: {E58442E4-0C80-402C-9559-867337A39765}
-	' // Documentation string: Afx_ISpeechLexiconPronunciation Interface
-	' // Number of Constants: 36
+	' Module: SpeechStringConstants
+	' IID: {E58442E4-0C80-402C-9559-867337A39765}
+	' Documentation string: ISpeechLexiconPronunciation Interface
+	' Number of Constants: 36
 	Const SpeechRegistryUserRoot = WStr("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Speech")
 	Const SpeechRegistryLocalMachineRoot = WStr("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech")
 	Const SpeechCategoryAudioOut = WStr("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\AudioOutput")
@@ -2112,19 +2091,19 @@ Namespace Speech
 	Const SPDUI_Tutorial              = WStr("Tutorial")
 	
 	
-	' // Structures and unions
+	' Structures and unions
 	
 	Type SPAUDIOBUFFERINFO
-		' // Documentation string: Afx_ISpAudio Interface
-		' // Number of members: 3
+		' Documentation string: ISpAudio Interface
+		' Number of members: 3
 		ulMsMinNotification As ULong
 		ulMsBufferSize As ULong
 		ulMsEventBias As ULong
 	End Type
 	
 	Type SPAUDIOSTATUS
-		' // Documentation string: Afx_ISpAudio Interface
-		' // Number of members: 7
+		' Documentation string: ISpAudio Interface
+		' Number of members: 7
 		cbFreeBuffSpace As Long
 		cbNonBlockingIO As ULong
 		State As ULong
@@ -2135,14 +2114,14 @@ Namespace Speech
 	End Type
 	
 	Type SPBINARYGRAMMAR
-		' // Documentation string: Afx_ISpGrammarBuilder Interface
-		' // Number of members: 1
+		' Documentation string: ISpGrammarBuilder Interface
+		' Number of members: 1
 		ulTotalSerializedSize As ULong
 	End Type
 	
 	Type SPEVENT
-		' // Documentation string: Afx_ISpNotifySource Interface
-		' // Number of members: 6
+		' Documentation string: ISpNotifySource Interface
+		' Number of members: 6
 		eEventId As UShort
 		elParamType As UShort
 		ulStreamNum As ULong
@@ -2151,18 +2130,18 @@ Namespace Speech
 		lParam As ULongInt
 	End Type
 	
-	' // Size = 24 bytes
+	' Size = 24 bytes
 	Type SPEVENTSOURCEINFO
-		' // Documentation string: Afx_ISpNotifySource Interface
-		' // Number of members: 3
+		' Documentation string: ISpNotifySource Interface
+		' Number of members: 3
 		ullEventInterest As ULongInt
 		ullQueuedInterest As ULongInt
 		ulCount As ULong
 	End Type
 	
 	Type SPPHRASE
-		' // Documentation string: Afx_ISpPhrase Interface
-		' // Number of members: 20
+		' Documentation string: ISpPhrase Interface
+		' Number of members: 20
 		cbSize As ULong
 		LangId As UShort
 		wHomophoneGroupId As UShort
@@ -2185,10 +2164,10 @@ Namespace Speech
 		SemanticTagFormat As SPSEMANTICFORMAT
 	End Type
 	
-	' // Size = 44 bytes
+	' Size = 44 bytes
 	Type SPPHRASEELEMENT
-		' // Documentation string: Afx_ISpPhrase Interface
-		' // Number of members: 14
+		' Documentation string: ISpPhrase Interface
+		' Number of members: 14
 		ulAudioTimeOffset As ULong
 		ulAudioSizeTime As ULong
 		ulAudioStreamOffset As ULong
@@ -2205,10 +2184,10 @@ Namespace Speech
 		SREngineConfidence As Single
 	End Type
 	
-	' // Size = 56 bytes (in 32-bit)
+	' Size = 56 bytes (in 32-bit)
 	Type SPPHRASEPROPERTY   ' Must be 8 byte aligned
-		' // Documentation string: Afx_ISpPhrase Interface
-		' // Number of members: 10
+		' Documentation string: ISpPhrase Interface
+		' Number of members: 10
 		pszName As WString Ptr
 		Union
 			ulId As ULong
@@ -2229,18 +2208,18 @@ Namespace Speech
 	End Type
 	
 	Type SPPHRASEREPLACEMENT
-		' // Documentation string: Afx_ISpPhrase Interface
-		' // Number of members: 4
+		' Documentation string: ISpPhrase Interface
+		' Number of members: 4
 		bDisplayAttributes As UByte
 		pszReplacementText As WCHAR Ptr   ' Const WCHAR *
 		ulFirstElement As ULong
 		ulCountOfElements As ULong
 	End Type
 	
-	' // Size = 32 bytes
+	' Size = 32 bytes
 	Type SPPHRASERULE
-		' // Documentation string: Afx_ISpPhrase Interface
-		' // Number of members: 8
+		' Documentation string: ISpPhrase Interface
+		' Number of members: 8
 		pszName As WString Ptr
 		ulId As ULong
 		ulFirstElement As ULong
@@ -2252,8 +2231,8 @@ Namespace Speech
 	End Type
 	
 	Type SPRECOCONTEXTSTATUS
-		' // Documentation string: Afx_ISpGrammarBuilder Interface
-		' // Number of members: 4
+		' Documentation string: ISpGrammarBuilder Interface
+		' Number of members: 4
 		eInterference As SPINTERFERENCE
 		szRequestTypeOfUI (0 To 254) As WCHAR
 		dwReserved1 As DWORD
@@ -2261,21 +2240,21 @@ Namespace Speech
 	End Type
 	
 	Type SPRECOGNIZERSTATUS
-		' // Documentation string: Afx_ISpProperties Interface
-		' // Number of members: 8
+		' Documentation string: ISpProperties Interface
+		' Number of members: 8
 		AudioStatus As SPAUDIOSTATUS
-		ullRecognitionStreamPos As ULongLong
+		ullRecognitionStreamPos As ULONGLONG
 		ulStreamNumber As ULong
 		ulNumActive As ULong
 		ClsidEngine As ULong
 		cLangIDs As ULong
 		aLangID (0 To 19) As LANGID
-		ullRecognitionStreamTime As ULongLong
+		ullRecognitionStreamTime As ULONGLONG
 	End Type
 	
 	Type SPRECORESULTTIMES
-		' // Documentation string: Afx_ISpRecoResult Interface
-		' // Number of members: 4
+		' Documentation string: ISpRecoResult Interface
+		' Number of members: 4
 		ftStreamTime As FILETIME
 		ullLength As ULongInt
 		dwTickCount As ULong
@@ -2283,16 +2262,16 @@ Namespace Speech
 	End Type
 	
 	Type SPRULE
-		' // Documentation string: Afx_ISpRecoGrammar2 Interface
-		' // Number of members: 3
+		' Documentation string: ISpRecoGrammar2 Interface
+		' Number of members: 3
 		pszRuleName As WString Ptr
 		ulRuleId As ULong
 		dwAttributes As ULong
 	End Type
 	
 	Type SPSEMANTICERRORINFO
-		' // Documentation string: Afx_ISpPhrase Interface
-		' // Number of members: 5
+		' Documentation string: ISpPhrase Interface
+		' Number of members: 5
 		ulLineNumber As ULong
 		pszScriptLine As WString Ptr
 		pszSource As WString Ptr
@@ -2301,20 +2280,20 @@ Namespace Speech
 	End Type
 	
 	Type SPSERIALIZEDPHRASE
-		' // Documentation string: Afx_ISpPhrase Interface
-		' // Number of members: 1
+		' Documentation string: ISpPhrase Interface
+		' Number of members: 1
 		ulSerializedSize As ULong
 	End Type
 	
 	Type SPSERIALIZEDRESULT
-		' // Documentation string: Afx_ISpGrammarBuilder Interface
-		' // Number of members: 1
+		' Documentation string: ISpGrammarBuilder Interface
+		' Number of members: 1
 		ulSerializedSize As ULong
 	End Type
 	
 	Type SPSHORTCUTPAIR
-		' // Documentation string: Afx_ISpShortcut Interface
-		' // Number of members: 5
+		' Documentation string: ISpShortcut Interface
+		' Number of members: 5
 		pNextSHORTCUTPAIR As SPSHORTCUTPAIR Ptr
 		LangId As UShort
 		shType As SPSHORTCUTType
@@ -2323,16 +2302,16 @@ Namespace Speech
 	End Type
 	
 	Type SPSHORTCUTPAIRLIST
-		' // Documentation string: Afx_ISpShortcut Interface
-		' // Number of members: 3
+		' Documentation string: ISpShortcut Interface
+		' Number of members: 3
 		ulSize As ULong
 		pvBuffer As UByte Ptr
 		pFirstShortcutPair As SPSHORTCUTPAIR Ptr
 	End Type
 	
 	Type SPVOICESTATUS
-		' // Documentation string: Afx_ISpVoice Interface
-		' // Number of members: 13
+		' Documentation string: ISpVoice Interface
+		' Number of members: 13
 		ulCurrentStream As ULong
 		ulLastStreamQueued As ULong
 		hrLastResult As HRESULT
@@ -2349,8 +2328,8 @@ Namespace Speech
 	End Type
 	
 	Type SPWORDPRONUNCIATION
-		' // Documentation string: Afx_ISpLexicon Interface
-		' // Number of members: 6
+		' Documentation string: ISpLexicon Interface
+		' Number of members: 6
 		pNextWordPronunciation As SPWORDPRONUNCIATION Ptr   ' struct SPWORDPRONUNCIATION *
 		eLexiconType As SPLEXICONType   ' SPLEXICONType enum
 		LangId As LANGID
@@ -2360,8 +2339,8 @@ Namespace Speech
 	End Type
 	
 	Type SPWORD
-		' // Documentation string: Afx_ISpLexicon Interface
-		' // Number of members: 6
+		' Documentation string: ISpLexicon Interface
+		' Number of members: 6
 		pNextWord As SPWORD Ptr
 		LangId As UShort
 		wReserved As UShort
@@ -2371,24 +2350,24 @@ Namespace Speech
 	End Type
 	
 	Type SPWORDLIST
-		' // Documentation string: Afx_ISpLexicon Interface
-		' // Number of members: 3
+		' Documentation string: ISpLexicon Interface
+		' Number of members: 3
 		ulSize As ULong
 		pvBuffer As UByte Ptr
 		pFirstWord As SPWORD Ptr
 	End Type
 	
 	Type SPWORDPRONUNCIATIONLIST
-		' // Documentation string: Afx_ISpLexicon Interface
-		' // Number of members: 3
+		' Documentation string: ISpLexicon Interface
+		' Number of members: 3
 		ulSize As ULong
 		pvBuffer As UByte Ptr
 		pFirstWordPronunciation As SPWORDPRONUNCIATION Ptr
 	End Type
 	
 	Type tagSPPROPERTYINFO
-		' // Documentation string: Afx_ISpGrammarBuilder Interface
-		' // Number of members: 4
+		' Documentation string: ISpGrammarBuilder Interface
+		' Number of members: 4
 		pszName As WCHAR Ptr   ' Const WCHAR *
 		ulId As ULong
 		pszValue As WCHAR Ptr   ' Const WCHAR *
@@ -2396,8 +2375,8 @@ Namespace Speech
 	End Type
 	
 	Type tagSPTEXTSELECTIONINFO
-		' // Documentation string: Afx_ISpGrammarBuilder Interface
-		' // Number of members: 4
+		' Documentation string: ISpGrammarBuilder Interface
+		' Number of members: 4
 		ulStartActiveOffset As ULong
 		cchActiveChars As ULong
 		ulStartSelection As ULong
@@ -2405,8 +2384,8 @@ Namespace Speech
 	End Type
 	
 	Type tagSTATSTG
-		' // Documentation string: Afx_ISpStreamFormat Interface
-		' // Number of members: 11
+		' Documentation string: ISpStreamFormat Interface
+		' Number of members: 11
 		pwcsName As WString Ptr
 		Type As ULong
 		cbSize As ULong
@@ -2421,155 +2400,153 @@ Namespace Speech
 	End Type
 	
 	Type WaveFormatEx
-		' // Documentation string: Afx_ISpStreamFormat Interface
-		' // Number of members: 7
+		' Documentation string: ISpStreamFormat Interface
+		' Number of members: 7
 		wFormatTag As UShort
 		nChannels As UShort
 		nSamplesPerSec As ULong
 		nAvgBytesPerSec As ULong
-		nBlockAlign AS UShort
-		wBitsPerSample AS UShort
-		cbSize AS UShort
-	END Type
+		nBlockAlign As UShort
+		wBitsPerSample As UShort
+		cbSize As UShort
+	End Type
 	
 	
-	' // Interfaces - Forward references
+	' Interfaces - Forward references
 	
-	Type Afx_IEnumSpObjectTokens AS Afx_IEnumSpObjectTokens_
-	Type Afx_ISpAudio AS Afx_ISpAudio_
-	Type Afx_ISpDataKey AS Afx_ISpDataKey_
-	Type Afx_ISpEventSink AS Afx_ISpEventSink_
-	Type Afx_ISpEventSource AS Afx_ISpEventSource_
-	Type Afx_ISpGrammarBuilder AS Afx_ISpGrammarBuilder_
-	Type Afx_ISpLexicon AS Afx_ISpLexicon_
-	Type Afx_ISpMMSysAudio AS Afx_ISpMMSysAudio_
-	Type Afx_ISpNotifySink AS Afx_ISpNotifySink_
-	Type Afx_ISpNotifySource AS Afx_ISpNotifySource_
-	Type Afx_ISpNotifyTranslator AS Afx_ISpNotifyTranslator_
-	Type Afx_ISpObjectToken AS Afx_ISpObjectToken_
-	Type Afx_ISpObjectTokenCategory AS Afx_ISpObjectTokenCategory_
-	Type Afx_ISpObjectWithToken AS Afx_ISpObjectWithToken_
-	Type Afx_ISpPhoneConverter AS Afx_ISpPhoneConverter_
-	Type Afx_ISpPhoneticAlphabetConverter AS Afx_ISpPhoneticAlphabetConverter_
-	Type Afx_ISpPhoneticAlphabetSelection AS Afx_ISpPhoneticAlphabetSelection_
-	Type Afx_ISpPhrase AS Afx_ISpPhrase_
-	Type Afx_ISpPhraseAlt AS Afx_ISpPhraseAlt_
-	Type Afx_ISpProperties AS Afx_ISpProperties_
-	Type Afx_ISpRecoCategory AS Afx_ISpRecoCategory_
-	Type Afx_ISpRecoContext AS Afx_ISpRecoContext_
-	Type Afx_ISpRecoContext2 AS Afx_ISpRecoContext2_
-	Type Afx_ISpRecognizer AS Afx_ISpRecognizer_
-	Type Afx_ISpRecognizer2 AS Afx_ISpRecognizer2_
-	Type Afx_ISpRecognizer3 AS Afx_ISpRecognizer3_
-	Type Afx_ISpRecoGrammar AS Afx_ISpRecoGrammar_
-	Type Afx_ISpRecoGrammar2 AS Afx_ISpRecoGrammar2_
-	Type Afx_ISpRecoResult AS Afx_ISpRecoResult_
-	Type Afx_ISpResourceManager AS Afx_ISpResourceManager_
-	Type Afx_ISpSerializeState AS Afx_ISpSerializeState_
-	Type Afx_ISpShortcut AS Afx_ISpShortcut_
-	Type Afx_ISpStream AS Afx_ISpStream_
-	Type Afx_ISpStreamFormat AS Afx_ISpStreamFormat_
-	Type Afx_ISpStreamFormatConverter AS Afx_ISpStreamFormatConverter_
-	Type Afx_ISpVoice AS Afx_ISpVoice_
-	Type ISpXMLRecoResult AS ISpXMLRecoResult_
+	Type IEnumSpObjectTokens As IEnumSpObjectTokens_
+	Type ISpAudio As ISpAudio_
+	Type ISpDataKey As ISpDataKey_
+	Type ISpEventSink As ISpEventSink_
+	Type ISpEventSource As ISpEventSource_
+	Type ISpGrammarBuilder As ISpGrammarBuilder_
+	Type ISpLexicon As ISpLexicon_
+	Type ISpMMSysAudio As ISpMMSysAudio_
+	Type ISpNotifySink As ISpNotifySink_
+	Type ISpNotifySource As ISpNotifySource_
+	Type ISpNotifyTranslator As ISpNotifyTranslator_
+	Type ISpObjectToken As ISpObjectToken_
+	Type ISpObjectTokenCategory As ISpObjectTokenCategory_
+	Type ISpObjectWithToken As ISpObjectWithToken_
+	Type ISpPhoneConverter As ISpPhoneConverter_
+	Type ISpPhoneticAlphabetConverter As ISpPhoneticAlphabetConverter_
+	Type ISpPhoneticAlphabetSelection As ISpPhoneticAlphabetSelection_
+	Type ISpPhrase As ISpPhrase_
+	Type ISpPhraseAlt As ISpPhraseAlt_
+	Type ISpProperties As ISpProperties_
+	Type ISpRecoCategory As ISpRecoCategory_
+	Type ISpRecoContext As ISpRecoContext_
+	Type ISpRecoContext2 As ISpRecoContext2_
+	Type ISpRecognizer As ISpRecognizer_
+	Type ISpRecognizer2 As ISpRecognizer2_
+	Type ISpRecognizer3 As ISpRecognizer3_
+	Type ISpRecoGrammar As ISpRecoGrammar_
+	Type ISpRecoGrammar2 As ISpRecoGrammar2_
+	Type ISpRecoResult As ISpRecoResult_
+	Type ISpResourceManager As ISpResourceManager_
+	Type ISpSerializeState As ISpSerializeState_
+	Type ISpShortcut As ISpShortcut_
+	Type ISpStream As ISpStream_
+	Type ISpStreamFormat As ISpStreamFormat_
+	Type ISpStreamFormatConverter As ISpStreamFormatConverter_
+	Type ISpVoice As ISpVoice_
+	Type ISpXMLRecoResult As ISpXMLRecoResult_
 	
-	' // Dual interfaces - Forward references
+	' Dual interfaces - Forward references
 	
-	Type Afx_ISpeechAudio AS Afx_ISpeechAudio_
-	Type Afx_ISpeechAudioBufferInfo AS Afx_ISpeechAudioBufferInfo_
-	Type Afx_ISpeechAudioFormat AS Afx_ISpeechAudioFormat_
-	Type Afx_ISpeechAudioStatus AS Afx_ISpeechAudioStatus_
-	Type Afx_ISpeechBaseStream As Afx_ISpeechBaseStream_
-	Type Afx_ISpeechCustomStream As Afx_ISpeechCustomStream_
-	Type Afx_ISpeechDataKey As Afx_ISpeechDataKey_
-	Type Afx_ISpeechFileStream As Afx_ISpeechFileStream_
-	Type Afx_ISpeechGrammarRule As Afx_ISpeechGrammarRule_
-	Type Afx_ISpeechGrammarRules As Afx_ISpeechGrammarRules_
-	Type Afx_ISpeechGrammarRuleState As Afx_ISpeechGrammarRuleState_
-	Type Afx_ISpeechGrammarRuleStateTransition As Afx_ISpeechGrammarRuleStateTransition_
-	Type Afx_ISpeechGrammarRuleStateTransitions As Afx_ISpeechGrammarRuleStateTransitions_
-	Type Afx_ISpeechLexicon As Afx_ISpeechLexicon_
-	Type Afx_ISpeechLexiconPronunciation As Afx_ISpeechLexiconPronunciation_
-	Type Afx_ISpeechLexiconPronunciations As Afx_ISpeechLexiconPronunciations_
-	Type Afx_ISpeechLexiconWord As Afx_ISpeechLexiconWord_
-	Type Afx_ISpeechLexiconWords As Afx_ISpeechLexiconWords_
-	Type Afx_ISpeechMemoryStream As Afx_ISpeechMemoryStream_
-	Type Afx_ISpeechMMSysAudio As Afx_ISpeechMMSysAudio_
-	Type Afx_ISpeechObjectToken As Afx_ISpeechObjectToken_
-	Type Afx_ISpeechObjectTokenCategory As Afx_ISpeechObjectTokenCategory_
-	Type Afx_ISpeechObjectTokens As Afx_ISpeechObjectTokens_
-	Type Afx_ISpeechPhoneConverter As Afx_ISpeechPhoneConverter_
-	Type Afx_ISpeechPhraseAlternate As Afx_ISpeechPhraseAlternate_
-	Type Afx_ISpeechPhraseAlternates As Afx_ISpeechPhraseAlternates_
-	Type Afx_ISpeechPhraseElement As Afx_ISpeechPhraseElement_
-	Type Afx_ISpeechPhraseElements As Afx_ISpeechPhraseElements_
-	Type Afx_ISpeechPhraseInfo As Afx_ISpeechPhraseInfo_
-	Type Afx_ISpeechPhraseInfoBuilder As Afx_ISpeechPhraseInfoBuilder_
-	Type Afx_ISpeechPhraseProperties As Afx_ISpeechPhraseProperties_
-	Type Afx_ISpeechPhraseProperty As Afx_ISpeechPhraseProperty_
-	Type Afx_ISpeechPhraseReplacement As Afx_ISpeechPhraseReplacement_
-	Type Afx_ISpeechPhraseReplacements As Afx_ISpeechPhraseReplacements_
-	Type Afx_ISpeechPhraseRule As Afx_ISpeechPhraseRule_
-	Type Afx_ISpeechPhraseRules As Afx_ISpeechPhraseRules_
-	Type Afx_ISpeechRecoContext As Afx_ISpeechRecoContext_
-	Type Afx_ISpeechRecognizer As Afx_ISpeechRecognizer_
-	Type Afx_ISpeechRecognizerStatus As Afx_ISpeechRecognizerStatus_
-	Type Afx_ISpeechRecoGrammar As Afx_ISpeechRecoGrammar_
-	Type Afx_ISpeechRecoResult As Afx_ISpeechRecoResult_
-	Type Afx_ISpeechRecoResult2 As Afx_ISpeechRecoResult2_
-	Type Afx_ISpeechRecoResultDispatch As Afx_ISpeechRecoResultDispatch_
-	Type Afx_ISpeechRecoResultTimes As Afx_ISpeechRecoResultTimes_
-	Type Afx_ISpeechResourceLoader As Afx_ISpeechResourceLoader_
-	Type Afx_ISpeechTextSelectionInformation As Afx_ISpeechTextSelectionInformation_
-	Type Afx_ISpeechVoice As Afx_ISpeechVoice_
-	Type Afx_ISpeechVoiceStatus As Afx_ISpeechVoiceStatus_
-	Type Afx_ISpeechWaveFormatEx As Afx_ISpeechWaveFormatEx_
-	Type Afx_ISpeechXMLRecoResult As Afx_ISpeechXMLRecoResult_
+	Type ISpeechAudio As ISpeechAudio_
+	Type ISpeechAudioBufferInfo As ISpeechAudioBufferInfo_
+	Type ISpeechAudioFormat As ISpeechAudioFormat_
+	Type ISpeechAudioStatus As ISpeechAudioStatus_
+	Type ISpeechBaseStream As ISpeechBaseStream_
+	Type ISpeechCustomStream As ISpeechCustomStream_
+	Type ISpeechDataKey As ISpeechDataKey_
+	Type ISpeechFileStream As ISpeechFileStream_
+	Type ISpeechGrammarRule As ISpeechGrammarRule_
+	Type ISpeechGrammarRules As ISpeechGrammarRules_
+	Type ISpeechGrammarRuleState As ISpeechGrammarRuleState_
+	Type ISpeechGrammarRuleStateTransition As ISpeechGrammarRuleStateTransition_
+	Type ISpeechGrammarRuleStateTransitions As ISpeechGrammarRuleStateTransitions_
+	Type ISpeechLexicon As ISpeechLexicon_
+	Type ISpeechLexiconPronunciation As ISpeechLexiconPronunciation_
+	Type ISpeechLexiconPronunciations As ISpeechLexiconPronunciations_
+	Type ISpeechLexiconWord As ISpeechLexiconWord_
+	Type ISpeechLexiconWords As ISpeechLexiconWords_
+	Type ISpeechMemoryStream As ISpeechMemoryStream_
+	Type ISpeechMMSysAudio As ISpeechMMSysAudio_
+	Type ISpeechObjectToken As ISpeechObjectToken_
+	Type ISpeechObjectTokenCategory As ISpeechObjectTokenCategory_
+	Type ISpeechObjectTokens As ISpeechObjectTokens_
+	Type ISpeechPhoneConverter As ISpeechPhoneConverter_
+	Type ISpeechPhraseAlternate As ISpeechPhraseAlternate_
+	Type ISpeechPhraseAlternates As ISpeechPhraseAlternates_
+	Type ISpeechPhraseElement As ISpeechPhraseElement_
+	Type ISpeechPhraseElements As ISpeechPhraseElements_
+	Type ISpeechPhraseInfo As ISpeechPhraseInfo_
+	Type ISpeechPhraseInfoBuilder As ISpeechPhraseInfoBuilder_
+	Type ISpeechPhraseProperties As ISpeechPhraseProperties_
+	Type ISpeechPhraseProperty As ISpeechPhraseProperty_
+	Type ISpeechPhraseReplacement As ISpeechPhraseReplacement_
+	Type ISpeechPhraseReplacements As ISpeechPhraseReplacements_
+	Type ISpeechPhraseRule As ISpeechPhraseRule_
+	Type ISpeechPhraseRules As ISpeechPhraseRules_
+	Type ISpeechRecoContext As ISpeechRecoContext_
+	Type ISpeechRecognizer As ISpeechRecognizer_
+	Type ISpeechRecognizerStatus As ISpeechRecognizerStatus_
+	Type ISpeechRecoGrammar As ISpeechRecoGrammar_
+	Type ISpeechRecoResult As ISpeechRecoResult_
+	Type ISpeechRecoResult2 As ISpeechRecoResult2_
+	Type ISpeechRecoResultDispatch As ISpeechRecoResultDispatch_
+	Type ISpeechRecoResultTimes As ISpeechRecoResultTimes_
+	Type ISpeechResourceLoader As ISpeechResourceLoader_
+	Type ISpeechTextSelectionInformation As ISpeechTextSelectionInformation_
+	Type ISpeechVoice As ISpeechVoice_
+	Type ISpeechVoiceStatus As ISpeechVoiceStatus_
+	Type ISpeechWaveFormatEx As ISpeechWaveFormatEx_
+	Type ISpeechXMLRecoResult As ISpeechXMLRecoResult_
 	
-	' // Interfaces
+	' Interfaces
 	
 	' ########################################################################################
-	' Interface name: Afx_IEnumSpObjectTokens
+	' Interface name: IEnumSpObjectTokens
 	' IID: {06B64F9E-7FDA-11D2-B4F2-00C04F797396}
-	' Documentation string: Afx_IEnumSpObjectTokens Interface
+	' Documentation string: IEnumSpObjectTokens Interface
 	' Attributes =  512 [&h00000200] [Restricted]
 	' Inherited interface = IUnknown
 	' Number of methods = 6
 	' ########################################################################################
 	
-	#ifndef __Afx_IEnumSpObjectTokens_INTERFACE_DEFINED__
-		#define __Afx_IEnumSpObjectTokens_INTERFACE_DEFINED__
+	#ifndef __IEnumSpObjectTokens_INTERFACE_DEFINED__
+		#define __IEnumSpObjectTokens_INTERFACE_DEFINED__
 		
-		Type Afx_IEnumSpObjectTokens_ Extends Afx_IUnknown
-			Declare Abstract Function Next_ (ByVal celt As ULong, ByVal pelt As Afx_ISpObjectToken Ptr Ptr, ByVal pceltFetched As ULong Ptr) As HRESULT
+		Type IEnumSpObjectTokens_ Extends Afx_IUnknown
+			Declare Abstract Function Next_ (ByVal celt As ULong, ByVal pelt As ISpObjectToken Ptr Ptr, ByVal pceltFetched As ULong Ptr) As HRESULT
 			Declare Abstract Function Skip (ByVal celt As ULong) As HRESULT
 			Declare Abstract Function Reset () As HRESULT
-			Declare Abstract Function Clone (ByVal ppEnum As Afx_IEnumSpObjectTokens Ptr Ptr) As HRESULT
-			Declare Abstract Function Item (ByVal Index As ULong, ByVal ppToken As Afx_ISpObjectToken Ptr Ptr) As HRESULT
+			Declare Abstract Function Clone (ByVal ppEnum As IEnumSpObjectTokens Ptr Ptr) As HRESULT
+			Declare Abstract Function Item (ByVal Index As ULong, ByVal ppToken As ISpObjectToken Ptr Ptr) As HRESULT
 			Declare Abstract Function GetCount (ByVal pCount As ULong Ptr) As HRESULT
 		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpStreamFormat
+	' Interface name: ISpStreamFormat
 	' IID: {BED530BE-2606-4F4D-A1C0-54C5CDA5566F}
-	' Documentation string: Afx_ISpStreamFormat Interface
+	' Documentation string: ISpStreamFormat Interface
 	' Attributes =  512 [&h00000200] [Restricted]
 	' Inherited interface = IStream
 	' Number of methods = 1
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpStreamFormat_INTERFACE_DEFINED__
-		#define __Afx_ISpStreamFormat_INTERFACE_DEFINED__
+	#ifndef __ISpStreamFormat_INTERFACE_DEFINED__
+		#define __ISpStreamFormat_INTERFACE_DEFINED__
 		
-		Type Afx_ISpStreamFormat_ Extends Afx_IUnknown
-			' // ISequentialStream interface
+		Type ISpStreamFormat_ Extends Afx_IUnknown
+			' ISequentialStream interface
 			Declare Abstract Function Read (ByVal pv As Const Any Ptr, ByVal cb As ULong, ByVal pcbRead As ULong Ptr) As HRESULT
 			Declare Abstract Function Write (ByVal pv As Const Any Ptr, ByVal cb As ULong, ByVal pcbWritten As ULong Ptr) As HRESULT
-			' // IStream interface
+			' IStream interface
 			Declare Abstract Function Seek (ByVal dlibMove As _LARGE_INTEGER, ByVal dwOrigin As ULong, ByVal plibNewPosition As _ULARGE_INTEGER Ptr) As HRESULT
 			Declare Abstract Function SetSize (ByVal libNewSize As _ULARGE_INTEGER) As HRESULT
 			Declare Abstract Function CopyTo (ByVal pstm As IStream Ptr, ByVal cb As _ULARGE_INTEGER, ByVal pcbRead As _ULARGE_INTEGER Ptr, ByVal pcbWritten As _ULARGE_INTEGER Ptr) As HRESULT
@@ -2579,27 +2556,25 @@ Namespace Speech
 			Declare Abstract Function UnlockRegion (ByVal libOffset As _ULARGE_INTEGER, ByVal cb As _ULARGE_INTEGER, ByVal dwLockType As ULong) As HRESULT
 			Declare Abstract Function Stat (ByVal pstatstg As tagSTATSTG Ptr, ByVal grfStatFlag As ULong) As HRESULT
 			Declare Abstract Function Clone (ByVal ppstm As IStream Ptr Ptr) As HRESULT
-			' // ISpStreamFormat iterface
+			' ISpStreamFormat iterface
 			Declare Abstract Function GetFormat (ByVal pguidFormatId As GUID Ptr, ByVal ppCoMemWaveFormatEx As WaveFormatEx Ptr Ptr) As HRESULT
 		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpAudio
+	' Interface name: ISpAudio
 	' IID: {C05C768F-FAE8-4EC2-8E07-338321C12452}
-	' Documentation string: Afx_ISpAudio Interface
+	' Documentation string: ISpAudio Interface
 	' Attributes =  512 [&h00000200] [Restricted]
-	' Inherited interface = Afx_ISpStreamFormat
+	' Inherited interface = ISpStreamFormat
 	' Number of methods = 11
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpAudio_INTERFACE_DEFINED__
-		#define __Afx_ISpAudio_INTERFACE_DEFINED__
+	#ifndef __ISpAudio_INTERFACE_DEFINED__
+		#define __ISpAudio_INTERFACE_DEFINED__
 		
-		Type Afx_ISpAudio_ Extends Afx_ISpStreamFormat
+		Type ISpAudio_ Extends ISpStreamFormat
 			Declare Abstract Function SetState (ByVal NewState As SPAUDIOSTATE, ByVal ullReserved As ULongInt) As HRESULT
 			Declare Abstract Function SetFormat (ByVal rguidFmtId As GUID Ptr, ByVal pWaveFormatEx As WaveFormatEx Ptr) As HRESULT
 			Declare Abstract Function GetStatus (ByVal pStatus As SPAUDIOSTATUS Ptr) As HRESULT
@@ -2616,28 +2591,26 @@ Namespace Speech
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpDataKey
+	' Interface name: ISpDataKey
 	' IID: {14056581-E16C-11D2-BB90-00C04F8EE6C0}
-	' Documentation string: Afx_ISpDataKey Interface
+	' Documentation string: ISpDataKey Interface
 	' Attributes =  512 [&h00000200] [Restricted]
 	' Inherited interface = IUnknown
 	' Number of methods = 12
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpDataKey_INTERFACE_DEFINED__
-		#define __Afx_ISpDataKey_INTERFACE_DEFINED__
+	#ifndef __ISpDataKey_INTERFACE_DEFINED__
+		#define __ISpDataKey_INTERFACE_DEFINED__
 		
-		Type Afx_ISpDataKey_ Extends Afx_IUnknown
+		Type ISpDataKey_ Extends Afx_IUnknown
 			Declare Abstract Function SetData (ByVal pszValueName As WString Ptr, ByVal cbData As ULong, ByVal pData As UByte Ptr) As HRESULT
 			Declare Abstract Function GetData (ByVal pszValueName As WString Ptr, ByVal pcbData As ULong Ptr, ByVal pData As UByte Ptr) As HRESULT
 			Declare Abstract Function SetStringValue (ByVal pszValueName As WString Ptr, ByVal pszValue As WString Ptr) As HRESULT
 			Declare Abstract Function GetStringValue (ByVal pszValueName As WString Ptr, ByVal ppszValue As WString Ptr Ptr) As HRESULT
 			Declare Abstract Function SetDWORD (ByVal pszValueName As WString Ptr, ByVal dwValue As ULong) As HRESULT
 			Declare Abstract Function GetDWORD (ByVal pszValueName As WString Ptr, ByVal pdwValue As ULong Ptr) As HRESULT
-			Declare Abstract Function OpenKey (ByVal pszSubKeyName As WString Ptr, ByVal ppSubKey As Afx_ISpDataKey Ptr Ptr) As HRESULT
-			Declare Abstract Function CreateKey (ByVal pszSubKey As WString Ptr, ByVal ppSubKey As Afx_ISpDataKey Ptr Ptr) As HRESULT
+			Declare Abstract Function OpenKey (ByVal pszSubKeyName As WString Ptr, ByVal ppSubKey As ISpDataKey Ptr Ptr) As HRESULT
+			Declare Abstract Function CreateKey (ByVal pszSubKey As WString Ptr, ByVal ppSubKey As ISpDataKey Ptr Ptr) As HRESULT
 			Declare Abstract Function DeleteKey (ByVal pszSubKey As WString Ptr) As HRESULT
 			Declare Abstract Function DeleteValue (ByVal pszValueName As WString Ptr) As HRESULT
 			Declare Abstract Function EnumKeys (ByVal Index As ULong, ByVal ppszSubKeyName As WString Ptr Ptr) As HRESULT
@@ -2647,20 +2620,18 @@ Namespace Speech
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpEventSink
+	' Interface name: ISpEventSink
 	' IID: {BE7A9CC9-5F9E-11D2-960F-00C04F8EE628}
-	' Documentation string: Afx_ISpEventSink Interface
+	' Documentation string: ISpEventSink Interface
 	' Attributes =  512 [&h00000200] [Restricted]
 	' Inherited interface = IUnknown
 	' Number of methods = 2
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpEventSink_INTERFACE_DEFINED__
-		#define __Afx_ISpEventSink_INTERFACE_DEFINED__
+	#ifndef __ISpEventSink_INTERFACE_DEFINED__
+		#define __ISpEventSink_INTERFACE_DEFINED__
 		
-		Type Afx_ISpEventSink_ Extends Afx_IUnknown
+		Type ISpEventSink_ Extends Afx_IUnknown
 			Declare Abstract Function AddEvents (ByVal pEventArray As SPEVENT Ptr, ByVal ulCount As ULong) As HRESULT
 			Declare Abstract Function GetEventInterest (ByVal pullEventInterest As ULongInt Ptr) As HRESULT
 		End Type
@@ -2671,19 +2642,19 @@ Namespace Speech
 	
 	
 	' ########################################################################################
-	' Interface name: Afx_ISpNotifySource
+	' Interface name: ISpNotifySource
 	' IID: {5EFF4AEF-8487-11D2-961C-00C04F8EE628}
-	' Documentation string: Afx_ISpNotifySource Interface
+	' Documentation string: ISpNotifySource Interface
 	' Attributes =  512 [&h00000200] [Restricted]
 	' Inherited interface = IUnknown
 	' Number of methods = 7
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpNotifySource_INTERFACE_DEFINED__
-		#define __Afx_ISpNotifySource_INTERFACE_DEFINED__
+	#ifndef __ISpNotifySource_INTERFACE_DEFINED__
+		#define __ISpNotifySource_INTERFACE_DEFINED__
 		
-		Type Afx_ISpNotifySource_ Extends Afx_IUnknown
-			Declare Abstract Function SetNotifySink (ByVal pNotifySink AS Afx_ISpNotifySink Ptr) AS HRESULT
+		Type ISpNotifySource_ Extends Afx_IUnknown
+			Declare Abstract Function SetNotifySink (ByVal pNotifySink AS ISpNotifySink Ptr) AS HRESULT
 			Declare Abstract Function SetNotifyWindowMessage (ByVal hWnd AS HWND, ByVal Msg AS UINT, ByVal wParam AS UINT_Ptr, ByVal lParam AS Long_Ptr) AS HRESULT
 			Declare Abstract Function SetNotifyCallbackFunction (ByVal pfnCallback AS ANY Ptr Ptr, ByVal wParam AS UINT_Ptr, ByVal lParam AS Long_Ptr) AS HRESULT
 			Declare Abstract Function SetNotifyCallbackInterface (ByVal pSpCallback AS ANY Ptr Ptr, ByVal wParam AS UINT_Ptr, ByVal lParam AS Long_Ptr) AS HRESULT
@@ -2695,69 +2666,63 @@ Namespace Speech
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpEventSource
+	' Interface name: ISpEventSource
 	' IID: {BE7A9CCE-5F9E-11D2-960F-00C04F8EE628}
-	' Documentation string: Afx_ISpEventSource Interface
+	' Documentation string: ISpEventSource Interface
 	' Attributes =  512 [&h00000200] [Restricted]
-	' Inherited interface = Afx_ISpNotifySource
+	' Inherited interface = ISpNotifySource
 	' Number of methods = 3
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpEventSource_INTERFACE_DEFINED__
-		#define __Afx_ISpEventSource_INTERFACE_DEFINED__
+	#ifndef __ISpEventSource_INTERFACE_DEFINED__
+		#define __ISpEventSource_INTERFACE_DEFINED__
 		
-		Type Afx_ISpEventSource_ Extends Afx_ISpNotifySource
-			Declare Abstract Function SetInterest (ByVal ullEventInterest AS ULongINT, ByVal ullQueuedInterest AS ULongINT) AS HRESULT
-			Declare Abstract Function GetEvents (ByVal ulCount AS ULong, ByVal pEventArray AS SPEVENT Ptr, ByVal pulFetched AS ULong Ptr) AS HRESULT
-			Declare Abstract Function GetInfo (ByVal pInfo AS SPEVENTSOURCEINFO Ptr) AS HRESULT
-		END Type
+		Type ISpEventSource_ Extends ISpNotifySource
+			Declare Abstract Function SetInterest (ByVal ullEventInterest As ULongInt, ByVal ullQueuedInterest As ULongInt) As HRESULT
+			Declare Abstract Function GetEvents (ByVal ulCount As ULong, ByVal pEventArray As SPEVENT Ptr, ByVal pulFetched As ULong Ptr) As HRESULT
+			Declare Abstract Function GetInfo (ByVal pInfo As SPEVENTSOURCEINFO Ptr) As HRESULT
+		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpGrammarBuilder
+	' Interface name: ISpGrammarBuilder
 	' IID: {8137828F-591A-4A42-BE58-49EA7EBAAC68}
-	' Documentation string: Afx_ISpGrammarBuilder Interface
+	' Documentation string: ISpGrammarBuilder Interface
 	' Attributes =  512 [&h00000200] [Restricted]
 	' Inherited interface = IUnknown
 	' Number of methods = 8
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpGrammarBuilder_INTERFACE_DEFINED__
-		#define __Afx_ISpGrammarBuilder_INTERFACE_DEFINED__
+	#ifndef __ISpGrammarBuilder_INTERFACE_DEFINED__
+		#define __ISpGrammarBuilder_INTERFACE_DEFINED__
 		
-		Type Afx_ISpGrammarBuilder_ Extends Afx_IUnknown
-			Declare Abstract Function ResetGrammar (ByVal NewLanguage AS UShort) AS HRESULT
-			Declare Abstract Function GetRule (ByVal pszRuleName AS WString Ptr, ByVal dwRuleId AS ULong, ByVal dwAttributes AS ULong, ByVal fCreateIfNotExist AS Long, ByVal phInitialState AS ANY Ptr Ptr) AS HRESULT
-			Declare Abstract Function ClearRule (ByVal hState AS ANY Ptr) AS HRESULT
-			Declare Abstract Function CreateNewState (ByVal hState AS ANY Ptr, ByVal phState AS ANY Ptr Ptr) AS HRESULT
-			Declare Abstract Function AddWordTransition (ByVal hFromState AS ANY Ptr, ByVal hToState AS ANY Ptr, ByVal psz AS WString Ptr, ByVal pszSeparators AS WString Ptr, ByVal eWordType AS SPGRAMMARWORDType, ByVal Weight AS SINGLE, ByVal pPropInfo AS SPPROPERTYINFO Ptr) AS HRESULT
-			Declare Abstract Function AddRuleTransition (ByVal hFromState AS ANY Ptr, ByVal hToState AS ANY Ptr, ByVal hRule AS ANY Ptr, ByVal Weight AS SINGLE, ByVal pPropInfo AS SPPROPERTYINFO Ptr) AS HRESULT
-			Declare Abstract Function AddResource (ByVal hRuleState AS ANY Ptr, ByVal pszResourceName AS WString Ptr, ByVal pszResourceValue AS WString Ptr) AS HRESULT
-			Declare Abstract Function Commit (ByVal dwReserved AS ULong) AS HRESULT
-		END Type
+		Type ISpGrammarBuilder_ Extends Afx_IUnknown
+			Declare Abstract Function ResetGrammar (ByVal NewLanguage As UShort) As HRESULT
+			Declare Abstract Function GetRule (ByVal pszRuleName As WString Ptr, ByVal dwRuleId As ULong, ByVal dwAttributes As ULong, ByVal fCreateIfNotExist As Long, ByVal phInitialState As Any Ptr Ptr) As HRESULT
+			Declare Abstract Function ClearRule (ByVal hState As Any Ptr) As HRESULT
+			Declare Abstract Function CreateNewState (ByVal hState As Any Ptr, ByVal phState As Any Ptr Ptr) As HRESULT
+			Declare Abstract Function AddWordTransition (ByVal hFromState As Any Ptr, ByVal hToState As Any Ptr, ByVal psz As WString Ptr, ByVal pszSeparators As WString Ptr, ByVal eWordType As SPGRAMMARWORDType, ByVal Weight As Single, ByVal pPropInfo As SPPROPERTYINFO Ptr) As HRESULT
+			Declare Abstract Function AddRuleTransition (ByVal hFromState As Any Ptr, ByVal hToState As Any Ptr, ByVal hRule As Any Ptr, ByVal Weight As Single, ByVal pPropInfo As SPPROPERTYINFO Ptr) As HRESULT
+			Declare Abstract Function AddResource (ByVal hRuleState As Any Ptr, ByVal pszResourceName As WString Ptr, ByVal pszResourceValue As WString Ptr) As HRESULT
+			Declare Abstract Function Commit (ByVal dwReserved As ULong) As HRESULT
+		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpLexicon
+	' Interface name: ISpLexicon
 	' IID: {DA41A7C2-5383-4DB2-916B-6C1719E3DB58}
-	' Documentation string: Afx_ISpLexicon Interface
+	' Documentation string: ISpLexicon Interface
 	' Attributes =  512 [&h00000200] [Restricted]
 	' Inherited interface = IUnknown
 	' Number of methods = 6
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpLexicon_INTERFACE_DEFINED__
-		#define __Afx_ISpLexicon_INTERFACE_DEFINED__
+	#ifndef __ISpLexicon_INTERFACE_DEFINED__
+		#define __ISpLexicon_INTERFACE_DEFINED__
 		
-		Type Afx_ISpLexicon_ Extends Afx_IUnknown
+		Type ISpLexicon_ Extends Afx_IUnknown
 			Declare Abstract Function GetPronunciations (ByVal pszWord AS WString Ptr, ByVal LangId AS UShort, ByVal dwFlags AS ULong, ByVal pWordPronunciationList AS SPWORDPRONUNCIATIONLIST Ptr) AS HRESULT
 			Declare Abstract Function AddPronunciation (ByVal pszWord AS WString Ptr, ByVal LangId AS UShort, ByVal ePartOfSpeech AS SPPARTOFSPEECH, ByVal pszPronunciation AS WString Ptr) AS HRESULT
 			Declare Abstract Function RemovePronunciation (ByVal pszWord AS WString Ptr, ByVal LangId AS UShort, ByVal ePartOfSpeech AS SPPARTOFSPEECH, ByVal pszPronunciation AS WString Ptr) AS HRESULT
@@ -2769,20 +2734,18 @@ Namespace Speech
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpMMSysAudio
+	' Interface name: ISpMMSysAudio
 	' IID: {15806F6E-1D70-4B48-98E6-3B1A007509AB}
-	' Documentation string: Afx_ISpMMSysAudio Interface
+	' Documentation string: ISpMMSysAudio Interface
 	' Attributes =  512 [&h00000200] [Restricted]
-	' Inherited interface = Afx_ISpAudio
+	' Inherited interface = ISpAudio
 	' Number of methods = 5
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpMMSysAudio_INTERFACE_DEFINED__
-		#define __Afx_ISpMMSysAudio_INTERFACE_DEFINED__
+	#ifndef __ISpMMSysAudio_INTERFACE_DEFINED__
+		#define __ISpMMSysAudio_INTERFACE_DEFINED__
 		
-		Type Afx_ISpMMSysAudio_ Extends Afx_ISpAudio
+		Type ISpMMSysAudio_ Extends ISpAudio
 			Declare Abstract Function GetDeviceId (ByVal puDeviceId As UINT Ptr) As HRESULT
 			Declare Abstract Function SetDeviceId (ByVal uDeviceId As UINT) As HRESULT
 			Declare Abstract Function GetMMHandle (ByVal pHandle As Any Ptr Ptr) As HRESULT
@@ -2793,206 +2756,188 @@ Namespace Speech
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpNotifySink
+	' Interface name: ISpNotifySink
 	' IID: {259684DC-37C3-11D2-9603-00C04F8EE628}
-	' Documentation string: Afx_ISpNotifySink Interface
+	' Documentation string: ISpNotifySink Interface
 	' Attributes =  512 [&h00000200] [Restricted]
 	' Inherited interface = IUnknown
 	' Number of methods = 1
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpNotifySink_INTERFACE_DEFINED__
-		#define __Afx_ISpNotifySink_INTERFACE_DEFINED__
+	#ifndef __ISpNotifySink_INTERFACE_DEFINED__
+		#define __ISpNotifySink_INTERFACE_DEFINED__
 		
-		Type Afx_ISpNotifySink_ Extends Afx_IUnknown
+		Type ISpNotifySink_ Extends Afx_IUnknown
 			Declare Abstract Function Notify () As HRESULT
 		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpNotifyTranslator
+	' Interface name: ISpNotifyTranslator
 	' IID: {ACA16614-5D3D-11D2-960E-00C04F8EE628}
-	' Documentation string: Afx_ISpNotifyTranslator Interface
+	' Documentation string: ISpNotifyTranslator Interface
 	' Attributes =  512 [&h00000200] [Restricted]
-	' Inherited interface = Afx_ISpNotifySink
+	' Inherited interface = ISpNotifySink
 	' Number of methods = 6
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpNotifyTranslator_INTERFACE_DEFINED__
-		#define __Afx_ISpNotifyTranslator_INTERFACE_DEFINED__
+	#ifndef __ISpNotifyTranslator_INTERFACE_DEFINED__
+		#define __ISpNotifyTranslator_INTERFACE_DEFINED__
 		
-		Type Afx_ISpNotifyTranslator_ Extends Afx_ISpNotifySink
-			Declare Abstract Function InitWindowMessage (ByVal hWnd AS HWND, ByVal Msg AS UINT, ByVal wParam AS UINT_Ptr, ByVal lParam AS Long_Ptr) AS HRESULT
-			Declare Abstract Function InitCallback (ByVal pfnCallback AS ANY Ptr Ptr, ByVal wParam AS UINT_Ptr, ByVal lParam AS Long_Ptr) AS HRESULT
-			Declare Abstract Function InitSpNotifyCallback (ByVal pSpCallback AS ANY Ptr Ptr, ByVal wParam AS UINT_Ptr, ByVal lParam AS Long_Ptr) AS HRESULT
-			Declare Abstract Function InitWin32Event (ByVal hEvent AS ANY Ptr, ByVal fCloseHandleOnRelease AS Long) AS HRESULT
-			Declare Abstract Function Wait (ByVal dwMilliseconds AS ULong) AS HRESULT
-			Declare Abstract Function GetEventHandle () AS HRESULT
-		END Type
+		Type ISpNotifyTranslator_ Extends ISpNotifySink
+			Declare Abstract Function InitWindowMessage (ByVal hWnd As HWND, ByVal Msg As UINT, ByVal wParam As UINT_PTR, ByVal lParam As LONG_PTR) As HRESULT
+			Declare Abstract Function InitCallback (ByVal pfnCallback As Any Ptr Ptr, ByVal wParam As UINT_PTR, ByVal lParam As LONG_PTR) As HRESULT
+			Declare Abstract Function InitSpNotifyCallback (ByVal pSpCallback As Any Ptr Ptr, ByVal wParam As UINT_PTR, ByVal lParam As LONG_PTR) As HRESULT
+			Declare Abstract Function InitWin32Event (ByVal hEvent As Any Ptr, ByVal fCloseHandleOnRelease As Long) As HRESULT
+			Declare Abstract Function Wait (ByVal dwMilliseconds As ULong) As HRESULT
+			Declare Abstract Function GetEventHandle () As HRESULT
+		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpObjectToken
+	' Interface name: ISpObjectToken
 	' IID: {14056589-E16C-11D2-BB90-00C04F8EE6C0}
-	' Documentation string: Afx_ISpObjectToken Interface
+	' Documentation string: ISpObjectToken Interface
 	' Attributes =  512 [&h00000200] [Restricted]
-	' Inherited interface = Afx_ISpDataKey
+	' Inherited interface = ISpDataKey
 	' Number of methods = 10
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpObjectToken_INTERFACE_DEFINED__
-		#define __Afx_ISpObjectToken_INTERFACE_DEFINED__
+	#ifndef __ISpObjectToken_INTERFACE_DEFINED__
+		#define __ISpObjectToken_INTERFACE_DEFINED__
 		
-		Type Afx_ISpObjectToken_ Extends Afx_ISpDataKey
-			Declare Abstract Function SetId (ByVal pszCategoryId AS WString Ptr, ByVal pszTokenId AS WString Ptr, ByVal fCreateIfNotExist AS Long) AS HRESULT
-			Declare Abstract Function GetId (ByVal ppszCoMemTokenId AS WString Ptr Ptr) AS HRESULT
-			Declare Abstract Function GetCategory (ByVal ppTokenCategory AS Afx_ISpObjectTokenCategory Ptr Ptr) AS HRESULT
-			Declare Abstract Function CreateInstance (ByVal pUnkOuter AS Afx_IUnknown Ptr, ByVal dwClsContext AS ULong, ByVal riid AS GUID Ptr, ByVal ppvObject AS ANY Ptr Ptr) AS HRESULT
-			Declare Abstract Function GetStorageFileName (ByVal clsidCaller AS GUID Ptr, ByVal pszValueName AS WString Ptr, ByVal pszFileNameSpecifier AS WString Ptr, ByVal nFolder AS ULong, ByVal ppszFilePath AS WString Ptr Ptr) AS HRESULT
-			Declare Abstract Function RemoveStorageFileName (ByVal clsidCaller AS GUID Ptr, ByVal pszKeyName AS WString Ptr, ByVal fDeleteFile AS Long) AS HRESULT
-			Declare Abstract Function Remove (ByVal pclsidCaller AS GUID Ptr) AS HRESULT
-			Declare Abstract Function IsUISupported (ByVal pszTypeOfUI AS WString Ptr, ByVal pvExtraData AS ANY Ptr, ByVal cbExtraData AS ULong, ByVal punkObject AS Afx_IUnknown Ptr, ByVal pfSupported AS Long Ptr) AS HRESULT
-			Declare Abstract Function DisplayUI (ByVal hWndParent AS HWND, ByVal pszTitle AS WString Ptr, ByVal pszTypeOfUI AS WString Ptr, ByVal pvExtraData AS ANY Ptr, ByVal cbExtraData AS ULong, ByVal punkObject AS Afx_IUnknown Ptr) AS HRESULT
-			Declare Abstract Function MatchesAttributes (ByVal pszAttributes AS WString Ptr, ByVal pfMatches AS Long Ptr) AS HRESULT
-		END Type
+		Type ISpObjectToken_ Extends ISpDataKey
+			Declare Abstract Function SetId (ByVal pszCategoryId As WString Ptr, ByVal pszTokenId As WString Ptr, ByVal fCreateIfNotExist As Long) As HRESULT
+			Declare Abstract Function GetId (ByVal ppszCoMemTokenId As WString Ptr Ptr) As HRESULT
+			Declare Abstract Function GetCategory (ByVal ppTokenCategory As ISpObjectTokenCategory Ptr Ptr) As HRESULT
+			Declare Abstract Function CreateInstance (ByVal pUnkOuter As Afx_IUnknown Ptr, ByVal dwClsContext As ULong, ByVal riid As GUID Ptr, ByVal ppvObject As Any Ptr Ptr) As HRESULT
+			Declare Abstract Function GetStorageFileName (ByVal clsidCaller As GUID Ptr, ByVal pszValueName As WString Ptr, ByVal pszFileNameSpecifier As WString Ptr, ByVal nFolder As ULong, ByVal ppszFilePath As WString Ptr Ptr) As HRESULT
+			Declare Abstract Function RemoveStorageFileName (ByVal clsidCaller As GUID Ptr, ByVal pszKeyName As WString Ptr, ByVal fDeleteFile As Long) As HRESULT
+			Declare Abstract Function Remove (ByVal pclsidCaller As GUID Ptr) As HRESULT
+			Declare Abstract Function IsUISupported (ByVal pszTypeOfUI As WString Ptr, ByVal pvExtraData As Any Ptr, ByVal cbExtraData As ULong, ByVal punkObject As Afx_IUnknown Ptr, ByVal pfSupported As Long Ptr) As HRESULT
+			Declare Abstract Function DisplayUI (ByVal hWndParent As HWND, ByVal pszTitle As WString Ptr, ByVal pszTypeOfUI As WString Ptr, ByVal pvExtraData As Any Ptr, ByVal cbExtraData As ULong, ByVal punkObject As Afx_IUnknown Ptr) As HRESULT
+			Declare Abstract Function MatchesAttributes (ByVal pszAttributes As WString Ptr, ByVal pfMatches As Long Ptr) As HRESULT
+		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpObjectTokenCategory
+	' Interface name: ISpObjectTokenCategory
 	' IID: {2D3D3845-39AF-4850-BBF9-40B49780011D}
-	' Documentation string: Afx_ISpObjectTokenCategory
+	' Documentation string: ISpObjectTokenCategory
 	' Attributes =  512 [&h00000200] [Restricted]
-	' Inherited interface = Afx_ISpDataKey
+	' Inherited interface = ISpDataKey
 	' Number of methods = 6
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpObjectTokenCategory_INTERFACE_DEFINED__
-		#define __Afx_ISpObjectTokenCategory_INTERFACE_DEFINED__
+	#ifndef __ISpObjectTokenCategory_INTERFACE_DEFINED__
+		#define __ISpObjectTokenCategory_INTERFACE_DEFINED__
 		
-		Type Afx_ISpObjectTokenCategory_ Extends Afx_ISpDataKey
-			Declare Abstract Function SetId (ByVal pszCategoryId AS WString Ptr, ByVal fCreateIfNotExist AS Long) AS HRESULT
-			Declare Abstract Function GetId (ByVal ppszCoMemCategoryId AS WString Ptr Ptr) AS HRESULT
-			Declare Abstract Function GetDataKey (ByVal spdkl AS SPDATAKEYLOCATION, ByVal ppDataKey AS Afx_ISpDataKey Ptr Ptr) AS HRESULT
-			Declare Abstract Function EnumTokens (ByVal pzsReqAttribs AS WString Ptr, ByVal pszOptAttribs AS WString Ptr, ByVal ppEnum AS Afx_IEnumSpObjectTokens Ptr Ptr) AS HRESULT
-			Declare Abstract Function SetDefaultTokenId (ByVal pszTokenId AS WString Ptr) AS HRESULT
-			Declare Abstract Function GetDefaultTokenId (ByVal ppszCoMemTokenId AS WString Ptr Ptr) AS HRESULT
-		END Type
+		Type ISpObjectTokenCategory_ Extends ISpDataKey
+			Declare Abstract Function SetId (ByVal pszCategoryId As WString Ptr, ByVal fCreateIfNotExist As Long) As HRESULT
+			Declare Abstract Function GetId (ByVal ppszCoMemCategoryId As WString Ptr Ptr) As HRESULT
+			Declare Abstract Function GetDataKey (ByVal spdkl As SPDATAKEYLOCATION, ByVal ppDataKey As ISpDataKey Ptr Ptr) As HRESULT
+			Declare Abstract Function EnumTokens (ByVal pzsReqAttribs As WString Ptr, ByVal pszOptAttribs As WString Ptr, ByVal ppEnum As IEnumSpObjectTokens Ptr Ptr) As HRESULT
+			Declare Abstract Function SetDefaultTokenId (ByVal pszTokenId As WString Ptr) As HRESULT
+			Declare Abstract Function GetDefaultTokenId (ByVal ppszCoMemTokenId As WString Ptr Ptr) As HRESULT
+		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpObjectWithToken
+	' Interface name: ISpObjectWithToken
 	' IID: {5B559F40-E952-11D2-BB91-00C04F8EE6C0}
-	' Documentation string: Afx_ISpObjectWithToken Interface
+	' Documentation string: ISpObjectWithToken Interface
 	' Attributes =  512 [&h00000200] [Restricted]
 	' Inherited interface = IUnknown
 	' Number of methods = 2
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpObjectWithToken_INTERFACE_DEFINED__
-		#define __Afx_ISpObjectWithToken_INTERFACE_DEFINED__
+	#ifndef __ISpObjectWithToken_INTERFACE_DEFINED__
+		#define __ISpObjectWithToken_INTERFACE_DEFINED__
 		
-		Type Afx_ISpObjectWithToken_ Extends Afx_IUnknown
-			Declare Abstract Function SetObjectToken (ByVal pToken AS Afx_ISpObjectToken Ptr) AS HRESULT
-			Declare Abstract Function GetObjectToken (ByVal ppToken AS Afx_ISpObjectToken Ptr Ptr) AS HRESULT
-		END Type
+		Type ISpObjectWithToken_ Extends Afx_IUnknown
+			Declare Abstract Function SetObjectToken (ByVal pToken As ISpObjectToken Ptr) As HRESULT
+			Declare Abstract Function GetObjectToken (ByVal ppToken As ISpObjectToken Ptr Ptr) As HRESULT
+		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpPhoneConverter
+	' Interface name: ISpPhoneConverter
 	' IID: {8445C581-0CAC-4A38-ABFE-9B2CE2826455}
-	' Documentation string: Afx_ISpPhoneConverter Interface
+	' Documentation string: ISpPhoneConverter Interface
 	' Attributes =  512 [&h00000200] [Restricted]
-	' Inherited interface = Afx_ISpObjectWithToken
+	' Inherited interface = ISpObjectWithToken
 	' Number of methods = 2
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpPhoneConverter_INTERFACE_DEFINED__
-		#define __Afx_ISpPhoneConverter_INTERFACE_DEFINED__
+	#ifndef __ISpPhoneConverter_INTERFACE_DEFINED__
+		#define __ISpPhoneConverter_INTERFACE_DEFINED__
 		
-		Type Afx_ISpPhoneConverter_ Extends Afx_ISpObjectWithToken
-			Declare Abstract Function PhoneToId (ByVal pszPhone AS WString Ptr, ByVal pId AS UShort Ptr) AS HRESULT
-			Declare Abstract Function IdToPhone (ByVal pId AS WString Ptr, ByVal pszPhone AS UShort Ptr) AS HRESULT
-		END Type
+		Type ISpPhoneConverter_ Extends ISpObjectWithToken
+			Declare Abstract Function PhoneToId (ByVal pszPhone As WString Ptr, ByVal pId As UShort Ptr) As HRESULT
+			Declare Abstract Function IdToPhone (ByVal pId As WString Ptr, ByVal pszPhone As UShort Ptr) As HRESULT
+		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpPhoneticAlphabetConverter
+	' Interface name: ISpPhoneticAlphabetConverter
 	' IID: {133ADCD4-19B4-4020-9FDC-842E78253B17}
-	' Documentation string: Afx_ISpPhoneticAlphabetConverter Interface
+	' Documentation string: ISpPhoneticAlphabetConverter Interface
 	' Attributes =  512 [&h00000200] [Restricted]
 	' Inherited interface = IUnknown
 	' Number of methods = 5
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpPhoneticAlphabetConverter_INTERFACE_DEFINED__
-		#define __Afx_ISpPhoneticAlphabetConverter_INTERFACE_DEFINED__
+	#ifndef __ISpPhoneticAlphabetConverter_INTERFACE_DEFINED__
+		#define __ISpPhoneticAlphabetConverter_INTERFACE_DEFINED__
 		
-		Type Afx_ISpPhoneticAlphabetConverter_ Extends Afx_IUnknown
-			Declare Abstract Function GetLangId (ByVal pLangID AS UShort Ptr) AS HRESULT
-			Declare Abstract Function SetLangId (ByVal LangId AS UShort) AS HRESULT
-			Declare Abstract Function SAPI2UPS (ByVal pszSAPIId AS UShort Ptr, ByVal pszUPSId AS UShort Ptr, ByVal cMaxLength AS ULong) AS HRESULT
-			Declare Abstract Function UPS2SAPI (ByVal pszUPSId AS UShort Ptr, ByVal pszSAPIId AS UShort Ptr, ByVal cMaxLength AS ULong) AS HRESULT
-			Declare Abstract Function GetMaxConvertLength (ByVal cSrcLength AS ULong, ByVal bSAPI2UPS AS Long, ByVal pcMaxDestLength AS ULong Ptr) AS HRESULT
-		END Type
+		Type ISpPhoneticAlphabetConverter_ Extends Afx_IUnknown
+			Declare Abstract Function GetLangId (ByVal pLangID As UShort Ptr) As HRESULT
+			Declare Abstract Function SetLangId (ByVal LangId As UShort) As HRESULT
+			Declare Abstract Function SAPI2UPS (ByVal pszSAPIId As UShort Ptr, ByVal pszUPSId As UShort Ptr, ByVal cMaxLength As ULong) As HRESULT
+			Declare Abstract Function UPS2SAPI (ByVal pszUPSId As UShort Ptr, ByVal pszSAPIId As UShort Ptr, ByVal cMaxLength As ULong) As HRESULT
+			Declare Abstract Function GetMaxConvertLength (ByVal cSrcLength As ULong, ByVal bSAPI2UPS As Long, ByVal pcMaxDestLength As ULong Ptr) As HRESULT
+		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpPhoneticAlphabetSelection
+	' Interface name: ISpPhoneticAlphabetSelection
 	' IID: {B2745EFD-42CE-48CA-81F1-A96E02538A90}
-	' Documentation string: Afx_ISpPhoneticAlphabetSelection Interface
+	' Documentation string: ISpPhoneticAlphabetSelection Interface
 	' Attributes =  512 [&h00000200] [Restricted]
 	' Inherited interface = IUnknown
 	' Number of methods = 2
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpPhoneticAlphabetSelection_INTERFACE_DEFINED__
-		#define __Afx_ISpPhoneticAlphabetSelection_INTERFACE_DEFINED__
+	#ifndef __ISpPhoneticAlphabetSelection_INTERFACE_DEFINED__
+		#define __ISpPhoneticAlphabetSelection_INTERFACE_DEFINED__
 		
-		Type Afx_ISpPhoneticAlphabetSelection_ Extends Afx_IUnknown
-			Declare Abstract Function IsAlphabetUPS (ByVal pfIsUPS AS Long Ptr) AS HRESULT
-			Declare Abstract Function SetAlphabetToUPS (ByVal fForceUPS AS Long) AS HRESULT
-		END Type
+		Type ISpPhoneticAlphabetSelection_ Extends Afx_IUnknown
+			Declare Abstract Function IsAlphabetUPS (ByVal pfIsUPS As Long Ptr) As HRESULT
+			Declare Abstract Function SetAlphabetToUPS (ByVal fForceUPS As Long) As HRESULT
+		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpPhrase
+	' Interface name: ISpPhrase
 	' IID: {1A5C0354-B621-4B5A-8791-D306ED379E53}
-	' Documentation string: Afx_ISpPhrase Interface
+	' Documentation string: ISpPhrase Interface
 	' Attributes =  512 [&h00000200] [Restricted]
 	' Inherited interface = IUnknown
 	' Number of methods = 4
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpPhrase_INTERFACE_DEFINED__
-		#define __Afx_ISpPhrase_INTERFACE_DEFINED__
+	#ifndef __ISpPhrase_INTERFACE_DEFINED__
+		#define __ISpPhrase_INTERFACE_DEFINED__
 		
-		Type Afx_ISpPhrase_ Extends Afx_IUnknown
+		Type ISpPhrase_ Extends Afx_IUnknown
 			Declare Abstract Function GetPhrase (ByVal ppCoMemPhrase AS SPPHRASE Ptr Ptr) AS HRESULT
 			Declare Abstract Function GetSerializedPhrase (ByVal ppCoMemPhrase AS SPSERIALIZEDPHRASE Ptr Ptr) AS HRESULT
 			Declare Abstract Function GetText (ByVal ulStart AS ULong, ByVal ulCount AS ULong, ByVal fUseTextReplacements AS Long, ByVal ppszCoMemText AS WString Ptr Ptr, ByVal pbDisplayAttributes AS UBYTE Ptr = NULL) AS HRESULT
@@ -3002,98 +2947,90 @@ Namespace Speech
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpPhraseAlt
+	' Interface name: ISpPhraseAlt
 	' IID: {8FCEBC98-4E49-4067-9C6C-D86A0E092E3D}
-	' Documentation string: Afx_ISpPhraseAlt Interface
+	' Documentation string: ISpPhraseAlt Interface
 	' Attributes =  512 [&h00000200] [Restricted]
-	' Inherited interface = Afx_ISpPhrase
+	' Inherited interface = ISpPhrase
 	' Number of methods = 2
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpPhraseAlt_INTERFACE_DEFINED__
-		#define __Afx_ISpPhraseAlt_INTERFACE_DEFINED__
+	#ifndef __ISpPhraseAlt_INTERFACE_DEFINED__
+		#define __ISpPhraseAlt_INTERFACE_DEFINED__
 		
-		Type Afx_ISpPhraseAlt_ Extends Afx_ISpPhrase
-			Declare Abstract Function GetAltInfo (ByVal ppParent AS Afx_ISpPhrase Ptr Ptr, ByVal pulStartElementInParent AS ULong Ptr, ByVal pcElementsInParent AS ULong Ptr, ByVal pcElementsInAlt AS ULong Ptr) AS HRESULT
+		Type ISpPhraseAlt_ Extends ISpPhrase
+			Declare Abstract Function GetAltInfo (ByVal ppParent AS ISpPhrase Ptr Ptr, ByVal pulStartElementInParent AS ULong Ptr, ByVal pcElementsInParent AS ULong Ptr, ByVal pcElementsInAlt AS ULong Ptr) AS HRESULT
 			Declare Abstract Function Commit () AS HRESULT
 		END Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpProperties
+	' Interface name: ISpProperties
 	' IID: {5B4FB971-B115-4DE1-AD97-E482E3BF6EE4}
-	' Documentation string: Afx_ISpProperties Interface
+	' Documentation string: ISpProperties Interface
 	' Attributes =  512 [&h00000200] [Restricted]
 	' Inherited interface = IUnknown
 	' Number of methods = 4
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpProperties_INTERFACE_DEFINED__
-		#define __Afx_ISpProperties_INTERFACE_DEFINED__
+	#ifndef __ISpProperties_INTERFACE_DEFINED__
+		#define __ISpProperties_INTERFACE_DEFINED__
 		
-		Type Afx_ISpProperties_ Extends Afx_IUnknown
-			Declare Abstract Function SetPropertyNum (ByVal pName AS WString Ptr, ByVal lValue AS Long) AS HRESULT
-			Declare Abstract Function GetPropertyNum (ByVal pName AS WString Ptr, ByVal plValue AS Long Ptr) AS HRESULT
-			Declare Abstract Function SetPropertyString (ByVal pName AS WString Ptr, ByVal pValue AS WString Ptr) AS HRESULT
-			Declare Abstract Function GetPropertyString (ByVal pName AS WString Ptr, ByVal ppCoMemValue AS WString Ptr Ptr) AS HRESULT
-		END Type
+		Type ISpProperties_ Extends Afx_IUnknown
+			Declare Abstract Function SetPropertyNum (ByVal pName As WString Ptr, ByVal lValue As Long) As HRESULT
+			Declare Abstract Function GetPropertyNum (ByVal pName As WString Ptr, ByVal plValue As Long Ptr) As HRESULT
+			Declare Abstract Function SetPropertyString (ByVal pName As WString Ptr, ByVal pValue As WString Ptr) As HRESULT
+			Declare Abstract Function GetPropertyString (ByVal pName As WString Ptr, ByVal ppCoMemValue As WString Ptr Ptr) As HRESULT
+		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpRecoCategory
+	' Interface name: ISpRecoCategory
 	' IID: {DA0CD0F9-14A2-4F09-8C2A-85CC48979345}
-	' Documentation string: Afx_ISpRecoCategory Interface
+	' Documentation string: ISpRecoCategory Interface
 	' Attributes =  512 [&h00000200] [Restricted]
 	' Inherited interface = IUnknown
 	' Number of methods = 1
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpRecoCategory_INTERFACE_DEFINED__
-		#define __Afx_ISpRecoCategory_INTERFACE_DEFINED__
+	#ifndef __ISpRecoCategory_INTERFACE_DEFINED__
+		#define __ISpRecoCategory_INTERFACE_DEFINED__
 		
-		Type Afx_ISpRecoCategory_ Extends Afx_IUnknown
-			Declare Abstract Function GetType (ByVal peCategoryType AS SPCATEGORYType Ptr) AS HRESULT
-		END Type
+		Type ISpRecoCategory_ Extends Afx_IUnknown
+			Declare Abstract Function GetType (ByVal peCategoryType As SPCATEGORYType Ptr) As HRESULT
+		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpRecoContext
+	' Interface name: ISpRecoContext
 	' IID: {F740A62F-7C15-489E-8234-940A33D9272D}
-	' Documentation string: Afx_ISpRecoContext Interface
+	' Documentation string: ISpRecoContext Interface
 	' Attributes =  512 [&h00000200] [Restricted]
-	' Inherited interface = Afx_ISpEventSource
+	' Inherited interface = ISpEventSource
 	' Number of methods = 18
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpRecoContext_INTERFACE_DEFINED__
-		#define __Afx_ISpRecoContext_INTERFACE_DEFINED__
+	#ifndef __ISpRecoContext_INTERFACE_DEFINED__
+		#define __ISpRecoContext_INTERFACE_DEFINED__
 		
-		Type Afx_ISpRecoContext_ Extends Afx_ISpEventSource
-			Declare Abstract Function GetRecognizer (ByVal ppRecognizer As Afx_ISpRecognizer Ptr Ptr) As HRESULT
-			Declare Abstract Function CreateGrammar (ByVal ullGrammarID As ULongInt, ByVal ppGrammar As Afx_ISpRecoGrammar Ptr Ptr) As HRESULT
+		Type ISpRecoContext_ Extends ISpEventSource
+			Declare Abstract Function GetRecognizer (ByVal ppRecognizer As ISpRecognizer Ptr Ptr) As HRESULT
+			Declare Abstract Function CreateGrammar (ByVal ullGrammarID As ULongInt, ByVal ppGrammar As ISpRecoGrammar Ptr Ptr) As HRESULT
 			Declare Abstract Function GetStatus (ByVal pStatus As SPRECOCONTEXTSTATUS Ptr) As HRESULT
 			Declare Abstract Function GetMaxAlternates (ByVal pcAlternates As ULong Ptr) As HRESULT
 			Declare Abstract Function SetMaxAlternates (ByVal cAlternates As ULong) As HRESULT
 			Declare Abstract Function SetAudioOptions (ByVal Options As SPAUDIOOPTIONS, ByVal pAudioFormatId As GUID Ptr, ByVal pWaveFormatEx As WaveFormatEx Ptr) As HRESULT
 			Declare Abstract Function GetAudioOptions (ByVal pOptions As SPAUDIOOPTIONS Ptr, ByVal pAudioFormatId As GUID Ptr, ByVal ppCoMemWFEX As WaveFormatEx Ptr Ptr) As HRESULT
-			Declare Abstract Function DeserializeResult (ByVal pSerializedResult As SPSERIALIZEDRESULT Ptr, ByVal ppResult As Afx_ISpRecoResult Ptr Ptr) As HRESULT
+			Declare Abstract Function DeserializeResult (ByVal pSerializedResult As SPSERIALIZEDRESULT Ptr, ByVal ppResult As ISpRecoResult Ptr Ptr) As HRESULT
 			Declare Abstract Function Bookmark (ByVal Options As SPBOOKMARKOPTIONS, ByVal ullStreamPosition As ULongInt, ByVal lparamEvent As Long_Ptr) As HRESULT
 			Declare Abstract Function SetAdaptationData (ByVal pAdaptationData As WString Ptr, ByVal cch As ULong) As HRESULT
 			Declare Abstract Function Pause (ByVal dwReserved As ULong) As HRESULT
 			Declare Abstract Function Resume (ByVal dwReserved As ULong) As HRESULT
-			Declare Abstract Function SetVoice (ByVal pVoice As Afx_ISpVoice Ptr, ByVal fAllowFormatChanges As Long) As HRESULT
-			Declare Abstract Function GetVoice (ByVal ppVoice As Afx_ISpVoice Ptr Ptr) As HRESULT
+			Declare Abstract Function SetVoice (ByVal pVoice As ISpVoice Ptr, ByVal fAllowFormatChanges As Long) As HRESULT
+			Declare Abstract Function GetVoice (ByVal ppVoice As ISpVoice Ptr Ptr) As HRESULT
 			Declare Abstract Function SetVoicePurgeEvent (ByVal ullEventInterest As ULongInt) As HRESULT
 			Declare Abstract Function GetVoicePurgeEvent (ByVal pullEventInterest As ULongInt Ptr) As HRESULT
 			Declare Abstract Function SetContextState (ByVal eContextState As SPCONTEXTSTATE) As HRESULT
@@ -3103,20 +3040,18 @@ Namespace Speech
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpRecoContext2
+	' Interface name: ISpRecoContext2
 	' IID: {BEAD311C-52FF-437F-9464-6B21054CA73D}
-	' Documentation string: Afx_ISpRecoContext2 Interface
+	' Documentation string: ISpRecoContext2 Interface
 	' Attributes =  512 [&h00000200] [Restricted]
 	' Inherited interface = IUnknown
 	' Number of methods = 3
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpRecoContext2_INTERFACE_DEFINED__
-		#define __Afx_ISpRecoContext2_INTERFACE_DEFINED__
+	#ifndef __ISpRecoContext2_INTERFACE_DEFINED__
+		#define __ISpRecoContext2_INTERFACE_DEFINED__
 		
-		Type Afx_ISpRecoContext2_ Extends Afx_IUnknown
+		Type ISpRecoContext2_ Extends Afx_IUnknown
 			Declare Abstract Function SetGrammarOptions (ByVal eGrammarOptions As ULong) As HRESULT
 			Declare Abstract Function GetGrammarOptions (ByVal peGrammarOptions As ULong Ptr) As HRESULT
 			Declare Abstract Function SetAdaptationData2 (ByVal pAdaptationData As WString Ptr, ByVal cch As ULong, ByVal pTopicName As WString Ptr, ByVal eAdaptationSettings As ULong, ByVal eRelevance As SPADAPTATIONRELEVANCE) As HRESULT
@@ -3125,28 +3060,26 @@ Namespace Speech
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpRecognizer
+	' Interface name: ISpRecognizer
 	' IID: {C2B5F241-DAA0-4507-9E16-5A1EAA2B7A5C}
-	' Documentation string: Afx_ISpRecognizer Interface
+	' Documentation string: ISpRecognizer Interface
 	' Attributes =  512 [&h00000200] [Restricted]
-	' Inherited interface = Afx_ISpProperties
+	' Inherited interface = ISpProperties
 	' Number of methods = 16
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpRecognizer_INTERFACE_DEFINED__
-		#define __Afx_ISpRecognizer_INTERFACE_DEFINED__
+	#ifndef __ISpRecognizer_INTERFACE_DEFINED__
+		#define __ISpRecognizer_INTERFACE_DEFINED__
 		
-		Type Afx_ISpRecognizer_ Extends Afx_ISpProperties
-			Declare Abstract Function SetRecognizer (ByVal pRecognizer As Afx_ISpObjectToken Ptr) As HRESULT
-			Declare Abstract Function GetRecognizer (ByVal ppRecognizer As Afx_ISpObjectToken Ptr Ptr) As HRESULT
+		Type ISpRecognizer_ Extends ISpProperties
+			Declare Abstract Function SetRecognizer (ByVal pRecognizer As ISpObjectToken Ptr) As HRESULT
+			Declare Abstract Function GetRecognizer (ByVal ppRecognizer As ISpObjectToken Ptr Ptr) As HRESULT
 			Declare Abstract Function SetInput (ByVal pUnkInput As Afx_IUnknown Ptr, ByVal fAllowFormatChanges As Long) As HRESULT
-			Declare Abstract Function GetInputObjectToken (ByVal ppToken As Afx_ISpObjectToken Ptr Ptr) As HRESULT
-			Declare Abstract Function GetInputStream (ByVal ppStream As Afx_ISpStreamFormat Ptr Ptr) As HRESULT
-			Declare Abstract Function CreateRecoContext (ByVal ppNewCtxt As Afx_ISpRecoContext Ptr Ptr) As HRESULT
-			Declare Abstract Function GetRecoProfile (ByVal ppToken As Afx_ISpObjectToken Ptr Ptr) As HRESULT
-			Declare Abstract Function SetRecoProfile (ByVal pToken As Afx_ISpObjectToken Ptr) As HRESULT
+			Declare Abstract Function GetInputObjectToken (ByVal ppToken As ISpObjectToken Ptr Ptr) As HRESULT
+			Declare Abstract Function GetInputStream (ByVal ppStream As ISpStreamFormat Ptr Ptr) As HRESULT
+			Declare Abstract Function CreateRecoContext (ByVal ppNewCtxt As ISpRecoContext Ptr Ptr) As HRESULT
+			Declare Abstract Function GetRecoProfile (ByVal ppToken As ISpObjectToken Ptr Ptr) As HRESULT
+			Declare Abstract Function SetRecoProfile (ByVal pToken As ISpObjectToken Ptr) As HRESULT
 			Declare Abstract Function IsSharedInstance () As HRESULT
 			Declare Abstract Function GetRecoState (ByVal pState As SPRECOSTATE Ptr) As HRESULT
 			Declare Abstract Function SetRecoState (ByVal NewState As SPRECOSTATE) As HRESULT
@@ -3154,27 +3087,25 @@ Namespace Speech
 			Declare Abstract Function GetFormat (ByVal WaveFormatType As SPSTREAMFORMATType, ByVal pFormatId As GUID Ptr, ByVal ppCoMemWFEX As WaveFormatEx Ptr Ptr) As HRESULT
 			Declare Abstract Function IsUISupported (ByVal pszTypeOfUI As WString Ptr, ByVal pvExtraData As Any Ptr, ByVal cbExtraData As ULong, ByVal pfSupported As Long Ptr) As HRESULT
 			Declare Abstract Function DisplayUI (ByVal hWndParent As HWND, ByVal pszTitle As WString Ptr, ByVal pszTypeOfUI As WString Ptr, ByVal pvExtraData As Any Ptr, ByVal cbExtraData As ULong) As HRESULT
-			Declare Abstract Function EmulateRecognition (ByVal pPhrase As Afx_ISpPhrase Ptr) As HRESULT
+			Declare Abstract Function EmulateRecognition (ByVal pPhrase As ISpPhrase Ptr) As HRESULT
 		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpRecognizer2
+	' Interface name: ISpRecognizer2
 	' IID: {8FC6D974-C81E-4098-93C5-0147F61ED4D3}
-	' Documentation string: Afx_ISpRecognizer2 Interface
+	' Documentation string: ISpRecognizer2 Interface
 	' Attributes =  512 [&h00000200] [Restricted]
 	' Inherited interface = IUnknown
 	' Number of methods = 3
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpRecognizer2_INTERFACE_DEFINED__
-		#define __Afx_ISpRecognizer2_INTERFACE_DEFINED__
+	#ifndef __ISpRecognizer2_INTERFACE_DEFINED__
+		#define __ISpRecognizer2_INTERFACE_DEFINED__
 		
-		Type Afx_ISpRecognizer2_ Extends Afx_IUnknown
-			Declare Abstract Function EmulateRecognitionEx (ByVal pPhrase As Afx_ISpPhrase Ptr, ByVal dwCompareFlags As ULong) As HRESULT
+		Type ISpRecognizer2_ Extends Afx_IUnknown
+			Declare Abstract Function EmulateRecognitionEx (ByVal pPhrase As ISpPhrase Ptr, ByVal dwCompareFlags As ULong) As HRESULT
 			Declare Abstract Function SetTrainingState (ByVal fDoingTraining As Long, ByVal fAdaptFromTrainingData As Long) As HRESULT
 			Declare Abstract Function ResetAcousticModelAdaptation () As HRESULT
 		End Type
@@ -3182,229 +3113,211 @@ Namespace Speech
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpRecognizer3
+	' Interface name: ISpRecognizer3
 	' IID: {DF1B943C-5838-4AA2-8706-D7CD5B333499}
-	' Documentation string: Afx_ISpRecognizer3 Interface
+	' Documentation string: ISpRecognizer3 Interface
 	' Attributes =  512 [&h00000200] [Restricted]
 	' Inherited interface = IUnknown
 	' Number of methods = 3
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpRecognizer3_INTERFACE_DEFINED__
-		#define __Afx_ISpRecognizer3_INTERFACE_DEFINED__
+	#ifndef __ISpRecognizer3_INTERFACE_DEFINED__
+		#define __ISpRecognizer3_INTERFACE_DEFINED__
 		
-		Type Afx_ISpRecognizer3_ Extends Afx_IUnknown
-			Declare Abstract Function GetCategory (ByVal categoryType AS SPCATEGORYType, ByVal ppCategory AS Afx_ISpRecoCategory Ptr Ptr) AS HRESULT
-			Declare Abstract Function SetActiveCategory (ByVal pCategory AS Afx_ISpRecoCategory Ptr) AS HRESULT
-			Declare Abstract Function GetActiveCategory (ByVal ppCategory AS Afx_ISpRecoCategory Ptr Ptr) AS HRESULT
-		END Type
+		Type ISpRecognizer3_ Extends Afx_IUnknown
+			Declare Abstract Function GetCategory (ByVal categoryType As SPCATEGORYType, ByVal ppCategory As ISpRecoCategory Ptr Ptr) As HRESULT
+			Declare Abstract Function SetActiveCategory (ByVal pCategory As ISpRecoCategory Ptr) As HRESULT
+			Declare Abstract Function GetActiveCategory (ByVal ppCategory As ISpRecoCategory Ptr Ptr) As HRESULT
+		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpRecoGrammar
+	' Interface name: ISpRecoGrammar
 	' IID: {2177DB29-7F45-47D0-8554-067E91C80502}
-	' Documentation string: Afx_ISpRecoGrammar Interface
+	' Documentation string: ISpRecoGrammar Interface
 	' Attributes =  512 [&h00000200] [Restricted]
-	' Inherited interface = Afx_ISpGrammarBuilder
+	' Inherited interface = ISpGrammarBuilder
 	' Number of methods = 18
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpRecoGrammar_INTERFACE_DEFINED__
-		#define __Afx_ISpRecoGrammar_INTERFACE_DEFINED__
+	#ifndef __ISpRecoGrammar_INTERFACE_DEFINED__
+		#define __ISpRecoGrammar_INTERFACE_DEFINED__
 		
-		Type Afx_ISpRecoGrammar_ Extends Afx_ISpGrammarBuilder
-			Declare Abstract Function GetGrammarId (ByVal pullGrammarId AS ULongINT Ptr) AS HRESULT
-			Declare Abstract Function GetRecoContext (ByVal ppRecoCtxt AS Afx_ISpRecoContext Ptr Ptr) AS HRESULT
-			Declare Abstract Function LoadCmdFromFile (ByVal pszFileName AS WString Ptr, ByVal Options AS SPLOADOPTIONS) AS HRESULT
-			Declare Abstract Function LoadCmdFromObject (ByVal rcid AS GUID Ptr, ByVal pszGrammarName AS WString Ptr, ByVal Options AS SPLOADOPTIONS) AS HRESULT
-			Declare Abstract Function LoadCmdFromResource (ByVal hModule AS ANY Ptr, ByVal pszResourceName AS WString Ptr, ByVal pszResourceType AS WString Ptr, ByVal wLanguage AS UShort, ByVal Options AS SPLOADOPTIONS) AS HRESULT
-			Declare Abstract Function LoadCmdFromMemory (ByVal pGrammar AS SPBINARYGRAMMAR Ptr, ByVal Options AS SPLOADOPTIONS) AS HRESULT
-			Declare Abstract Function LoadCmdFromProprietaryGrammar (ByVal rguidParam AS GUID Ptr, ByVal pszStringParam AS WString Ptr, ByVal pvDataPrarm AS ANY Ptr, ByVal cbDataSize AS ULong, ByVal Options AS SPLOADOPTIONS) AS HRESULT
-			Declare Abstract Function SetRuleState (ByVal pszName AS WString Ptr, ByVal pReserved AS ANY Ptr, ByVal NewState AS SPRULESTATE) AS HRESULT
-			Declare Abstract Function SetRuleIdState (ByVal ulRuleId AS ULong, ByVal NewState AS SPRULESTATE) AS HRESULT
-			Declare Abstract Function LoadDictation (ByVal pszTopicName AS WString Ptr, ByVal Options AS SPLOADOPTIONS) AS HRESULT
-			Declare Abstract Function UnloadDictation () AS HRESULT
-			Declare Abstract Function SetDictationState (ByVal NewState AS SPRULESTATE) AS HRESULT
-			Declare Abstract Function SetWordSequenceData (ByVal pText AS UShort Ptr, ByVal cchText AS ULong, ByVal pInfo AS SPTEXTSELECTIONINFO Ptr) AS HRESULT
-			Declare Abstract Function SetTextSelection (ByVal pInfo AS SPTEXTSELECTIONINFO Ptr) AS HRESULT
-			Declare Abstract Function IsPronounceable (ByVal pszWord AS WString Ptr, ByVal pWordPronounceable AS SPWORDPRONOUNCEABLE Ptr) AS HRESULT
-			Declare Abstract Function SetGrammarState (ByVal eGrammarState AS SPGRAMMARSTATE) AS HRESULT
-			Declare Abstract Function SaveCmd (ByVal pStream AS IStream Ptr, ByVal ppszCoMemErrorText AS WString Ptr Ptr = NULL) AS HRESULT
-			Declare Abstract Function GetGrammarState (ByVal peGrammarState AS SPGRAMMARSTATE Ptr) AS HRESULT
-		END Type
+		Type ISpRecoGrammar_ Extends ISpGrammarBuilder
+			Declare Abstract Function GetGrammarId (ByVal pullGrammarId As ULongInt Ptr) As HRESULT
+			Declare Abstract Function GetRecoContext (ByVal ppRecoCtxt As ISpRecoContext Ptr Ptr) As HRESULT
+			Declare Abstract Function LoadCmdFromFile (ByVal pszFileName As WString Ptr, ByVal Options As SPLOADOPTIONS) As HRESULT
+			Declare Abstract Function LoadCmdFromObject (ByVal rcid As GUID Ptr, ByVal pszGrammarName As WString Ptr, ByVal Options As SPLOADOPTIONS) As HRESULT
+			Declare Abstract Function LoadCmdFromResource (ByVal hModule As Any Ptr, ByVal pszResourceName As WString Ptr, ByVal pszResourceType As WString Ptr, ByVal wLanguage As UShort, ByVal Options As SPLOADOPTIONS) As HRESULT
+			Declare Abstract Function LoadCmdFromMemory (ByVal pGrammar As SPBINARYGRAMMAR Ptr, ByVal Options As SPLOADOPTIONS) As HRESULT
+			Declare Abstract Function LoadCmdFromProprietaryGrammar (ByVal rguidParam As GUID Ptr, ByVal pszStringParam As WString Ptr, ByVal pvDataPrarm As Any Ptr, ByVal cbDataSize As ULong, ByVal Options As SPLOADOPTIONS) As HRESULT
+			Declare Abstract Function SetRuleState (ByVal pszName As WString Ptr, ByVal pReserved As Any Ptr, ByVal NewState As SPRULESTATE) As HRESULT
+			Declare Abstract Function SetRuleIdState (ByVal ulRuleId As ULong, ByVal NewState As SPRULESTATE) As HRESULT
+			Declare Abstract Function LoadDictation (ByVal pszTopicName As WString Ptr, ByVal Options As SPLOADOPTIONS) As HRESULT
+			Declare Abstract Function UnloadDictation () As HRESULT
+			Declare Abstract Function SetDictationState (ByVal NewState As SPRULESTATE) As HRESULT
+			Declare Abstract Function SetWordSequenceData (ByVal pText As UShort Ptr, ByVal cchText As ULong, ByVal pInfo As SPTEXTSELECTIONINFO Ptr) As HRESULT
+			Declare Abstract Function SetTextSelection (ByVal pInfo As SPTEXTSELECTIONINFO Ptr) As HRESULT
+			Declare Abstract Function IsPronounceable (ByVal pszWord As WString Ptr, ByVal pWordPronounceable As SPWORDPRONOUNCEABLE Ptr) As HRESULT
+			Declare Abstract Function SetGrammarState (ByVal eGrammarState As SPGRAMMARSTATE) As HRESULT
+			Declare Abstract Function SaveCmd (ByVal pStream As IStream Ptr, ByVal ppszCoMemErrorText As WString Ptr Ptr = NULL) As HRESULT
+			Declare Abstract Function GetGrammarState (ByVal peGrammarState As SPGRAMMARSTATE Ptr) As HRESULT
+		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpRecoGrammar2
+	' Interface name: ISpRecoGrammar2
 	' IID: {4B37BC9E-9ED6-44A3-93D3-18F022B79EC3}
-	' Documentation string: Afx_ISpRecoGrammar2 Interface
+	' Documentation string: ISpRecoGrammar2 Interface
 	' Attributes =  512 [&h00000200] [Restricted]
 	' Inherited interface = IUnknown
 	' Number of methods = 8
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpRecoGrammar2_INTERFACE_DEFINED__
-		#define __Afx_ISpRecoGrammar2_INTERFACE_DEFINED__
+	#ifndef __ISpRecoGrammar2_INTERFACE_DEFINED__
+		#define __ISpRecoGrammar2_INTERFACE_DEFINED__
 		
-		Type Afx_ISpRecoGrammar2_ Extends Afx_IUnknown
-			Declare Abstract Function GetRules (ByVal ppCoMemRules AS SPRULE Ptr Ptr, ByVal puNumRules AS UINT Ptr) AS HRESULT
-			Declare Abstract Function LoadCmdFromFile2 (ByVal pszFileName AS WString Ptr, ByVal Options AS SPLOADOPTIONS, ByVal pszSharingUri AS WString Ptr, ByVal pszBaseUri AS WString Ptr) AS HRESULT
-			Declare Abstract Function LoadCmdFromMemory2 (ByVal pGrammar AS SPBINARYGRAMMAR Ptr, ByVal Options AS SPLOADOPTIONS, ByVal pszSharingUri AS WString Ptr, ByVal pszBaseUri AS WString Ptr) AS HRESULT
-			Declare Abstract Function SetRulePriority (ByVal pszRuleName AS WString Ptr, ByVal ulRuleId AS ULong, ByVal nRulePriority AS INT_) AS HRESULT
-			Declare Abstract Function SetRuleWeight (ByVal pszRuleName AS WString Ptr, ByVal ulRuleId AS ULong, ByVal flWeight AS SINGLE) AS HRESULT
-			Declare Abstract Function SetDictationWeight (ByVal flWeight AS SINGLE) AS HRESULT
-			Declare Abstract Function SetGrammarLoader (ByVal pLoader AS Afx_ISpeechResourceLoader Ptr) AS HRESULT
-			Declare Abstract Function SetSMLSecurityManager (ByVal pSMLSecurityManager AS IInternetSecurityManager Ptr) AS HRESULT
-		END Type
+		Type ISpRecoGrammar2_ Extends Afx_IUnknown
+			Declare Abstract Function GetRules (ByVal ppCoMemRules As SPRULE Ptr Ptr, ByVal puNumRules As UINT Ptr) As HRESULT
+			Declare Abstract Function LoadCmdFromFile2 (ByVal pszFileName As WString Ptr, ByVal Options As SPLOADOPTIONS, ByVal pszSharingUri As WString Ptr, ByVal pszBaseUri As WString Ptr) As HRESULT
+			Declare Abstract Function LoadCmdFromMemory2 (ByVal pGrammar As SPBINARYGRAMMAR Ptr, ByVal Options As SPLOADOPTIONS, ByVal pszSharingUri As WString Ptr, ByVal pszBaseUri As WString Ptr) As HRESULT
+			Declare Abstract Function SetRulePriority (ByVal pszRuleName As WString Ptr, ByVal ulRuleId As ULong, ByVal nRulePriority As INT_) As HRESULT
+			Declare Abstract Function SetRuleWeight (ByVal pszRuleName As WString Ptr, ByVal ulRuleId As ULong, ByVal flWeight As Single) As HRESULT
+			Declare Abstract Function SetDictationWeight (ByVal flWeight As Single) As HRESULT
+			Declare Abstract Function SetGrammarLoader (ByVal pLoader As ISpeechResourceLoader Ptr) As HRESULT
+			Declare Abstract Function SetSMLSecurityManager (ByVal pSMLSecurityManager As IInternetSecurityManager Ptr) As HRESULT
+		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpRecoResult
+	' Interface name: ISpRecoResult
 	' IID: {20B053BE-E235-43CD-9A2A-8D17A48B7842}
-	' Documentation string: Afx_ISpRecoResult Interface
+	' Documentation string: ISpRecoResult Interface
 	' Attributes =  512 [&h00000200] [Restricted]
-	' Inherited interface = Afx_ISpPhrase
+	' Inherited interface = ISpPhrase
 	' Number of methods = 7
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpRecoResult_INTERFACE_DEFINED__
-		#define __Afx_ISpRecoResult_INTERFACE_DEFINED__
+	#ifndef __ISpRecoResult_INTERFACE_DEFINED__
+		#define __ISpRecoResult_INTERFACE_DEFINED__
 		
-		Type Afx_ISpRecoResult_ Extends Afx_ISpPhrase
+		Type ISpRecoResult_ Extends ISpPhrase
 			Declare Abstract Function GetResultTimes (ByVal pTimes AS SPRECORESULTTIMES Ptr) AS HRESULT
-			Declare Abstract Function GetAlternates (ByVal ulStartElement AS ULong, ByVal cElements AS ULong, ByVal ulRequestCount AS ULong, ByVal ppPhrases AS Afx_ISpPhraseAlt Ptr Ptr, ByVal pcPhrasesReturned AS ULong Ptr) AS HRESULT
-			Declare Abstract Function GetAudio (ByVal ulStartElement AS ULong, ByVal cElements AS ULong, ByVal ppStream AS Afx_ISpStreamFormat Ptr Ptr) AS HRESULT
+			Declare Abstract Function GetAlternates (ByVal ulStartElement AS ULong, ByVal cElements AS ULong, ByVal ulRequestCount AS ULong, ByVal ppPhrases AS ISpPhraseAlt Ptr Ptr, ByVal pcPhrasesReturned AS ULong Ptr) AS HRESULT
+			Declare Abstract Function GetAudio (ByVal ulStartElement AS ULong, ByVal cElements AS ULong, ByVal ppStream AS ISpStreamFormat Ptr Ptr) AS HRESULT
 			Declare Abstract Function SpeakAudio (ByVal ulStartElement AS ULong, ByVal cElements AS ULong, ByVal dwFlags AS ULong, ByVal pulStreamNumber AS ULong Ptr) AS HRESULT
 			Declare Abstract Function Serialize (ByVal ppCoMemSerializedResult AS SPSERIALIZEDRESULT Ptr Ptr) AS HRESULT
 			Declare Abstract Function ScaleAudio (ByVal pAudioFormatId AS GUID Ptr, ByVal pWaveFormatEx AS WaveFormatEx Ptr) AS HRESULT
-			Declare Abstract Function GetRecoContext (ByVal ppRecoContext AS Afx_ISpRecoContext Ptr Ptr) AS HRESULT
+			Declare Abstract Function GetRecoContext (ByVal ppRecoContext AS ISpRecoContext Ptr Ptr) AS HRESULT
 		END Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpResourceManager
+	' Interface name: ISpResourceManager
 	' IID: {93384E18-5014-43D5-ADBB-A78E055926BD}
-	' Documentation string: Afx_ISpResourceManager Interface
+	' Documentation string: ISpResourceManager Interface
 	' Attributes =  512 [&h00000200] [Restricted]
 	' Inherited interface = IServiceProvider
 	' Number of methods = 2
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpResourceManager_INTERFACE_DEFINED__
-		#define __Afx_ISpResourceManager_INTERFACE_DEFINED__
+	#ifndef __ISpResourceManager_INTERFACE_DEFINED__
+		#define __ISpResourceManager_INTERFACE_DEFINED__
 		
-		Type Afx_ISpResourceManager_ Extends Afx_IUnknown
-			' // IServiceProvider interface
-			Declare Abstract Function QueryService (ByVal guidService AS GUID Ptr, ByVal riid AS GUID Ptr, ByVal ppvObject AS IUnknown Ptr Ptr) AS HRESULT
-			' // ISpResourceManager interface
-			Declare Abstract Function SetObject (ByVal guidServiceId AS GUID Ptr, ByVal punkObject AS Afx_IUnknown Ptr) AS HRESULT
-			Declare Abstract Function GetObject (ByVal guidServiceId AS GUID Ptr, ByVal ObjectCLSID AS GUID Ptr, ByVal ObjectIID AS GUID Ptr, ByVal fReleaseWhenLastExternalRefReleased AS Long, ByVal ppObject AS ANY Ptr Ptr) AS HRESULT
-		END Type
+		Type ISpResourceManager_ Extends Afx_IUnknown
+			' IServiceProvider interface
+			Declare Abstract Function QueryService (ByVal guidService As GUID Ptr, ByVal riid As GUID Ptr, ByVal ppvObject As IUnknown Ptr Ptr) As HRESULT
+			' ISpResourceManager interface
+			Declare Abstract Function SetObject (ByVal guidServiceId As GUID Ptr, ByVal punkObject As Afx_IUnknown Ptr) As HRESULT
+			Declare Abstract Function GetObject (ByVal guidServiceId As GUID Ptr, ByVal ObjectCLSID As GUID Ptr, ByVal ObjectIID As GUID Ptr, ByVal fReleaseWhenLastExternalRefReleased As Long, ByVal ppObject As Any Ptr Ptr) As HRESULT
+		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpSerializeState
+	' Interface name: ISpSerializeState
 	' IID: {21B501A0-0EC7-46C9-92C3-A2BC784C54B9}
-	' Documentation string: Afx_ISpSerializeState Interface
+	' Documentation string: ISpSerializeState Interface
 	' Attributes =  512 [&h00000200] [Restricted]
 	' Inherited interface = IUnknown
 	' Number of methods = 2
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpSerializeState_INTERFACE_DEFINED__
-		#define __Afx_ISpSerializeState_INTERFACE_DEFINED__
+	#ifndef __ISpSerializeState_INTERFACE_DEFINED__
+		#define __ISpSerializeState_INTERFACE_DEFINED__
 		
-		Type Afx_ISpSerializeState_ Extends Afx_IUnknown
-			Declare Abstract Function GetSerializedState (ByVal ppbData AS UBYTE Ptr Ptr, ByVal pulSize AS ULong Ptr, ByVal dwReserved AS ULong) AS HRESULT
-			Declare Abstract Function SetSerializedState (ByVal pbData AS UBYTE Ptr, ByVal ulSize AS ULong, ByVal dwReserved AS ULong) AS HRESULT
-		END Type
+		Type ISpSerializeState_ Extends Afx_IUnknown
+			Declare Abstract Function GetSerializedState (ByVal ppbData As UByte Ptr Ptr, ByVal pulSize As ULong Ptr, ByVal dwReserved As ULong) As HRESULT
+			Declare Abstract Function SetSerializedState (ByVal pbData As UByte Ptr, ByVal ulSize As ULong, ByVal dwReserved As ULong) As HRESULT
+		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpShortcut
+	' Interface name: ISpShortcut
 	' IID: {3DF681E2-EA56-11D9-8BDE-F66BAD1E3F3A}
-	' Documentation string: Afx_ISpShortcut Interface
+	' Documentation string: ISpShortcut Interface
 	' Attributes =  512 [&h00000200] [Restricted]
 	' Inherited interface = IUnknown
 	' Number of methods = 8
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpShortcut_INTERFACE_DEFINED__
-		#define __Afx_ISpShortcut_INTERFACE_DEFINED__
+	#ifndef __ISpShortcut_INTERFACE_DEFINED__
+		#define __ISpShortcut_INTERFACE_DEFINED__
 		
-		Type Afx_ISpShortcut_ Extends Afx_IUnknown
-			Declare Abstract Function AddShortcut (ByVal pszDisplay AS WString Ptr, ByVal LangId AS UShort, ByVal pszSpoken AS WString Ptr, ByVal shType AS SPSHORTCUTType) AS HRESULT
-			Declare Abstract Function RemoveShortcut (ByVal pszDisplay AS WString Ptr, ByVal LangId AS UShort, ByVal pszSpoken AS WString Ptr, ByVal shType AS SPSHORTCUTType) AS HRESULT
-			Declare Abstract Function GetShortcuts (ByVal LangId AS UShort, ByVal pShortcutpairList AS SPSHORTCUTPAIRLIST Ptr) AS HRESULT
-			Declare Abstract Function GetGeneration (ByVal pdwGeneration AS ULong Ptr) AS HRESULT
-			Declare Abstract Function GetWordsFromGenerationChange (ByVal pdwGeneration AS ULong Ptr, ByVal pWordList AS SPWORDLIST Ptr) AS HRESULT
-			Declare Abstract Function GetWords (ByVal pdwGeneration AS ULong Ptr, ByVal pdwCookie AS ULong Ptr, ByVal pWordList AS SPWORDLIST Ptr) AS HRESULT
-			Declare Abstract Function GetShortcutsForGeneration (ByVal pdwGeneration AS ULong Ptr, ByVal pdwCookie AS ULong Ptr, ByVal pShortcutpairList AS SPSHORTCUTPAIRLIST Ptr) AS HRESULT
-			Declare Abstract Function GetGenerationChange (ByVal pdwGeneration AS ULong Ptr, ByVal pShortcutpairList AS SPSHORTCUTPAIRLIST Ptr) AS HRESULT
-		END Type
+		Type ISpShortcut_ Extends Afx_IUnknown
+			Declare Abstract Function AddShortcut (ByVal pszDisplay As WString Ptr, ByVal LangId As UShort, ByVal pszSpoken As WString Ptr, ByVal shType As SPSHORTCUTType) As HRESULT
+			Declare Abstract Function RemoveShortcut (ByVal pszDisplay As WString Ptr, ByVal LangId As UShort, ByVal pszSpoken As WString Ptr, ByVal shType As SPSHORTCUTType) As HRESULT
+			Declare Abstract Function GetShortcuts (ByVal LangId As UShort, ByVal pShortcutpairList As SPSHORTCUTPAIRLIST Ptr) As HRESULT
+			Declare Abstract Function GetGeneration (ByVal pdwGeneration As ULong Ptr) As HRESULT
+			Declare Abstract Function GetWordsFromGenerationChange (ByVal pdwGeneration As ULong Ptr, ByVal pWordList As SPWORDLIST Ptr) As HRESULT
+			Declare Abstract Function GetWords (ByVal pdwGeneration As ULong Ptr, ByVal pdwCookie As ULong Ptr, ByVal pWordList As SPWORDLIST Ptr) As HRESULT
+			Declare Abstract Function GetShortcutsForGeneration (ByVal pdwGeneration As ULong Ptr, ByVal pdwCookie As ULong Ptr, ByVal pShortcutpairList As SPSHORTCUTPAIRLIST Ptr) As HRESULT
+			Declare Abstract Function GetGenerationChange (ByVal pdwGeneration As ULong Ptr, ByVal pShortcutpairList As SPSHORTCUTPAIRLIST Ptr) As HRESULT
+		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpStream
+	' Interface name: ISpStream
 	' IID: {12E3CCA9-7518-44C5-A5E7-BA5A79CB929E}
-	' Documentation string: Afx_ISpStream Interface
+	' Documentation string: ISpStream Interface
 	' Attributes =  512 [&h00000200] [Restricted]
-	' Inherited interface = Afx_ISpStreamFormat
+	' Inherited interface = ISpStreamFormat
 	' Number of methods = 4
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpStream_INTERFACE_DEFINED__
-		#define __Afx_ISpStream_INTERFACE_DEFINED__
+	#ifndef __ISpStream_INTERFACE_DEFINED__
+		#define __ISpStream_INTERFACE_DEFINED__
 		
-		Type Afx_ISpStream_ Extends Afx_ISpStreamFormat
-			Declare Abstract Function SetBaseStream (ByVal pStream AS IStream Ptr, ByVal rguidFormat AS GUID Ptr, ByVal pWaveFormatEx AS WaveFormatEx Ptr) AS HRESULT
-			Declare Abstract Function GetBaseStream (ByVal ppStream AS IStream Ptr Ptr) AS HRESULT
-			Declare Abstract Function BindToFile (ByVal pszFileName AS WString Ptr, ByVal eMode AS SPFILEMODE, ByVal pFormatId AS GUID Ptr, ByVal pWaveFormatEx AS WaveFormatEx Ptr, ByVal ullEventInterest AS ULongINT) AS HRESULT
-			Declare Abstract Function Close () AS HRESULT
-		END Type
+		Type ISpStream_ Extends ISpStreamFormat
+			Declare Abstract Function SetBaseStream (ByVal pStream As IStream Ptr, ByVal rguidFormat As GUID Ptr, ByVal pWaveFormatEx As WaveFormatEx Ptr) As HRESULT
+			Declare Abstract Function GetBaseStream (ByVal ppStream As IStream Ptr Ptr) As HRESULT
+			Declare Abstract Function BindToFile (ByVal pszFileName As WString Ptr, ByVal eMode As SPFILEMODE, ByVal pFormatId As GUID Ptr, ByVal pWaveFormatEx As WaveFormatEx Ptr, ByVal ullEventInterest As ULongInt) As HRESULT
+			Declare Abstract Function Close () As HRESULT
+		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpStreamFormatConverter
+	' Interface name: ISpStreamFormatConverter
 	' IID: {678A932C-EA71-4446-9B41-78FDA6280A29}
-	' Documentation string: Afx_ISpStreamFormatConverter Interface
+	' Documentation string: ISpStreamFormatConverter Interface
 	' Attributes =  512 [&h00000200] [Restricted]
-	' Inherited interface = Afx_ISpStreamFormat
+	' Inherited interface = ISpStreamFormat
 	' Number of methods = 6
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpStreamFormatConverter_INTERFACE_DEFINED__
-		#define __Afx_ISpStreamFormatConverter_INTERFACE_DEFINED__
+	#ifndef __ISpStreamFormatConverter_INTERFACE_DEFINED__
+		#define __ISpStreamFormatConverter_INTERFACE_DEFINED__
 		
-		Type Afx_ISpStreamFormatConverter_ Extends Afx_ISpStreamFormat
-			Declare Abstract Function SetBaseStream (ByVal pStream AS Afx_ISpStreamFormat Ptr, ByVal fSetFormatToBaseStreamFormat AS Long, ByVal fWriteToBaseStream AS Long) AS HRESULT
-			Declare Abstract Function GetBaseStream (ByVal ppStream AS Afx_ISpStreamFormat Ptr Ptr) AS HRESULT
+		Type ISpStreamFormatConverter_ Extends ISpStreamFormat
+			Declare Abstract Function SetBaseStream (ByVal pStream AS ISpStreamFormat Ptr, ByVal fSetFormatToBaseStreamFormat AS Long, ByVal fWriteToBaseStream AS Long) AS HRESULT
+			Declare Abstract Function GetBaseStream (ByVal ppStream AS ISpStreamFormat Ptr Ptr) AS HRESULT
 			Declare Abstract Function SetFormat (ByVal rguidFormatIdOfConvertedStream AS GUID Ptr, ByVal pWaveFormatExOfConvertedStream AS WaveFormatEx Ptr) AS HRESULT
 			Declare Abstract Function ResetSeekPosition () AS HRESULT
 			Declare Abstract Function ScaleConvertedToBaseOffset (ByVal ullOffsetConvertedStream AS ULongINT, ByVal pullOffsetBaseStream AS ULongINT Ptr) AS HRESULT
@@ -3414,730 +3327,676 @@ Namespace Speech
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpVoice
+	' Interface name: ISpVoice
 	' IID: {6C44DF74-72B9-4992-A1EC-EF996E0422D4}
-	' Documentation string: Afx_ISpVoice Interface
+	' Documentation string: ISpVoice Interface
 	' Attributes =  512 [&h00000200] [Restricted]
-	' Inherited interface = Afx_ISpEventSource
+	' Inherited interface = ISpEventSource
 	' Number of methods = 25
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpVoice_INTERFACE_DEFINED__
-		#define __Afx_ISpVoice_INTERFACE_DEFINED__
+	#ifndef __ISpVoice_INTERFACE_DEFINED__
+		#define __ISpVoice_INTERFACE_DEFINED__
 		
-		Type Afx_ISpVoice_ Extends Afx_ISpEventSource
-			Declare Abstract Function SetOutput (ByVal pUnkOutput AS Afx_IUnknown Ptr, ByVal fAllowFormatChanges AS Long) AS HRESULT
-			Declare Abstract Function GetOutputObjectToken (ByVal ppObjectToken AS Afx_ISpObjectToken Ptr Ptr) AS HRESULT
-			Declare Abstract Function GetOutputStream (ByVal ppStream AS Afx_ISpStreamFormat Ptr Ptr) AS HRESULT
-			Declare Abstract Function Pause () AS HRESULT
-			Declare Abstract Function Resume () AS HRESULT
-			Declare Abstract Function SetVoice (ByVal pToken AS Afx_ISpObjectToken Ptr) AS HRESULT
-			Declare Abstract Function GetVoice (ByVal ppToken AS Afx_ISpObjectToken Ptr Ptr) AS HRESULT
-			Declare Abstract Function Speak (ByVal pwcs AS WString Ptr, ByVal dwFlags AS ULong, ByVal pulStreamNumber AS ULong Ptr) AS HRESULT
-			Declare Abstract Function SpeakStream (ByVal pStream AS IStream Ptr, ByVal dwFlags AS ULong, ByVal pulStreamNumber AS ULong Ptr) AS HRESULT
-			Declare Abstract Function GetStatus (ByVal pStatus AS SPVOICESTATUS Ptr, ByVal ppszLastBookmark AS WString Ptr Ptr) AS HRESULT
-			Declare Abstract Function Skip (ByVal pItemType AS WString Ptr, ByVal lNumItems AS Long, ByVal pulNumSkipped AS ULong Ptr) AS HRESULT
-			Declare Abstract Function SetPriority (ByVal ePriority AS SPVPRIORITY) AS HRESULT
-			Declare Abstract Function GetPriority (ByVal pePriority AS SPVPRIORITY Ptr) AS HRESULT
-			Declare Abstract Function SetAlertBoundary (ByVal eBoundary AS SPEVENTENUM) AS HRESULT
-			Declare Abstract Function GetAlertBoundary (ByVal peBoundary AS SPEVENTENUM Ptr) AS HRESULT
-			Declare Abstract Function SetRate (ByVal RateAdjust AS Long) AS HRESULT
-			Declare Abstract Function GetRate (ByVal pRateAdjust AS Long Ptr) AS HRESULT
-			Declare Abstract Function SetVolume (ByVal usVolume AS UShort) AS HRESULT
-			Declare Abstract Function GetVolume (ByVal pusVolume AS UShort Ptr) AS HRESULT
-			Declare Abstract Function WaitUntilDone (ByVal msTimeout AS ULong) AS HRESULT
-			Declare Abstract Function SetSyncSpeakTimeout (ByVal msTimeout AS ULong) AS HRESULT
-			Declare Abstract Function GetSyncSpeakTimeout (ByVal pmsTimeout AS ULong Ptr) AS HRESULT
-			Declare Abstract Function SpeakCompleteEvent () AS HRESULT
-			Declare Abstract Function IsUISupported (ByVal pszTypeOfUI AS WString Ptr, ByVal pvExtraData AS ANY Ptr, ByVal cbExtraData AS ULong, ByVal pfSupported AS Long Ptr) AS HRESULT
-			Declare Abstract Function DisplayUI (ByVal hWndParent AS HWND, ByVal pszTitle AS WString Ptr, ByVal pszTypeOfUI AS WString Ptr, ByVal pvExtraData AS ANY Ptr, ByVal cbExtraData AS ULong) AS HRESULT
-		END Type
+		Type ISpVoice_ Extends ISpEventSource
+			Declare Abstract Function SetOutput (ByVal pUnkOutput As Afx_IUnknown Ptr, ByVal fAllowFormatChanges As Long) As HRESULT
+			Declare Abstract Function GetOutputObjectToken (ByVal ppObjectToken AS ISpObjectToken Ptr Ptr) AS HRESULT
+			Declare Abstract Function GetOutputStream (ByVal ppStream As ISpStreamFormat Ptr Ptr) As HRESULT
+			Declare Abstract Function Pause () As HRESULT
+			Declare Abstract Function Resume () As HRESULT
+			Declare Abstract Function SetVoice (ByVal pToken As ISpObjectToken Ptr) As HRESULT
+			Declare Abstract Function GetVoice (ByVal ppToken As ISpObjectToken Ptr Ptr) As HRESULT
+			Declare Abstract Function Speak (ByVal pwcs As WString Ptr, ByVal dwFlags As ULong, ByVal pulStreamNumber As ULong Ptr) As HRESULT
+			Declare Abstract Function SpeakStream (ByVal pStream As IStream Ptr, ByVal dwFlags As ULong, ByVal pulStreamNumber As ULong Ptr) As HRESULT
+			Declare Abstract Function GetStatus (ByVal pStatus As SPVOICESTATUS Ptr, ByVal ppszLastBookmark As WString Ptr Ptr) As HRESULT
+			Declare Abstract Function Skip (ByVal pItemType As WString Ptr, ByVal lNumItems As Long, ByVal pulNumSkipped As ULong Ptr) As HRESULT
+			Declare Abstract Function SetPriority (ByVal ePriority As SPVPRIORITY) As HRESULT
+			Declare Abstract Function GetPriority (ByVal pePriority As SPVPRIORITY Ptr) As HRESULT
+			Declare Abstract Function SetAlertBoundary (ByVal eBoundary As SPEVENTENUM) As HRESULT
+			Declare Abstract Function GetAlertBoundary (ByVal peBoundary As SPEVENTENUM Ptr) As HRESULT
+			Declare Abstract Function SetRate (ByVal RateAdjust As Long) As HRESULT
+			Declare Abstract Function GetRate (ByVal pRateAdjust As Long Ptr) As HRESULT
+			Declare Abstract Function SetVolume (ByVal usVolume As UShort) As HRESULT
+			Declare Abstract Function GetVolume (ByVal pusVolume As UShort Ptr) As HRESULT
+			Declare Abstract Function WaitUntilDone (ByVal msTimeout As ULong) As HRESULT
+			Declare Abstract Function SetSyncSpeakTimeout (ByVal msTimeout As ULong) As HRESULT
+			Declare Abstract Function GetSyncSpeakTimeout (ByVal pmsTimeout As ULong Ptr) As HRESULT
+			Declare Abstract Function SpeakCompleteEvent () As HRESULT
+			Declare Abstract Function IsUISupported (ByVal pszTypeOfUI As WString Ptr, ByVal pvExtraData As Any Ptr, ByVal cbExtraData As ULong, ByVal pfSupported As Long Ptr) As HRESULT
+			Declare Abstract Function DisplayUI (ByVal hWndParent As HWND, ByVal pszTitle As WString Ptr, ByVal pszTypeOfUI As WString Ptr, ByVal pvExtraData As Any Ptr, ByVal cbExtraData As ULong) As HRESULT
+		End Type
 		
 	#endif
-	
-	' ########################################################################################
 	
 	' ########################################################################################
 	' Interface name: ISpXMLRecoResult
 	' IID: {AE39362B-45A8-4074-9B9E-CCF49AA2D0B6}
 	' Documentation string: ISpXMLRecoResult Interface
 	' Attributes =  512 [&h00000200] [Restricted]
-	' Inherited interface = Afx_ISpRecoResult
+	' Inherited interface = ISpRecoResult
 	' Number of methods = 2
 	' ########################################################################################
 	
 	#ifndef __ISpXMLRecoResult_INTERFACE_DEFINED__
 		#define __ISpXMLRecoResult_INTERFACE_DEFINED__
 		
-		Type ISpXMLRecoResult_ Extends Afx_ISpRecoResult
-			Declare Abstract Function GetXMLResult (ByVal ppszCoMemXMLResult AS WString Ptr Ptr, ByVal Options AS SPXMLRESULTOPTIONS) AS HRESULT
-			Declare Abstract Function GetXMLErrorInfo (ByVal pSemanticErrorInfo AS SPSEMANTICERRORINFO Ptr) AS HRESULT
-		END Type
+		Type ISpXMLRecoResult_ Extends ISpRecoResult
+			Declare Abstract Function GetXMLResult (ByVal ppszCoMemXMLResult As WString Ptr Ptr, ByVal Options As SPXMLRESULTOPTIONS) As HRESULT
+			Declare Abstract Function GetXMLErrorInfo (ByVal pSemanticErrorInfo As SPSEMANTICERRORINFO Ptr) As HRESULT
+		End Type
 		
 	#endif
 	
 	' ########################################################################################
 	
-	' // Dual interfaces
+	' Dual interfaces
 	
 	
 	' ########################################################################################
-	' Interface name: Afx_ISpeechBaseStream
+	' Interface name: ISpeechBaseStream
 	' IID: {6450336F-7D49-4CED-8097-49D6DEE37294}
-	' Documentation string: Afx_ISpeechBaseStream Interface
+	' Documentation string: ISpeechBaseStream Interface
 	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
 	' Inherited interface = IDispatch
 	' Number of methods = 5
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpeechBaseStream_INTERFACE_DEFINED__
-		#define __Afx_ISpeechBaseStream_INTERFACE_DEFINED__
+	#ifndef __ISpeechBaseStream_INTERFACE_DEFINED__
+		#define __ISpeechBaseStream_INTERFACE_DEFINED__
 		
-		Type Afx_ISpeechBaseStream_ Extends Afx_IDispatch
-			Declare Abstract Function get_Format (ByVal AudioFormat AS Afx_ISpeechAudioFormat Ptr Ptr) AS HRESULT
-			Declare Abstract Function putref_Format (ByVal AudioFormat AS Afx_ISpeechAudioFormat Ptr) AS HRESULT
-			Declare Abstract Function Read (ByVal Buffer AS VARIANT Ptr, ByVal NumberOfBytes AS Long, ByVal BytesRead AS Long Ptr) AS HRESULT
-			Declare Abstract Function Write (ByVal Buffer AS VARIANT, ByVal BytesWritten AS Long Ptr) AS HRESULT
-			Declare Abstract Function Seek (ByVal Position AS VARIANT, ByVal Origin AS SpeechStreamSeekPositionType = 0, ByVal NewPosition AS VARIANT Ptr) AS HRESULT
-		END Type
+		Type ISpeechBaseStream_ Extends Afx_IDispatch
+			Declare Abstract Function get_Format (ByVal AudioFormat As ISpeechAudioFormat Ptr Ptr) As HRESULT
+			Declare Abstract Function putref_Format (ByVal AudioFormat As ISpeechAudioFormat Ptr) As HRESULT
+			Declare Abstract Function Read (ByVal Buffer As VARIANT Ptr, ByVal NumberOfBytes As Long, ByVal BytesRead As Long Ptr) As HRESULT
+			Declare Abstract Function Write (ByVal Buffer As VARIANT, ByVal BytesWritten As Long Ptr) As HRESULT
+			Declare Abstract Function Seek (ByVal Position As VARIANT, ByVal Origin As SpeechStreamSeekPositionType = 0, ByVal NewPosition As VARIANT Ptr) As HRESULT
+		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	' Interface name: Afx_ISpeechAudio
+	' Interface name: ISpeechAudio
 	' IID: {CFF8E175-019E-11D3-A08E-00C04F8EF9B5}
-	' Documentation string: Afx_ISpeechAudio Interface
+	' Documentation string: ISpeechAudio Interface
 	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
-	' Inherited interface = Afx_ISpeechBaseStream
+	' Inherited interface = ISpeechBaseStream
 	' Number of methods = 9
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpeechAudio_INTERFACE_DEFINED__
-		#define __Afx_ISpeechAudio_INTERFACE_DEFINED__
+	#ifndef __ISpeechAudio_INTERFACE_DEFINED__
+		#define __ISpeechAudio_INTERFACE_DEFINED__
 		
-		Type Afx_ISpeechAudio_ Extends Afx_ISpeechBaseStream
-			Declare Abstract Function get_Status (ByVal Status AS Afx_ISpeechAudioStatus Ptr Ptr) AS HRESULT
-			Declare Abstract Function get_BufferInfo (ByVal BufferInfo AS Afx_ISpeechAudioBufferInfo Ptr Ptr) AS HRESULT
-			Declare Abstract Function get_DefaultFormat (ByVal StreamFormat AS Afx_ISpeechAudioFormat Ptr Ptr) AS HRESULT
-			Declare Abstract Function get_Volume (ByVal Volume AS Long Ptr) AS HRESULT
-			Declare Abstract Function put_Volume (ByVal Volume AS Long) AS HRESULT
-			Declare Abstract Function get_BufferNotifySize (ByVal BufferNotifySize AS Long Ptr) AS HRESULT
-			Declare Abstract Function put_BufferNotifySize (ByVal BufferNotifySize AS Long) AS HRESULT
-			Declare Abstract Function get_EventHandle (ByVal EventHandle AS Long Ptr) AS HRESULT
-			Declare Abstract Function SetState (ByVal State AS SpeechAudioState) AS HRESULT
-		END Type
+		Type ISpeechAudio_ Extends ISpeechBaseStream
+			Declare Abstract Function get_Status (ByVal Status As ISpeechAudioStatus Ptr Ptr) As HRESULT
+			Declare Abstract Function get_BufferInfo (ByVal BufferInfo As ISpeechAudioBufferInfo Ptr Ptr) As HRESULT
+			Declare Abstract Function get_DefaultFormat (ByVal StreamFormat As ISpeechAudioFormat Ptr Ptr) As HRESULT
+			Declare Abstract Function get_Volume (ByVal Volume As Long Ptr) As HRESULT
+			Declare Abstract Function put_Volume (ByVal Volume As Long) As HRESULT
+			Declare Abstract Function get_BufferNotifySize (ByVal BufferNotifySize As Long Ptr) As HRESULT
+			Declare Abstract Function put_BufferNotifySize (ByVal BufferNotifySize As Long) As HRESULT
+			Declare Abstract Function get_EventHandle (ByVal EventHandle As Long Ptr) As HRESULT
+			Declare Abstract Function SetState (ByVal State As SpeechAudioState) As HRESULT
+		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpeechAudioBufferInfo
+	' Interface name: ISpeechAudioBufferInfo
 	' IID: {11B103D8-1142-4EDF-A093-82FB3915F8CC}
-	' Documentation string: Afx_ISpeechAudioBufferInfo Interface
+	' Documentation string: ISpeechAudioBufferInfo Interface
 	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
 	' Inherited interface = IDispatch
 	' Number of methods = 6
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpeechAudioBufferInfo_INTERFACE_DEFINED__
-		#define __Afx_ISpeechAudioBufferInfo_INTERFACE_DEFINED__
+	#ifndef __ISpeechAudioBufferInfo_INTERFACE_DEFINED__
+		#define __ISpeechAudioBufferInfo_INTERFACE_DEFINED__
 		
-		Type Afx_ISpeechAudioBufferInfo_ Extends Afx_IDispatch
-			Declare Abstract Function get_MinNotification (ByVal MinNotification AS Long Ptr) AS HRESULT
-			Declare Abstract Function put_MinNotification (ByVal MinNotification AS Long) AS HRESULT
-			Declare Abstract Function get_BufferSize (ByVal BufferSize AS Long Ptr) AS HRESULT
-			Declare Abstract Function put_BufferSize (ByVal BufferSize AS Long) AS HRESULT
-			Declare Abstract Function get_EventBias (ByVal EventBias AS Long Ptr) AS HRESULT
-			Declare Abstract Function put_EventBias (ByVal EventBias AS Long) AS HRESULT
-		END Type
+		Type ISpeechAudioBufferInfo_ Extends Afx_IDispatch
+			Declare Abstract Function get_MinNotification (ByVal MinNotification As Long Ptr) As HRESULT
+			Declare Abstract Function put_MinNotification (ByVal MinNotification As Long) As HRESULT
+			Declare Abstract Function get_BufferSize (ByVal BufferSize As Long Ptr) As HRESULT
+			Declare Abstract Function put_BufferSize (ByVal BufferSize As Long) As HRESULT
+			Declare Abstract Function get_EventBias (ByVal EventBias As Long Ptr) As HRESULT
+			Declare Abstract Function put_EventBias (ByVal EventBias As Long) As HRESULT
+		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpeechAudioFormat
+	' Interface name: ISpeechAudioFormat
 	' IID: {E6E9C590-3E18-40E3-8299-061F98BDE7C7}
-	' Documentation string: Afx_ISpeechAudioFormat Interface
+	' Documentation string: ISpeechAudioFormat Interface
 	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
 	' Inherited interface = IDispatch
 	' Number of methods = 6
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpeechAudioFormat_INTERFACE_DEFINED__
-		#define __Afx_ISpeechAudioFormat_INTERFACE_DEFINED__
+	#ifndef __ISpeechAudioFormat_INTERFACE_DEFINED__
+		#define __ISpeechAudioFormat_INTERFACE_DEFINED__
 		
-		Type Afx_ISpeechAudioFormat_ Extends Afx_IDispatch
-			Declare Abstract Function get_Type (ByVal AudioFormat AS SpeechAudioFormatType Ptr) AS HRESULT
-			Declare Abstract Function put_Type (ByVal AudioFormat AS SpeechAudioFormatType) AS HRESULT
-			Declare Abstract Function get_Guid (ByVal Guid AS Afx_BSTR Ptr) AS HRESULT
-			Declare Abstract Function put_Guid (ByVal Guid AS Afx_BSTR) AS HRESULT
-			Declare Abstract Function GetWaveFormatEx (ByVal WaveFormatEx AS Afx_ISpeechWaveFormatEx Ptr Ptr) AS HRESULT
-			Declare Abstract Function SetWaveFormatEx (ByVal WaveFormatEx AS Afx_ISpeechWaveFormatEx Ptr) AS HRESULT
-		END Type
+		Type ISpeechAudioFormat_ Extends Afx_IDispatch
+			Declare Abstract Function get_Type (ByVal AudioFormat As SpeechAudioFormatType Ptr) As HRESULT
+			Declare Abstract Function put_Type (ByVal AudioFormat As SpeechAudioFormatType) As HRESULT
+			Declare Abstract Function get_Guid (ByVal Guid As WString Ptr Ptr) As HRESULT
+			Declare Abstract Function put_Guid (ByVal Guid As WString Ptr) As HRESULT
+			Declare Abstract Function GetWaveFormatEx (ByVal WaveFormatEx As ISpeechWaveFormatEx Ptr Ptr) As HRESULT
+			Declare Abstract Function SetWaveFormatEx (ByVal WaveFormatEx As ISpeechWaveFormatEx Ptr) As HRESULT
+		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpeechAudioStatus
+	' Interface name: ISpeechAudioStatus
 	' IID: {C62D9C91-7458-47F6-862D-1EF86FB0B278}
-	' Documentation string: Afx_ISpeechAudioStatus Interface
+	' Documentation string: ISpeechAudioStatus Interface
 	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
 	' Inherited interface = IDispatch
 	' Number of methods = 5
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpeechAudioStatus_INTERFACE_DEFINED__
-		#define __Afx_ISpeechAudioStatus_INTERFACE_DEFINED__
+	#ifndef __ISpeechAudioStatus_INTERFACE_DEFINED__
+		#define __ISpeechAudioStatus_INTERFACE_DEFINED__
 		
-		Type Afx_ISpeechAudioStatus_ Extends Afx_IDispatch
-			Declare Abstract Function get_FreeBufferSpace (ByVal FreeBufferSpace AS Long Ptr) AS HRESULT
-			Declare Abstract Function get_NonBlockingIO (ByVal NonBlockingIO AS Long Ptr) AS HRESULT
-			Declare Abstract Function get_State (ByVal State AS SpeechAudioState Ptr) AS HRESULT
-			Declare Abstract Function get_CurrentSeekPosition (ByVal CurrentSeekPosition AS VARIANT Ptr) AS HRESULT
-			Declare Abstract Function get_CurrentDevicePosition (ByVal CurrentDevicePosition AS VARIANT Ptr) AS HRESULT
-		END Type
+		Type ISpeechAudioStatus_ Extends Afx_IDispatch
+			Declare Abstract Function get_FreeBufferSpace (ByVal FreeBufferSpace As Long Ptr) As HRESULT
+			Declare Abstract Function get_NonBlockingIO (ByVal NonBlockingIO As Long Ptr) As HRESULT
+			Declare Abstract Function get_State (ByVal State As SpeechAudioState Ptr) As HRESULT
+			Declare Abstract Function get_CurrentSeekPosition (ByVal CurrentSeekPosition As VARIANT Ptr) As HRESULT
+			Declare Abstract Function get_CurrentDevicePosition (ByVal CurrentDevicePosition As VARIANT Ptr) As HRESULT
+		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpeechCustomStream
+	' Interface name: ISpeechCustomStream
 	' IID: {1A9E9F4F-104F-4DB8-A115-EFD7FD0C97AE}
-	' Documentation string: Afx_ISpeechCustomStream Interface
+	' Documentation string: ISpeechCustomStream Interface
 	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
-	' Inherited interface = Afx_ISpeechBaseStream
+	' Inherited interface = ISpeechBaseStream
 	' Number of methods = 2
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpeechCustomStream_INTERFACE_DEFINED__
-		#define __Afx_ISpeechCustomStream_INTERFACE_DEFINED__
+	#ifndef __ISpeechCustomStream_INTERFACE_DEFINED__
+		#define __ISpeechCustomStream_INTERFACE_DEFINED__
 		
-		Type Afx_ISpeechCustomStream_ Extends Afx_ISpeechBaseStream
-			Declare Abstract Function get_BaseStream (ByVal ppUnkStream AS Afx_IUnknown Ptr Ptr) AS HRESULT
-			Declare Abstract Function putref_BaseStream (ByVal ppUnkStream AS Afx_IUnknown Ptr) AS HRESULT
-		END Type
+		Type ISpeechCustomStream_ Extends ISpeechBaseStream
+			Declare Abstract Function get_BaseStream (ByVal ppUnkStream As Afx_IUnknown Ptr Ptr) As HRESULT
+			Declare Abstract Function putref_BaseStream (ByVal ppUnkStream As Afx_IUnknown Ptr) As HRESULT
+		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpeechDataKey
+	' Interface name: ISpeechDataKey
 	' IID: {CE17C09B-4EFA-44D5-A4C9-59D9585AB0CD}
-	' Documentation string: Afx_ISpeechDataKey Interface
+	' Documentation string: ISpeechDataKey Interface
 	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
 	' Inherited interface = IDispatch
 	' Number of methods = 12
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpeechDataKey_INTERFACE_DEFINED__
-		#define __Afx_ISpeechDataKey_INTERFACE_DEFINED__
+	#ifndef __ISpeechDataKey_INTERFACE_DEFINED__
+		#define __ISpeechDataKey_INTERFACE_DEFINED__
 		
-		Type Afx_ISpeechDataKey_ Extends Afx_IDispatch
-			Declare Abstract Function SetBinaryValue (ByVal ValueName AS Afx_BSTR, ByVal Value AS VARIANT) AS HRESULT
-			Declare Abstract Function GetBinaryValue (ByVal ValueName AS Afx_BSTR, ByVal Value AS VARIANT Ptr) AS HRESULT
-			Declare Abstract Function SetStringValue (ByVal ValueName AS Afx_BSTR, ByVal Value AS Afx_BSTR) AS HRESULT
-			Declare Abstract Function GetStringValue (ByVal ValueName AS Afx_BSTR, ByVal Value AS Afx_BSTR Ptr) AS HRESULT
-			Declare Abstract Function SetLongValue (ByVal ValueName AS Afx_BSTR, ByVal Value AS Long) AS HRESULT
-			Declare Abstract Function GetLongValue (ByVal ValueName AS Afx_BSTR, ByVal Value AS Long Ptr) AS HRESULT
-			Declare Abstract Function OpenKey (ByVal SubKeyName AS Afx_BSTR, ByVal SubKey AS Afx_ISpeechDataKey Ptr Ptr) AS HRESULT
-			Declare Abstract Function CreateKey (ByVal SubKeyName AS Afx_BSTR, ByVal SubKey AS Afx_ISpeechDataKey Ptr Ptr) AS HRESULT
-			Declare Abstract Function DeleteKey (ByVal SubKeyName AS Afx_BSTR) AS HRESULT
-			Declare Abstract Function DeleteValue (ByVal ValueName AS Afx_BSTR) AS HRESULT
-			Declare Abstract Function EnumKeys (ByVal Index AS Long, ByVal SubKeyName AS Afx_BSTR Ptr) AS HRESULT
-			Declare Abstract Function EnumValues (ByVal Index AS Long, ByVal ValueName AS Afx_BSTR Ptr) AS HRESULT
-		END Type
+		Type ISpeechDataKey_ Extends Afx_IDispatch
+			Declare Abstract Function SetBinaryValue (ByVal ValueName As WString Ptr, ByVal Value As VARIANT) As HRESULT
+			Declare Abstract Function GetBinaryValue (ByVal ValueName As WString Ptr, ByVal Value As VARIANT Ptr) As HRESULT
+			Declare Abstract Function SetStringValue (ByVal ValueName As WString Ptr, ByVal Value As WString Ptr) As HRESULT
+			Declare Abstract Function GetStringValue (ByVal ValueName As WString Ptr, ByVal Value As WString Ptr Ptr) As HRESULT
+			Declare Abstract Function SetLongValue (ByVal ValueName As WString Ptr, ByVal Value As Long) As HRESULT
+			Declare Abstract Function GetLongValue (ByVal ValueName As WString Ptr, ByVal Value As Long Ptr) As HRESULT
+			Declare Abstract Function OpenKey (ByVal SubKeyName As WString Ptr, ByVal SubKey As ISpeechDataKey Ptr Ptr) As HRESULT
+			Declare Abstract Function CreateKey (ByVal SubKeyName As WString Ptr, ByVal SubKey As ISpeechDataKey Ptr Ptr) As HRESULT
+			Declare Abstract Function DeleteKey (ByVal SubKeyName As WString Ptr) As HRESULT
+			Declare Abstract Function DeleteValue (ByVal ValueName As WString Ptr) As HRESULT
+			Declare Abstract Function EnumKeys (ByVal Index As Long, ByVal SubKeyName As WString Ptr Ptr) As HRESULT
+			Declare Abstract Function EnumValues (ByVal Index As Long, ByVal ValueName As WString Ptr Ptr) As HRESULT
+		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpeechFileStream
+	' Interface name: ISpeechFileStream
 	' IID: {AF67F125-AB39-4E93-B4A2-CC2E66E182A7}
-	' Documentation string: Afx_ISpeechFileStream Interface
+	' Documentation string: ISpeechFileStream Interface
 	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
-	' Inherited interface = Afx_ISpeechBaseStream
+	' Inherited interface = ISpeechBaseStream
 	' Number of methods = 2
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpeechFileStream_INTERFACE_DEFINED__
-		#define __Afx_ISpeechFileStream_INTERFACE_DEFINED__
+	#ifndef __ISpeechFileStream_INTERFACE_DEFINED__
+		#define __ISpeechFileStream_INTERFACE_DEFINED__
 		
-		Type Afx_ISpeechFileStream_ Extends Afx_ISpeechBaseStream
-			Declare Abstract Function Open (ByVal FileName AS Afx_BSTR, ByVal FileMode AS SpeechStreamFileMode = 0, ByVal DoEvents AS VARIANT_BOOL = 0) AS HRESULT
-			Declare Abstract Function Close () AS HRESULT
-		END Type
+		Type ISpeechFileStream_ Extends ISpeechBaseStream
+			Declare Abstract Function Open (ByVal FileName As WString Ptr, ByVal FileMode As SpeechStreamFileMode = 0, ByVal DoEvents As VARIANT_BOOL = 0) As HRESULT
+			Declare Abstract Function Close () As HRESULT
+		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpeechGrammarRule
+	' Interface name: ISpeechGrammarRule
 	' IID: {AFE719CF-5DD1-44F2-999C-7A399F1CFCCC}
-	' Documentation string: Afx_ISpeechGrammarRule Interface
+	' Documentation string: ISpeechGrammarRule Interface
 	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
 	' Inherited interface = IDispatch
 	' Number of methods = 7
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpeechGrammarRule_INTERFACE_DEFINED__
-		#define __Afx_ISpeechGrammarRule_INTERFACE_DEFINED__
+	#ifndef __ISpeechGrammarRule_INTERFACE_DEFINED__
+		#define __ISpeechGrammarRule_INTERFACE_DEFINED__
 		
-		Type Afx_ISpeechGrammarRule_ Extends Afx_IDispatch
-			Declare Abstract Function get_Attributes (ByVal Attributes AS SpeechRuleAttributes Ptr) AS HRESULT
-			Declare Abstract Function get_InitialState (ByVal State AS Afx_ISpeechGrammarRuleState Ptr Ptr) AS HRESULT
-			Declare Abstract Function get_Name (ByVal Name AS Afx_BSTR Ptr) AS HRESULT
+		Type ISpeechGrammarRule_ Extends Afx_IDispatch
+			Declare Abstract Function get_Attributes (ByVal Attributes As SpeechRuleAttributes Ptr) As HRESULT
+			Declare Abstract Function get_InitialState (ByVal State AS ISpeechGrammarRuleState Ptr Ptr) AS HRESULT
+			Declare Abstract Function get_Name (ByVal Name AS WString Ptr Ptr) AS HRESULT
 			Declare Abstract Function get_Id (ByVal Id AS Long Ptr) AS HRESULT
 			Declare Abstract Function Clear () AS HRESULT
-			Declare Abstract Function AddResource (ByVal ResourceName AS Afx_BSTR, ByVal ResourceValue AS Afx_BSTR) AS HRESULT
-			Declare Abstract Function AddState (ByVal State AS Afx_ISpeechGrammarRuleState Ptr Ptr) AS HRESULT
+			Declare Abstract Function AddResource (ByVal ResourceName AS WString Ptr, ByVal ResourceValue AS WString Ptr) AS HRESULT
+			Declare Abstract Function AddState (ByVal State AS ISpeechGrammarRuleState Ptr Ptr) AS HRESULT
 		END Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpeechGrammarRules
+	' Interface name: ISpeechGrammarRules
 	' IID: {6FFA3B44-FC2D-40D1-8AFC-32911C7F1AD1}
-	' Documentation string: Afx_ISpeechGrammarRules Interface
+	' Documentation string: ISpeechGrammarRules Interface
 	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
 	' Inherited interface = IDispatch
 	' Number of methods = 8
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpeechGrammarRules_INTERFACE_DEFINED__
-		#define __Afx_ISpeechGrammarRules_INTERFACE_DEFINED__
+	#ifndef __ISpeechGrammarRules_INTERFACE_DEFINED__
+		#define __ISpeechGrammarRules_INTERFACE_DEFINED__
 		
-		Type Afx_ISpeechGrammarRules_ Extends Afx_IDispatch
+		Type ISpeechGrammarRules_ Extends Afx_IDispatch
 			Declare Abstract Function get_Count (ByVal Count AS Long Ptr) AS HRESULT
-			Declare Abstract Function FindRule (ByVal RuleNameOrId AS VARIANT, ByVal Rule AS Afx_ISpeechGrammarRule Ptr Ptr) AS HRESULT
-			Declare Abstract Function Item (ByVal Index AS Long, ByVal Rule AS Afx_ISpeechGrammarRule Ptr Ptr) AS HRESULT
+			Declare Abstract Function FindRule (ByVal RuleNameOrId AS VARIANT, ByVal Rule AS ISpeechGrammarRule Ptr Ptr) AS HRESULT
+			Declare Abstract Function Item (ByVal Index AS Long, ByVal Rule AS ISpeechGrammarRule Ptr Ptr) AS HRESULT
 			Declare Abstract Function get__NewEnum (ByVal EnumVARIANT AS Afx_IUnknown Ptr Ptr) AS HRESULT
 			Declare Abstract Function get_Dynamic (ByVal Dynamic AS VARIANT_BOOL Ptr) AS HRESULT
-			Declare Abstract Function Add (ByVal RuleName AS Afx_BSTR, ByVal Attributes AS SpeechRuleAttributes, ByVal RuleId AS Long = 0, ByVal Rule AS Afx_ISpeechGrammarRule Ptr Ptr) AS HRESULT
+			Declare Abstract Function Add (ByVal RuleName AS WString Ptr, ByVal Attributes AS SpeechRuleAttributes, ByVal RuleId AS Long = 0, ByVal Rule AS ISpeechGrammarRule Ptr Ptr) AS HRESULT
 			Declare Abstract Function Commit () AS HRESULT
-			Declare Abstract Function CommitAndSave (ByVal ErrorText AS Afx_BSTR Ptr, ByVal SaveStream AS VARIANT Ptr) AS HRESULT
+			Declare Abstract Function CommitAndSave (ByVal ErrorText AS WString Ptr Ptr, ByVal SaveStream AS VARIANT Ptr) AS HRESULT
 		END Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpeechGrammarRuleState
+	' Interface name: ISpeechGrammarRuleState
 	' IID: {D4286F2C-EE67-45AE-B928-28D695362EDA}
-	' Documentation string: Afx_ISpeechGrammarRuleState Interface
+	' Documentation string: ISpeechGrammarRuleState Interface
 	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
 	' Inherited interface = IDispatch
 	' Number of methods = 5
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpeechGrammarRuleState_INTERFACE_DEFINED__
-		#define __Afx_ISpeechGrammarRuleState_INTERFACE_DEFINED__
+	#ifndef __ISpeechGrammarRuleState_INTERFACE_DEFINED__
+		#define __ISpeechGrammarRuleState_INTERFACE_DEFINED__
 		
-		Type Afx_ISpeechGrammarRuleState_ Extends Afx_IDispatch
-			Declare Abstract Function get_Rule (ByVal Rule AS Afx_ISpeechGrammarRule Ptr Ptr) AS HRESULT
-			Declare Abstract Function get_Transitions (ByVal Transitions AS Afx_ISpeechGrammarRuleStateTransitions Ptr Ptr) AS HRESULT
-			Declare Abstract Function AddWordTransition (ByVal DestState AS Afx_ISpeechGrammarRuleState Ptr, ByVal Words AS Afx_BSTR, ByVal Separators AS Afx_BSTR, ByVal Type AS SpeechGrammarWordType = 1, ByVal PropertyName AS Afx_BSTR, ByVal PropertyId AS Long = 0, ByVal PropertyValue AS VARIANT Ptr, ByVal Weight AS SINGLE = 1) AS HRESULT
-			Declare Abstract Function AddRuleTransition (ByVal DestinationState AS Afx_ISpeechGrammarRuleState Ptr, ByVal Rule AS Afx_ISpeechGrammarRule Ptr, ByVal PropertyName AS Afx_BSTR, ByVal PropertyId AS Long = 0, ByVal PropertyValue AS VARIANT Ptr, ByVal Weight AS SINGLE = 1) AS HRESULT
-			Declare Abstract Function AddSpecialTransition (ByVal DestinationState AS Afx_ISpeechGrammarRuleState Ptr, ByVal Type AS SpeechSpecialTransitionType, ByVal PropertyName AS Afx_BSTR, ByVal PropertyId AS Long = 0, ByVal PropertyValue AS VARIANT Ptr, ByVal Weight AS SINGLE = 1) AS HRESULT
-		END Type
+		Type ISpeechGrammarRuleState_ Extends Afx_IDispatch
+			Declare Abstract Function get_Rule (ByVal Rule As ISpeechGrammarRule Ptr Ptr) As HRESULT
+			Declare Abstract Function get_Transitions (ByVal Transitions As ISpeechGrammarRuleStateTransitions Ptr Ptr) As HRESULT
+			Declare Abstract Function AddWordTransition (ByVal DestState As ISpeechGrammarRuleState Ptr, ByVal Words As WString Ptr, ByVal Separators As WString Ptr, ByVal Type As SpeechGrammarWordType = 1, ByVal PropertyName As WString Ptr, ByVal PropertyId As Long = 0, ByVal PropertyValue As VARIANT Ptr, ByVal Weight As Single = 1) As HRESULT
+			Declare Abstract Function AddRuleTransition (ByVal DestinationState As ISpeechGrammarRuleState Ptr, ByVal Rule As ISpeechGrammarRule Ptr, ByVal PropertyName As WString Ptr, ByVal PropertyId As Long = 0, ByVal PropertyValue As VARIANT Ptr, ByVal Weight As Single = 1) As HRESULT
+			Declare Abstract Function AddSpecialTransition (ByVal DestinationState As ISpeechGrammarRuleState Ptr, ByVal Type As SpeechSpecialTransitionType, ByVal PropertyName As WString Ptr, ByVal PropertyId As Long = 0, ByVal PropertyValue As VARIANT Ptr, ByVal Weight As Single = 1) As HRESULT
+		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpeechGrammarRuleStateTransition
+	' Interface name: ISpeechGrammarRuleStateTransition
 	' IID: {CAFD1DB1-41D1-4A06-9863-E2E81DA17A9A}
-	' Documentation string: Afx_ISpeechGrammarRuleStateTransition Interface
+	' Documentation string: ISpeechGrammarRuleStateTransition Interface
 	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
 	' Inherited interface = IDispatch
 	' Number of methods = 8
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpeechGrammarRuleStateTransition_INTERFACE_DEFINED__
-		#define __Afx_ISpeechGrammarRuleStateTransition_INTERFACE_DEFINED__
+	#ifndef __ISpeechGrammarRuleStateTransition_INTERFACE_DEFINED__
+		#define __ISpeechGrammarRuleStateTransition_INTERFACE_DEFINED__
 		
-		Type Afx_ISpeechGrammarRuleStateTransition_ Extends Afx_IDispatch
-			Declare Abstract Function get_Type (ByVal Type AS SpeechGrammarRuleStateTransitionType Ptr) AS HRESULT
-			Declare Abstract Function get_Text (ByVal Text AS Afx_BSTR Ptr) AS HRESULT
-			Declare Abstract Function get_Rule (ByVal Rule AS Afx_ISpeechGrammarRule Ptr Ptr) AS HRESULT
-			Declare Abstract Function get_Weight (ByVal Weight AS VARIANT Ptr) AS HRESULT
-			Declare Abstract Function get_PropertyName (ByVal PropertyName AS Afx_BSTR Ptr) AS HRESULT
-			Declare Abstract Function get_PropertyId (ByVal PropertyId AS Long Ptr) AS HRESULT
-			Declare Abstract Function get_PropertyValue (ByVal PropertyValue AS VARIANT Ptr) AS HRESULT
-			Declare Abstract Function get_NextState (ByVal NextState AS Afx_ISpeechGrammarRuleState Ptr Ptr) AS HRESULT
-		END Type
+		Type ISpeechGrammarRuleStateTransition_ Extends Afx_IDispatch
+			Declare Abstract Function get_Type (ByVal Type As SpeechGrammarRuleStateTransitionType Ptr) As HRESULT
+			Declare Abstract Function get_Text (ByVal Text As WString Ptr Ptr) As HRESULT
+			Declare Abstract Function get_Rule (ByVal Rule As ISpeechGrammarRule Ptr Ptr) As HRESULT
+			Declare Abstract Function get_Weight (ByVal Weight As VARIANT Ptr) As HRESULT
+			Declare Abstract Function get_PropertyName (ByVal PropertyName As WString Ptr Ptr) As HRESULT
+			Declare Abstract Function get_PropertyId (ByVal PropertyId As Long Ptr) As HRESULT
+			Declare Abstract Function get_PropertyValue (ByVal PropertyValue As VARIANT Ptr) As HRESULT
+			Declare Abstract Function get_NextState (ByVal NextState As ISpeechGrammarRuleState Ptr Ptr) As HRESULT
+		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpeechGrammarRuleStateTransitions
+	' Interface name: ISpeechGrammarRuleStateTransitions
 	' IID: {EABCE657-75BC-44A2-AA7F-C56476742963}
-	' Documentation string: Afx_ISpeechGrammarRuleStateTransitions Interface
+	' Documentation string: ISpeechGrammarRuleStateTransitions Interface
 	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
 	' Inherited interface = IDispatch
 	' Number of methods = 3
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpeechGrammarRuleStateTransitions_INTERFACE_DEFINED__
-		#define __Afx_ISpeechGrammarRuleStateTransitions_INTERFACE_DEFINED__
+	#ifndef __ISpeechGrammarRuleStateTransitions_INTERFACE_DEFINED__
+		#define __ISpeechGrammarRuleStateTransitions_INTERFACE_DEFINED__
 		
-		Type Afx_ISpeechGrammarRuleStateTransitions_ Extends Afx_IDispatch
+		Type ISpeechGrammarRuleStateTransitions_ Extends Afx_IDispatch
 			Declare Abstract Function get_Count (ByVal Count AS Long Ptr) AS HRESULT
-			Declare Abstract Function Item (ByVal Index AS Long, ByVal Transition AS Afx_ISpeechGrammarRuleStateTransition Ptr Ptr) AS HRESULT
+			Declare Abstract Function Item (ByVal Index AS Long, ByVal Transition AS ISpeechGrammarRuleStateTransition Ptr Ptr) AS HRESULT
 			Declare Abstract Function get__NewEnum (ByVal EnumVARIANT AS Afx_IUnknown Ptr Ptr) AS HRESULT
 		END Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpeechLexicon
+	' Interface name: ISpeechLexicon
 	' IID: {3DA7627A-C7AE-4B23-8708-638C50362C25}
-	' Documentation string: Afx_ISpeechLexicon Interface
+	' Documentation string: ISpeechLexicon Interface
 	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
 	' Inherited interface = IDispatch
 	' Number of methods = 8
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpeechLexicon_INTERFACE_DEFINED__
-		#define __Afx_ISpeechLexicon_INTERFACE_DEFINED__
+	#ifndef __ISpeechLexicon_INTERFACE_DEFINED__
+		#define __ISpeechLexicon_INTERFACE_DEFINED__
 		
-		Type Afx_ISpeechLexicon_ Extends Afx_IDispatch
-			Declare Abstract Function get_GenerationId (ByVal GenerationId AS Long Ptr) AS HRESULT
-			Declare Abstract Function GetWords (ByVal Flags AS SpeechLexiconType = 3, ByVal GenerationId AS Long Ptr = 0, ByVal Words AS Afx_ISpeechLexiconWords Ptr Ptr) AS HRESULT
-			Declare Abstract Function AddPronunciation (ByVal bstrWord AS Afx_BSTR, ByVal LangId AS Long, ByVal PartOfSpeech AS SpeechPartOfSpeech = 0, ByVal bstrPronunciation AS Afx_BSTR) AS HRESULT
-			Declare Abstract Function AddPronunciationByPhoneIds (ByVal bstrWord AS Afx_BSTR, ByVal LangId AS Long, ByVal PartOfSpeech AS SpeechPartOfSpeech = 0, ByVal PhoneIds AS VARIANT Ptr) AS HRESULT
-			Declare Abstract Function RemovePronunciation (ByVal bstrWord AS Afx_BSTR, ByVal LangId AS Long, ByVal PartOfSpeech AS SpeechPartOfSpeech = 0, ByVal bstrPronunciation AS Afx_BSTR) AS HRESULT
-			Declare Abstract Function RemovePronunciationByPhoneIds (ByVal bstrWord AS Afx_BSTR, ByVal LangId AS Long, ByVal PartOfSpeech AS SpeechPartOfSpeech = 0, ByVal PhoneIds AS VARIANT Ptr) AS HRESULT
-			Declare Abstract Function GetPronunciations (ByVal bstrWord AS Afx_BSTR, ByVal LangId AS Long = 0, ByVal TypeFlags AS SpeechLexiconType = 3, ByVal ppPronunciations AS Afx_ISpeechLexiconPronunciations Ptr Ptr) AS HRESULT
-			Declare Abstract Function GetGenerationChange (ByVal GenerationId AS Long Ptr, ByVal ppWords AS Afx_ISpeechLexiconWords Ptr Ptr) AS HRESULT
-		END Type
+		Type ISpeechLexicon_ Extends Afx_IDispatch
+			Declare Abstract Function get_GenerationId (ByVal GenerationId As Long Ptr) As HRESULT
+			Declare Abstract Function GetWords (ByVal Flags As SpeechLexiconType = 3, ByVal GenerationId As Long Ptr = 0, ByVal Words As ISpeechLexiconWords Ptr Ptr) As HRESULT
+			Declare Abstract Function AddPronunciation (ByVal bstrWord As WString Ptr, ByVal LangId As Long, ByVal PartOfSpeech As SpeechPartOfSpeech = 0, ByVal bstrPronunciation As WString Ptr) As HRESULT
+			Declare Abstract Function AddPronunciationByPhoneIds (ByVal bstrWord As WString Ptr, ByVal LangId As Long, ByVal PartOfSpeech As SpeechPartOfSpeech = 0, ByVal PhoneIds As VARIANT Ptr) As HRESULT
+			Declare Abstract Function RemovePronunciation (ByVal bstrWord As WString Ptr, ByVal LangId As Long, ByVal PartOfSpeech As SpeechPartOfSpeech = 0, ByVal bstrPronunciation As WString Ptr) As HRESULT
+			Declare Abstract Function RemovePronunciationByPhoneIds (ByVal bstrWord As WString Ptr, ByVal LangId As Long, ByVal PartOfSpeech As SpeechPartOfSpeech = 0, ByVal PhoneIds As VARIANT Ptr) As HRESULT
+			Declare Abstract Function GetPronunciations (ByVal bstrWord As WString Ptr, ByVal LangId As Long = 0, ByVal TypeFlags As SpeechLexiconType = 3, ByVal ppPronunciations As ISpeechLexiconPronunciations Ptr Ptr) As HRESULT
+			Declare Abstract Function GetGenerationChange (ByVal GenerationId As Long Ptr, ByVal ppWords As ISpeechLexiconWords Ptr Ptr) As HRESULT
+		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpeechLexiconPronunciation
+	' Interface name: ISpeechLexiconPronunciation
 	' IID: {95252C5D-9E43-4F4A-9899-48EE73352F9F}
-	' Documentation string: Afx_ISpeechLexiconPronunciation Interface
+	' Documentation string: ISpeechLexiconPronunciation Interface
 	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
 	' Inherited interface = IDispatch
 	' Number of methods = 5
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpeechLexiconPronunciation_INTERFACE_DEFINED__
-		#define __Afx_ISpeechLexiconPronunciation_INTERFACE_DEFINED__
+	#ifndef __ISpeechLexiconPronunciation_INTERFACE_DEFINED__
+		#define __ISpeechLexiconPronunciation_INTERFACE_DEFINED__
 		
-		Type Afx_ISpeechLexiconPronunciation_ Extends Afx_IDispatch
+		Type ISpeechLexiconPronunciation_ Extends Afx_IDispatch
 			Declare Abstract Function get_Type (ByVal LexiconType As SpeechLexiconType Ptr) As HRESULT
 			Declare Abstract Function get_LangId (ByVal LangId As Long Ptr) As HRESULT
 			Declare Abstract Function get_PartOfSpeech (ByVal PartOfSpeech As SpeechPartOfSpeech Ptr) As HRESULT
 			Declare Abstract Function get_PhoneIds (ByVal PhoneIds As VARIANT Ptr) As HRESULT
-			Declare Abstract Function get_Symbolic (ByVal Symbolic As Afx_BSTR Ptr) As HRESULT
+			Declare Abstract Function get_Symbolic (ByVal Symbolic As WString Ptr Ptr) As HRESULT
 		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpeechLexiconPronunciations
+	' Interface name: ISpeechLexiconPronunciations
 	' IID: {72829128-5682-4704-A0D4-3E2BB6F2EAD3}
-	' Documentation string: Afx_ISpeechLexiconPronunciations Interface
+	' Documentation string: ISpeechLexiconPronunciations Interface
 	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
 	' Inherited interface = IDispatch
 	' Number of methods = 3
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpeechLexiconPronunciations_INTERFACE_DEFINED__
-		#define __Afx_ISpeechLexiconPronunciations_INTERFACE_DEFINED__
+	#ifndef __ISpeechLexiconPronunciations_INTERFACE_DEFINED__
+		#define __ISpeechLexiconPronunciations_INTERFACE_DEFINED__
 		
-		Type Afx_ISpeechLexiconPronunciations_ Extends Afx_IDispatch
-			Declare Abstract Function get_Count (ByVal Count AS Long Ptr) AS HRESULT
-			Declare Abstract Function Item (ByVal Index AS Long, ByVal Pronunciation AS Afx_ISpeechLexiconPronunciation Ptr Ptr) AS HRESULT
-			Declare Abstract Function get__NewEnum (ByVal EnumVARIANT AS Afx_IUnknown Ptr Ptr) AS HRESULT
-		END Type
-		
-	#endif
-	
-	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpeechLexiconWord
-	' IID: {4E5B933C-C9BE-48ED-8842-1EE51BB1D4FF}
-	' Documentation string: Afx_ISpeechLexiconWord Interface
-	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
-	' Inherited interface = IDispatch
-	' Number of methods = 4
-	' ########################################################################################
-	
-	#ifndef __Afx_ISpeechLexiconWord_INTERFACE_DEFINED__
-		#define __Afx_ISpeechLexiconWord_INTERFACE_DEFINED__
-		
-		Type Afx_ISpeechLexiconWord_ Extends Afx_IDispatch
-			Declare Abstract Function get_LangId (ByVal LangId AS Long Ptr) AS HRESULT
-			Declare Abstract Function get_Type (ByVal WordType AS SpeechWordType Ptr) AS HRESULT
-			Declare Abstract Function get_Word (ByVal Word AS Afx_BSTR Ptr) AS HRESULT
-			Declare Abstract Function get_Pronunciations (ByVal Pronunciations AS Afx_ISpeechLexiconPronunciations Ptr Ptr) AS HRESULT
-		END Type
-		
-	#endif
-	
-	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpeechLexiconWords
-	' IID: {8D199862-415E-47D5-AC4F-FAA608B424E6}
-	' Documentation string: Afx_ISpeechLexiconWords Interface
-	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
-	' Inherited interface = IDispatch
-	' Number of methods = 3
-	' ########################################################################################
-	
-	#ifndef __Afx_ISpeechLexiconWords_INTERFACE_DEFINED__
-		#define __Afx_ISpeechLexiconWords_INTERFACE_DEFINED__
-		
-		Type Afx_ISpeechLexiconWords_ Extends Afx_IDispatch
-			Declare Abstract Function get_Count (ByVal Count AS Long Ptr) AS HRESULT
-			Declare Abstract Function Item (ByVal Index AS Long, ByVal Word AS Afx_ISpeechLexiconWord Ptr Ptr) AS HRESULT
-			Declare Abstract Function get__NewEnum (ByVal EnumVARIANT AS Afx_IUnknown Ptr Ptr) AS HRESULT
-		END Type
-		
-	#endif
-	
-	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpeechMemoryStream
-	' IID: {EEB14B68-808B-4ABE-A5EA-B51DA7588008}
-	' Documentation string: Afx_ISpeechMemoryStream Interface
-	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
-	' Inherited interface = Afx_ISpeechBaseStream
-	' Number of methods = 2
-	' ########################################################################################
-	
-	#ifndef __Afx_ISpeechMemoryStream_INTERFACE_DEFINED__
-		#define __Afx_ISpeechMemoryStream_INTERFACE_DEFINED__
-		
-		Type Afx_ISpeechMemoryStream_ Extends Afx_ISpeechBaseStream
-			Declare Abstract Function SetData (ByVal Data AS VARIANT) AS HRESULT
-			Declare Abstract Function GetData (ByVal pData AS VARIANT Ptr) AS HRESULT
-		END Type
-		
-	#endif
-	
-	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpeechMMSysAudio
-	' IID: {3C76AF6D-1FD7-4831-81D1-3B71D5A13C44}
-	' Documentation string: Afx_ISpeechMMSysAudio Interface
-	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
-	' Inherited interface = Afx_ISpeechAudio
-	' Number of methods = 5
-	' ########################################################################################
-	
-	#ifndef __Afx_ISpeechMMSysAudio_INTERFACE_DEFINED__
-		#define __Afx_ISpeechMMSysAudio_INTERFACE_DEFINED__
-		
-		Type Afx_ISpeechMMSysAudio_ Extends Afx_ISpeechAudio
-			Declare Abstract Function get_DeviceId (ByVal DeviceId AS Long Ptr) AS HRESULT
-			Declare Abstract Function put_DeviceId (ByVal DeviceId AS Long) AS HRESULT
-			Declare Abstract Function get_LineId (ByVal LineId AS Long Ptr) AS HRESULT
-			Declare Abstract Function put_LineId (ByVal LineId AS Long) AS HRESULT
-			Declare Abstract Function get_MMHandle (ByVal Handle AS Long Ptr) AS HRESULT
-		END Type
-		
-	#endif
-	
-	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpeechObjectToken
-	' IID: {C74A3ADC-B727-4500-A84A-B526721C8B8C}
-	' Documentation string: Afx_ISpeechObjectToken Interface
-	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
-	' Inherited interface = IDispatch
-	' Number of methods = 13
-	' ########################################################################################
-	
-	#ifndef __Afx_ISpeechObjectToken_INTERFACE_DEFINED__
-		#define __Afx_ISpeechObjectToken_INTERFACE_DEFINED__
-		
-		Type Afx_ISpeechObjectToken_ Extends Afx_IDispatch
-			Declare Abstract Function get_Id (ByVal ObjectId AS Afx_BSTR Ptr) AS HRESULT
-			Declare Abstract Function get_DataKey (ByVal DataKey AS Afx_ISpeechDataKey Ptr Ptr) AS HRESULT
-			Declare Abstract Function get_Category (ByVal Category AS Afx_ISpeechObjectTokenCategory Ptr Ptr) AS HRESULT
-			Declare Abstract Function GetDescription (ByVal Locale AS Long = 0, ByVal Description AS Afx_BSTR Ptr) AS HRESULT
-			Declare Abstract Function SetId (ByVal Id AS Afx_BSTR, ByVal CategoryID AS Afx_BSTR, ByVal CreateIfNotExist AS VARIANT_BOOL = 0) AS HRESULT
-			Declare Abstract Function GetAttribute (ByVal AttributeName AS Afx_BSTR, ByVal AttributeValue AS Afx_BSTR Ptr) AS HRESULT
-			Declare Abstract Function CreateInstance (ByVal pUnkOuter AS Afx_IUnknown Ptr, ByVal ClsContext AS SpeechTokenContext = 23, ByVal Object AS Afx_IUnknown Ptr Ptr) AS HRESULT
-			Declare Abstract Function Remove (ByVal ObjectStorageCLSID AS Afx_BSTR) AS HRESULT
-			Declare Abstract Function GetStorageFileName (ByVal ObjectStorageCLSID AS Afx_BSTR, ByVal KeyName AS Afx_BSTR, ByVal FileName AS Afx_BSTR, ByVal Folder AS SpeechTokenShellFolder, ByVal FilePath AS Afx_BSTR Ptr) AS HRESULT
-			Declare Abstract Function RemoveStorageFileName (ByVal ObjectStorageCLSID AS Afx_BSTR, ByVal KeyName AS Afx_BSTR, ByVal DeleteFile AS VARIANT_BOOL) AS HRESULT
-			Declare Abstract Function IsUISupported (ByVal TypeOfUI AS Afx_BSTR, ByVal ExtraData AS VARIANT Ptr, ByVal Object AS Afx_IUnknown Ptr, ByVal Supported AS VARIANT_BOOL Ptr) AS HRESULT
-			Declare Abstract Function DisplayUI (ByVal hWnd AS Long, ByVal Title AS Afx_BSTR, ByVal TypeOfUI AS Afx_BSTR, ByVal ExtraData AS VARIANT Ptr, ByVal Object AS Afx_IUnknown Ptr) AS HRESULT
-			Declare Abstract Function MatchesAttributes (ByVal Attributes AS Afx_BSTR, ByVal Matches AS VARIANT_BOOL Ptr) AS HRESULT
-		END Type
-		
-	#endif
-	
-	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpeechObjectTokenCategory
-	' IID: {CA7EAC50-2D01-4145-86D4-5AE7D70F4469}
-	' Documentation string: Afx_ISpeechObjectTokenCategory Interface
-	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
-	' Inherited interface = IDispatch
-	' Number of methods = 6
-	' ########################################################################################
-	
-	#ifndef __Afx_ISpeechObjectTokenCategory_INTERFACE_DEFINED__
-		#define __Afx_ISpeechObjectTokenCategory_INTERFACE_DEFINED__
-		
-		Type Afx_ISpeechObjectTokenCategory_ Extends Afx_IDispatch
-			Declare Abstract Function get_Id (ByVal Id AS Afx_BSTR Ptr) AS HRESULT
-			Declare Abstract Function put_Default (ByVal TokenId AS Afx_BSTR) AS HRESULT
-			Declare Abstract Function get_Default (ByVal TokenId AS Afx_BSTR Ptr) AS HRESULT
-			Declare Abstract Function SetId (ByVal Id AS Afx_BSTR, ByVal CreateIfNotExist AS VARIANT_BOOL = 0) AS HRESULT
-			Declare Abstract Function GetDataKey (ByVal Location AS SpeechDataKeyLocation = 0, ByVal DataKey AS Afx_ISpeechDataKey Ptr Ptr) AS HRESULT
-			Declare Abstract Function EnumerateTokens (ByVal RequiredAttributes AS Afx_BSTR, ByVal OptionalAttributes AS Afx_BSTR, ByVal Tokens AS Afx_ISpeechObjectTokens Ptr Ptr) AS HRESULT
-		END Type
-		
-	#endif
-	
-	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpeechObjectTokens
-	' IID: {9285B776-2E7B-4BC0-B53E-580EB6FA967F}
-	' Documentation string: Afx_ISpeechObjectTokens Interface
-	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
-	' Inherited interface = IDispatch
-	' Number of methods = 3
-	' ########################################################################################
-	
-	#ifndef __Afx_ISpeechObjectTokens_INTERFACE_DEFINED__
-		#define __Afx_ISpeechObjectTokens_INTERFACE_DEFINED__
-		
-		Type Afx_ISpeechObjectTokens_ Extends Afx_IDispatch
-			Declare Abstract Function get_Count (ByVal Count AS Long Ptr) AS HRESULT
-			Declare Abstract Function Item (ByVal Index AS Long, ByVal Token AS Afx_ISpeechObjectToken Ptr Ptr) AS HRESULT
-			Declare Abstract Function get__NewEnum (ByVal ppEnumVARIANT AS Afx_IUnknown Ptr Ptr) AS HRESULT
-		END Type
-		
-	#endif
-	
-	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpeechPhoneConverter
-	' IID: {C3E4F353-433F-43D6-89A1-6A62A7054C3D}
-	' Documentation string: Afx_ISpeechPhoneConverter Interface
-	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
-	' Inherited interface = IDispatch
-	' Number of methods = 4
-	' ########################################################################################
-	
-	#ifndef __Afx_ISpeechPhoneConverter_INTERFACE_DEFINED__
-		#define __Afx_ISpeechPhoneConverter_INTERFACE_DEFINED__
-		
-		Type Afx_ISpeechPhoneConverter_ Extends Afx_IDispatch
-			Declare Abstract Function get_LanguageId (ByVal LanguageId AS Long Ptr) AS HRESULT
-			Declare Abstract Function put_LanguageId (ByVal LanguageId AS Long) AS HRESULT
-			Declare Abstract Function PhoneToId (ByVal Phonemes AS Afx_BSTR, ByVal IdArray AS VARIANT Ptr) AS HRESULT
-			Declare Abstract Function IdToPhone (ByVal IdArray AS VARIANT, ByVal Phonemes AS Afx_BSTR Ptr) AS HRESULT
-		END Type
-		
-	#endif
-	
-	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpeechPhraseAlternate
-	' IID: {27864A2A-2B9F-4CB8-92D3-0D2722FD1E73}
-	' Documentation string: Afx_ISpeechPhraseAlternate Interface
-	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
-	' Inherited interface = IDispatch
-	' Number of methods = 5
-	' ########################################################################################
-	
-	#ifndef __Afx_ISpeechPhraseAlternate_INTERFACE_DEFINED__
-		#define __Afx_ISpeechPhraseAlternate_INTERFACE_DEFINED__
-		
-		Type Afx_ISpeechPhraseAlternate_ Extends Afx_IDispatch
-			Declare Abstract Function get_RecoResult (ByVal RecoResult As Afx_ISpeechRecoResult Ptr Ptr) As HRESULT
-			Declare Abstract Function get_StartElementInResult (ByVal StartElement As Long Ptr) As HRESULT
-			Declare Abstract Function get_NumberOfElementsInResult (ByVal NumberOfElements As Long Ptr) As HRESULT
-			Declare Abstract Function get_PhraseInfo (ByVal PhraseInfo As Afx_ISpeechPhraseInfo Ptr Ptr) As HRESULT
-			Declare Abstract Function Commit () As HRESULT
-		End Type
-		
-	#endif
-	
-	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpeechPhraseAlternates
-	' IID: {B238B6D5-F276-4C3D-A6C1-2974801C3CC2}
-	' Documentation string: Afx_ISpeechPhraseAlternates Interface
-	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
-	' Inherited interface = IDispatch
-	' Number of methods = 3
-	' ########################################################################################
-	
-	#ifndef __Afx_ISpeechPhraseAlternates_INTERFACE_DEFINED__
-		#define __Afx_ISpeechPhraseAlternates_INTERFACE_DEFINED__
-		
-		Type Afx_ISpeechPhraseAlternates_ Extends Afx_IDispatch
+		Type ISpeechLexiconPronunciations_ Extends Afx_IDispatch
 			Declare Abstract Function get_Count (ByVal Count As Long Ptr) As HRESULT
-			Declare Abstract Function Item (ByVal Index As Long, ByVal PhraseAlternate As Afx_ISpeechPhraseAlternate Ptr Ptr) As HRESULT
+			Declare Abstract Function Item (ByVal Index As Long, ByVal Pronunciation As ISpeechLexiconPronunciation Ptr Ptr) As HRESULT
 			Declare Abstract Function get__NewEnum (ByVal EnumVARIANT As Afx_IUnknown Ptr Ptr) As HRESULT
 		End Type
 		
 	#endif
 	
 	' ########################################################################################
+	' Interface name: ISpeechLexiconWord
+	' IID: {4E5B933C-C9BE-48ED-8842-1EE51BB1D4FF}
+	' Documentation string: ISpeechLexiconWord Interface
+	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
+	' Inherited interface = IDispatch
+	' Number of methods = 4
+	' ########################################################################################
+	
+	#ifndef __ISpeechLexiconWord_INTERFACE_DEFINED__
+		#define __ISpeechLexiconWord_INTERFACE_DEFINED__
+		
+		Type ISpeechLexiconWord_ Extends Afx_IDispatch
+			Declare Abstract Function get_LangId (ByVal LangId As Long Ptr) As HRESULT
+			Declare Abstract Function get_Type (ByVal WordType As SpeechWordType Ptr) As HRESULT
+			Declare Abstract Function get_Word (ByVal Word As WString Ptr Ptr) As HRESULT
+			Declare Abstract Function get_Pronunciations (ByVal Pronunciations As ISpeechLexiconPronunciations Ptr Ptr) As HRESULT
+		End Type
+		
+	#endif
 	
 	' ########################################################################################
-	' Interface name: Afx_ISpeechPhraseElement
-	' IID: {E6176F96-E373-4801-B223-3B62C068C0B4}
-	' Documentation string: Afx_ISpeechPhraseElement Interface
+	' Interface name: ISpeechLexiconWords
+	' IID: {8D199862-415E-47D5-AC4F-FAA608B424E6}
+	' Documentation string: ISpeechLexiconWords Interface
+	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
+	' Inherited interface = IDispatch
+	' Number of methods = 3
+	' ########################################################################################
+	
+	#ifndef __ISpeechLexiconWords_INTERFACE_DEFINED__
+		#define __ISpeechLexiconWords_INTERFACE_DEFINED__
+		
+		Type ISpeechLexiconWords_ Extends Afx_IDispatch
+			Declare Abstract Function get_Count (ByVal Count AS Long Ptr) AS HRESULT
+			Declare Abstract Function Item (ByVal Index AS Long, ByVal Word AS ISpeechLexiconWord Ptr Ptr) AS HRESULT
+			Declare Abstract Function get__NewEnum (ByVal EnumVARIANT AS Afx_IUnknown Ptr Ptr) AS HRESULT
+		END Type
+		
+	#endif
+	
+	' ########################################################################################
+	' Interface name: ISpeechMemoryStream
+	' IID: {EEB14B68-808B-4ABE-A5EA-B51DA7588008}
+	' Documentation string: ISpeechMemoryStream Interface
+	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
+	' Inherited interface = ISpeechBaseStream
+	' Number of methods = 2
+	' ########################################################################################
+	
+	#ifndef __ISpeechMemoryStream_INTERFACE_DEFINED__
+		#define __ISpeechMemoryStream_INTERFACE_DEFINED__
+		
+		Type ISpeechMemoryStream_ Extends ISpeechBaseStream
+			Declare Abstract Function SetData (ByVal Data AS VARIANT) AS HRESULT
+			Declare Abstract Function GetData (ByVal pData As VARIANT Ptr) As HRESULT
+		End Type
+		
+	#endif
+	
+	' ########################################################################################
+	' Interface name: ISpeechMMSysAudio
+	' IID: {3C76AF6D-1FD7-4831-81D1-3B71D5A13C44}
+	' Documentation string: ISpeechMMSysAudio Interface
+	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
+	' Inherited interface = ISpeechAudio
+	' Number of methods = 5
+	' ########################################################################################
+	
+	#ifndef __ISpeechMMSysAudio_INTERFACE_DEFINED__
+		#define __ISpeechMMSysAudio_INTERFACE_DEFINED__
+		
+		Type ISpeechMMSysAudio_ Extends ISpeechAudio
+			Declare Abstract Function get_DeviceId (ByVal DeviceId As Long Ptr) As HRESULT
+			Declare Abstract Function put_DeviceId (ByVal DeviceId As Long) As HRESULT
+			Declare Abstract Function get_LineId (ByVal LineId As Long Ptr) As HRESULT
+			Declare Abstract Function put_LineId (ByVal LineId As Long) As HRESULT
+			Declare Abstract Function get_MMHandle (ByVal Handle As Long Ptr) As HRESULT
+		End Type
+		
+	#endif
+	
+	' ########################################################################################
+	' Interface name: ISpeechObjectToken
+	' IID: {C74A3ADC-B727-4500-A84A-B526721C8B8C}
+	' Documentation string: ISpeechObjectToken Interface
 	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
 	' Inherited interface = IDispatch
 	' Number of methods = 13
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpeechPhraseElement_INTERFACE_DEFINED__
-		#define __Afx_ISpeechPhraseElement_INTERFACE_DEFINED__
+	#ifndef __ISpeechObjectToken_INTERFACE_DEFINED__
+		#define __ISpeechObjectToken_INTERFACE_DEFINED__
 		
-		Type Afx_ISpeechPhraseElement_ Extends Afx_IDispatch
+		Type ISpeechObjectToken_ Extends Afx_IDispatch
+			Declare Abstract Function get_Id (ByVal ObjectId As WString Ptr Ptr) As HRESULT
+			Declare Abstract Function get_DataKey (ByVal DataKey As ISpeechDataKey Ptr Ptr) As HRESULT
+			Declare Abstract Function get_Category (ByVal Category As ISpeechObjectTokenCategory Ptr Ptr) As HRESULT
+			Declare Abstract Function GetDescription (ByVal Locale As Long = 0, ByVal Description As WString Ptr Ptr) As HRESULT
+			Declare Abstract Function SetId (ByVal Id As WString Ptr, ByVal CategoryID As WString Ptr, ByVal CreateIfNotExist As VARIANT_BOOL = 0) As HRESULT
+			Declare Abstract Function GetAttribute (ByVal AttributeName As WString Ptr, ByVal AttributeValue As WString Ptr Ptr) As HRESULT
+			Declare Abstract Function CreateInstance (ByVal pUnkOuter As Afx_IUnknown Ptr, ByVal ClsContext As SpeechTokenContext = 23, ByVal Object As Afx_IUnknown Ptr Ptr) As HRESULT
+			Declare Abstract Function Remove (ByVal ObjectStorageCLSID As WString Ptr) As HRESULT
+			Declare Abstract Function GetStorageFileName (ByVal ObjectStorageCLSID As WString Ptr, ByVal KeyName As WString Ptr, ByVal FileName As WString Ptr, ByVal Folder As SpeechTokenShellFolder, ByVal FilePath As WString Ptr Ptr) As HRESULT
+			Declare Abstract Function RemoveStorageFileName (ByVal ObjectStorageCLSID As WString Ptr, ByVal KeyName As WString Ptr, ByVal DeleteFile As VARIANT_BOOL) As HRESULT
+			Declare Abstract Function IsUISupported (ByVal TypeOfUI As WString Ptr, ByVal ExtraData As VARIANT Ptr, ByVal Object As Afx_IUnknown Ptr, ByVal Supported As VARIANT_BOOL Ptr) As HRESULT
+			Declare Abstract Function DisplayUI (ByVal hWnd AS Long, ByVal Title AS WString Ptr, ByVal TypeOfUI AS WString Ptr, ByVal ExtraData AS VARIANT Ptr, ByVal Object AS Afx_IUnknown Ptr) AS HRESULT
+			Declare Abstract Function MatchesAttributes (ByVal Attributes AS WString Ptr, ByVal Matches AS VARIANT_BOOL Ptr) AS HRESULT
+		END Type
+		
+	#endif
+	
+	' ########################################################################################
+	' Interface name: ISpeechObjectTokenCategory
+	' IID: {CA7EAC50-2D01-4145-86D4-5AE7D70F4469}
+	' Documentation string: ISpeechObjectTokenCategory Interface
+	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
+	' Inherited interface = IDispatch
+	' Number of methods = 6
+	' ########################################################################################
+	
+	#ifndef __ISpeechObjectTokenCategory_INTERFACE_DEFINED__
+		#define __ISpeechObjectTokenCategory_INTERFACE_DEFINED__
+		
+		Type ISpeechObjectTokenCategory_ Extends Afx_IDispatch
+			Declare Abstract Function get_Id (ByVal Id AS WString Ptr Ptr) AS HRESULT
+			Declare Abstract Function put_Default (ByVal TokenId AS WString Ptr) AS HRESULT
+			Declare Abstract Function get_Default (ByVal TokenId As WString Ptr Ptr) As HRESULT
+			Declare Abstract Function SetId (ByVal Id As WString Ptr, ByVal CreateIfNotExist As VARIANT_BOOL = 0) As HRESULT
+			Declare Abstract Function GetDataKey (ByVal Location As SpeechDataKeyLocation = 0, ByVal DataKey As ISpeechDataKey Ptr Ptr) As HRESULT
+			Declare Abstract Function EnumerateTokens (ByVal RequiredAttributes As WString Ptr, ByVal OptionalAttributes As WString Ptr, ByVal Tokens As ISpeechObjectTokens Ptr Ptr) As HRESULT
+		End Type
+		
+	#endif
+	
+	' ########################################################################################
+	' Interface name: ISpeechObjectTokens
+	' IID: {9285B776-2E7B-4BC0-B53E-580EB6FA967F}
+	' Documentation string: ISpeechObjectTokens Interface
+	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
+	' Inherited interface = IDispatch
+	' Number of methods = 3
+	' ########################################################################################
+	
+	#ifndef __ISpeechObjectTokens_INTERFACE_DEFINED__
+		#define __ISpeechObjectTokens_INTERFACE_DEFINED__
+		
+		Type ISpeechObjectTokens_ Extends Afx_IDispatch
+			Declare Abstract Function get_Count (ByVal Count As Long Ptr) As HRESULT
+			Declare Abstract Function Item (ByVal Index As Long, ByVal Token As ISpeechObjectToken Ptr Ptr) As HRESULT
+			Declare Abstract Function get__NewEnum (ByVal ppEnumVARIANT As Afx_IUnknown Ptr Ptr) As HRESULT
+		End Type
+		
+	#endif
+	
+	' ########################################################################################
+	' Interface name: ISpeechPhoneConverter
+	' IID: {C3E4F353-433F-43D6-89A1-6A62A7054C3D}
+	' Documentation string: ISpeechPhoneConverter Interface
+	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
+	' Inherited interface = IDispatch
+	' Number of methods = 4
+	' ########################################################################################
+	
+	#ifndef __ISpeechPhoneConverter_INTERFACE_DEFINED__
+		#define __ISpeechPhoneConverter_INTERFACE_DEFINED__
+		
+		Type ISpeechPhoneConverter_ Extends Afx_IDispatch
+			Declare Abstract Function get_LanguageId (ByVal LanguageId As Long Ptr) As HRESULT
+			Declare Abstract Function put_LanguageId (ByVal LanguageId As Long) As HRESULT
+			Declare Abstract Function PhoneToId (ByVal Phonemes AS WString Ptr, ByVal IdArray AS VARIANT Ptr) AS HRESULT
+			Declare Abstract Function IdToPhone (ByVal IdArray As VARIANT, ByVal Phonemes As WString Ptr Ptr) As HRESULT
+		End Type
+		
+	#endif
+	
+	' ########################################################################################
+	' Interface name: ISpeechPhraseAlternate
+	' IID: {27864A2A-2B9F-4CB8-92D3-0D2722FD1E73}
+	' Documentation string: ISpeechPhraseAlternate Interface
+	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
+	' Inherited interface = IDispatch
+	' Number of methods = 5
+	' ########################################################################################
+	
+	#ifndef __ISpeechPhraseAlternate_INTERFACE_DEFINED__
+		#define __ISpeechPhraseAlternate_INTERFACE_DEFINED__
+		
+		Type ISpeechPhraseAlternate_ Extends Afx_IDispatch
+			Declare Abstract Function get_RecoResult (ByVal RecoResult As ISpeechRecoResult Ptr Ptr) As HRESULT
+			Declare Abstract Function get_StartElementInResult (ByVal StartElement As Long Ptr) As HRESULT
+			Declare Abstract Function get_NumberOfElementsInResult (ByVal NumberOfElements As Long Ptr) As HRESULT
+			Declare Abstract Function get_PhraseInfo (ByVal PhraseInfo As ISpeechPhraseInfo Ptr Ptr) As HRESULT
+			Declare Abstract Function Commit () As HRESULT
+		End Type
+		
+	#endif
+	
+	' ########################################################################################
+	' Interface name: ISpeechPhraseAlternates
+	' IID: {B238B6D5-F276-4C3D-A6C1-2974801C3CC2}
+	' Documentation string: ISpeechPhraseAlternates Interface
+	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
+	' Inherited interface = IDispatch
+	' Number of methods = 3
+	' ########################################################################################
+	
+	#ifndef __ISpeechPhraseAlternates_INTERFACE_DEFINED__
+		#define __ISpeechPhraseAlternates_INTERFACE_DEFINED__
+		
+		Type ISpeechPhraseAlternates_ Extends Afx_IDispatch
+			Declare Abstract Function get_Count (ByVal Count As Long Ptr) As HRESULT
+			Declare Abstract Function Item (ByVal Index As Long, ByVal PhraseAlternate As ISpeechPhraseAlternate Ptr Ptr) As HRESULT
+			Declare Abstract Function get__NewEnum (ByVal EnumVARIANT As Afx_IUnknown Ptr Ptr) As HRESULT
+		End Type
+		
+	#endif
+	
+	' ########################################################################################
+	' Interface name: ISpeechPhraseElement
+	' IID: {E6176F96-E373-4801-B223-3B62C068C0B4}
+	' Documentation string: ISpeechPhraseElement Interface
+	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
+	' Inherited interface = IDispatch
+	' Number of methods = 13
+	' ########################################################################################
+	
+	#ifndef __ISpeechPhraseElement_INTERFACE_DEFINED__
+		#define __ISpeechPhraseElement_INTERFACE_DEFINED__
+		
+		Type ISpeechPhraseElement_ Extends Afx_IDispatch
 			Declare Abstract Function get_AudioTimeOffset (ByVal AudioTimeOffset AS Long Ptr) AS HRESULT
 			Declare Abstract Function get_AudioSizeTime (ByVal AudioSizeTime AS Long Ptr) AS HRESULT
 			Declare Abstract Function get_AudioStreamOffset (ByVal AudioStreamOffset AS Long Ptr) AS HRESULT
 			Declare Abstract Function get_AudioSizeBytes (ByVal AudioSizeBytes AS Long Ptr) AS HRESULT
 			Declare Abstract Function get_RetainedStreamOffset (ByVal RetainedStreamOffset AS Long Ptr) AS HRESULT
 			Declare Abstract Function get_RetainedSizeBytes (ByVal RetainedSizeBytes AS Long Ptr) AS HRESULT
-			Declare Abstract Function get_DisplayText (ByVal DisplayText AS Afx_BSTR Ptr) AS HRESULT
-			Declare Abstract Function get_LexicalForm (ByVal LexicalForm AS Afx_BSTR Ptr) AS HRESULT
+			Declare Abstract Function get_DisplayText (ByVal DisplayText AS WString Ptr Ptr) AS HRESULT
+			Declare Abstract Function get_LexicalForm (ByVal LexicalForm AS WString Ptr Ptr) AS HRESULT
 			Declare Abstract Function get_Pronunciation (ByVal Pronunciation AS VARIANT Ptr) AS HRESULT
 			Declare Abstract Function get_DisplayAttributes (ByVal DisplayAttributes AS SpeechDisplayAttributes Ptr) AS HRESULT
 			Declare Abstract Function get_RequiredConfidence (ByVal RequiredConfidence AS SpeechEngineConfidence Ptr) AS HRESULT
@@ -4148,246 +4007,226 @@ Namespace Speech
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpeechPhraseElements
+	' Interface name: ISpeechPhraseElements
 	' IID: {0626B328-3478-467D-A0B3-D0853B93DDA3}
-	' Documentation string: Afx_ISpeechPhraseElements Interface
+	' Documentation string: ISpeechPhraseElements Interface
 	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
 	' Inherited interface = IDispatch
 	' Number of methods = 3
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpeechPhraseElements_INTERFACE_DEFINED__
-		#define __Afx_ISpeechPhraseElements_INTERFACE_DEFINED__
+	#ifndef __ISpeechPhraseElements_INTERFACE_DEFINED__
+		#define __ISpeechPhraseElements_INTERFACE_DEFINED__
 		
-		Type Afx_ISpeechPhraseElements_ Extends Afx_IDispatch
-			Declare Abstract Function get_Count (ByVal Count AS Long Ptr) AS HRESULT
-			Declare Abstract Function Item (ByVal Index AS Long, ByVal Element AS Afx_ISpeechPhraseElement Ptr Ptr) AS HRESULT
-			Declare Abstract Function get__NewEnum (ByVal EnumVARIANT AS Afx_IUnknown Ptr Ptr) AS HRESULT
-		END Type
-		
-	#endif
-	
-	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpeechPhraseInfo
-	' IID: {961559CF-4E67-4662-8BF0-D93F1FCD61B3}
-	' Documentation string: Afx_ISpeechPhraseInfo Interface
-	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
-	' Inherited interface = IDispatch
-	' Number of methods = 16
-	' ########################################################################################
-	
-	#ifndef __Afx_ISpeechPhraseInfo_INTERFACE_DEFINED__
-		#define __Afx_ISpeechPhraseInfo_INTERFACE_DEFINED__
-		
-		Type Afx_ISpeechPhraseInfo_ Extends Afx_IDispatch
-			Declare Abstract Function get_LanguageId (ByVal LanguageId AS Long Ptr) AS HRESULT
-			Declare Abstract Function get_GrammarId (ByVal GrammarId AS VARIANT Ptr) AS HRESULT
-			Declare Abstract Function get_StartTime (ByVal StartTime AS VARIANT Ptr) AS HRESULT
-			Declare Abstract Function get_AudioStreamPosition (ByVal AudioStreamPosition AS VARIANT Ptr) AS HRESULT
-			Declare Abstract Function get_AudioSizeBytes (ByVal pAudioSizeBytes AS Long Ptr) AS HRESULT
-			Declare Abstract Function get_RetainedSizeBytes (ByVal RetainedSizeBytes AS Long Ptr) AS HRESULT
-			Declare Abstract Function get_AudioSizeTime (ByVal AudioSizeTime AS Long Ptr) AS HRESULT
-			Declare Abstract Function get_Rule (ByVal Rule AS Afx_ISpeechPhraseRule Ptr Ptr) AS HRESULT
-			Declare Abstract Function get_Properties (ByVal Properties AS Afx_ISpeechPhraseProperties Ptr Ptr) AS HRESULT
-			Declare Abstract Function get_Elements (ByVal Elements AS Afx_ISpeechPhraseElements Ptr Ptr) AS HRESULT
-			Declare Abstract Function get_Replacements (ByVal Replacements AS Afx_ISpeechPhraseReplacements Ptr Ptr) AS HRESULT
-			Declare Abstract Function get_EngineId (ByVal EngineIdGuid AS Afx_BSTR Ptr) AS HRESULT
-			Declare Abstract Function get_EnginePrivateData (ByVal PrivateData AS VARIANT Ptr) AS HRESULT
-			Declare Abstract Function SaveToMemory (ByVal PhraseBlock AS VARIANT Ptr) AS HRESULT
-			Declare Abstract Function GetText (ByVal StartElement AS Long = 0, ByVal Elements AS Long = -1, ByVal UseReplacements AS VARIANT_BOOL = -1, ByVal Text AS Afx_BSTR Ptr) AS HRESULT
-			Declare Abstract Function GetDisplayAttributes (ByVal StartElement AS Long = 0, ByVal Elements AS Long = -1, ByVal UseReplacements AS VARIANT_BOOL = -1, ByVal DisplayAttributes AS SpeechDisplayAttributes Ptr) AS HRESULT
-		END Type
-		
-	#endif
-	
-	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpeechPhraseInfoBuilder
-	' IID: {3B151836-DF3A-4E0A-846C-D2ADC9334333}
-	' Documentation string: Afx_ISpeechPhraseInfoBuilder Interface
-	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
-	' Inherited interface = IDispatch
-	' Number of methods = 1
-	' ########################################################################################
-	
-	#ifndef __Afx_ISpeechPhraseInfoBuilder_INTERFACE_DEFINED__
-		#define __Afx_ISpeechPhraseInfoBuilder_INTERFACE_DEFINED__
-		
-		Type Afx_ISpeechPhraseInfoBuilder_ Extends Afx_IDispatch
-			Declare Abstract Function RestorePhraseFromMemory (ByVal PhraseInMemory AS VARIANT Ptr, ByVal PhraseInfo AS Afx_ISpeechPhraseInfo Ptr Ptr) AS HRESULT
-		END Type
-		
-	#endif
-	
-	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpeechPhraseProperties
-	' IID: {08166B47-102E-4B23-A599-BDB98DBFD1F4}
-	' Documentation string: Afx_ISpeechPhraseProperties Interface
-	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
-	' Inherited interface = IDispatch
-	' Number of methods = 3
-	' ########################################################################################
-	
-	#ifndef __Afx_ISpeechPhraseProperties_INTERFACE_DEFINED__
-		#define __Afx_ISpeechPhraseProperties_INTERFACE_DEFINED__
-		
-		Type Afx_ISpeechPhraseProperties_ Extends Afx_IDispatch
+		Type ISpeechPhraseElements_ Extends Afx_IDispatch
 			Declare Abstract Function get_Count (ByVal Count As Long Ptr) As HRESULT
-			Declare Abstract Function Item (ByVal Index As Long, ByVal Property As Afx_ISpeechPhraseProperty Ptr Ptr) As HRESULT
+			Declare Abstract Function Item (ByVal Index As Long, ByVal Element As ISpeechPhraseElement Ptr Ptr) As HRESULT
 			Declare Abstract Function get__NewEnum (ByVal EnumVARIANT As Afx_IUnknown Ptr Ptr) As HRESULT
 		End Type
 		
 	#endif
 	
 	' ########################################################################################
+	' Interface name: ISpeechPhraseInfo
+	' IID: {961559CF-4E67-4662-8BF0-D93F1FCD61B3}
+	' Documentation string: ISpeechPhraseInfo Interface
+	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
+	' Inherited interface = IDispatch
+	' Number of methods = 16
+	' ########################################################################################
+	
+	#ifndef __ISpeechPhraseInfo_INTERFACE_DEFINED__
+		#define __ISpeechPhraseInfo_INTERFACE_DEFINED__
+		
+		Type ISpeechPhraseInfo_ Extends Afx_IDispatch
+			Declare Abstract Function get_LanguageId (ByVal LanguageId As Long Ptr) As HRESULT
+			Declare Abstract Function get_GrammarId (ByVal GrammarId As VARIANT Ptr) As HRESULT
+			Declare Abstract Function get_StartTime (ByVal StartTime As VARIANT Ptr) As HRESULT
+			Declare Abstract Function get_AudioStreamPosition (ByVal AudioStreamPosition As VARIANT Ptr) As HRESULT
+			Declare Abstract Function get_AudioSizeBytes (ByVal pAudioSizeBytes As Long Ptr) As HRESULT
+			Declare Abstract Function get_RetainedSizeBytes (ByVal RetainedSizeBytes As Long Ptr) As HRESULT
+			Declare Abstract Function get_AudioSizeTime (ByVal AudioSizeTime As Long Ptr) As HRESULT
+			Declare Abstract Function get_Rule (ByVal Rule As ISpeechPhraseRule Ptr Ptr) As HRESULT
+			Declare Abstract Function get_Properties (ByVal Properties As ISpeechPhraseProperties Ptr Ptr) As HRESULT
+			Declare Abstract Function get_Elements (ByVal Elements As ISpeechPhraseElements Ptr Ptr) As HRESULT
+			Declare Abstract Function get_Replacements (ByVal Replacements As ISpeechPhraseReplacements Ptr Ptr) As HRESULT
+			Declare Abstract Function get_EngineId (ByVal EngineIdGuid As WString Ptr Ptr) As HRESULT
+			Declare Abstract Function get_EnginePrivateData (ByVal PrivateData As VARIANT Ptr) As HRESULT
+			Declare Abstract Function SaveToMemory (ByVal PhraseBlock As VARIANT Ptr) As HRESULT
+			Declare Abstract Function GetText (ByVal StartElement As Long = 0, ByVal Elements As Long = -1, ByVal UseReplacements As VARIANT_BOOL = -1, ByVal Text As WString Ptr Ptr) As HRESULT
+			Declare Abstract Function GetDisplayAttributes (ByVal StartElement As Long = 0, ByVal Elements As Long = -1, ByVal UseReplacements As VARIANT_BOOL = -1, ByVal DisplayAttributes As SpeechDisplayAttributes Ptr) As HRESULT
+		End Type
+		
+	#endif
 	
 	' ########################################################################################
-	' Interface name: Afx_ISpeechPhraseProperty
+	' Interface name: ISpeechPhraseInfoBuilder
+	' IID: {3B151836-DF3A-4E0A-846C-D2ADC9334333}
+	' Documentation string: ISpeechPhraseInfoBuilder Interface
+	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
+	' Inherited interface = IDispatch
+	' Number of methods = 1
+	' ########################################################################################
+	
+	#ifndef __ISpeechPhraseInfoBuilder_INTERFACE_DEFINED__
+		#define __ISpeechPhraseInfoBuilder_INTERFACE_DEFINED__
+		
+		Type ISpeechPhraseInfoBuilder_ Extends Afx_IDispatch
+			Declare Abstract Function RestorePhraseFromMemory (ByVal PhraseInMemory As VARIANT Ptr, ByVal PhraseInfo As ISpeechPhraseInfo Ptr Ptr) As HRESULT
+		End Type
+		
+	#endif
+	
+	' ########################################################################################
+	' Interface name: ISpeechPhraseProperties
+	' IID: {08166B47-102E-4B23-A599-BDB98DBFD1F4}
+	' Documentation string: ISpeechPhraseProperties Interface
+	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
+	' Inherited interface = IDispatch
+	' Number of methods = 3
+	' ########################################################################################
+	
+	#ifndef __ISpeechPhraseProperties_INTERFACE_DEFINED__
+		#define __ISpeechPhraseProperties_INTERFACE_DEFINED__
+		
+		Type ISpeechPhraseProperties_ Extends Afx_IDispatch
+			Declare Abstract Function get_Count (ByVal Count As Long Ptr) As HRESULT
+			Declare Abstract Function Item (ByVal Index As Long, ByVal Property As ISpeechPhraseProperty Ptr Ptr) As HRESULT
+			Declare Abstract Function get__NewEnum (ByVal EnumVARIANT As Afx_IUnknown Ptr Ptr) As HRESULT
+		End Type
+		
+	#endif
+	
+	' ########################################################################################
+	' Interface name: ISpeechPhraseProperty
 	' IID: {CE563D48-961E-4732-A2E1-378A42B430BE}
-	' Documentation string: Afx_ISpeechPhraseProperty Interface
+	' Documentation string: ISpeechPhraseProperty Interface
 	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
 	' Inherited interface = IDispatch
 	' Number of methods = 9
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpeechPhraseProperty_INTERFACE_DEFINED__
-		#define __Afx_ISpeechPhraseProperty_INTERFACE_DEFINED__
+	#ifndef __ISpeechPhraseProperty_INTERFACE_DEFINED__
+		#define __ISpeechPhraseProperty_INTERFACE_DEFINED__
 		
-		Type Afx_ISpeechPhraseProperty_ Extends Afx_IDispatch
-			Declare Abstract Function get_Name (ByVal Name As Afx_BSTR Ptr) As HRESULT
+		Type ISpeechPhraseProperty_ Extends Afx_IDispatch
+			Declare Abstract Function get_Name (ByVal Name As WString Ptr Ptr) As HRESULT
 			Declare Abstract Function get_Id (ByVal Id As Long Ptr) As HRESULT
 			Declare Abstract Function get_Value (ByVal Value As VARIANT Ptr) As HRESULT
 			Declare Abstract Function get_FirstElement (ByVal FirstElement As Long Ptr) As HRESULT
 			Declare Abstract Function get_NumberOfElements (ByVal NumberOfElements As Long Ptr) As HRESULT
 			Declare Abstract Function get_EngineConfidence (ByVal Confidence As Single Ptr) As HRESULT
 			Declare Abstract Function get_Confidence (ByVal Confidence As SpeechEngineConfidence Ptr) As HRESULT
-			Declare Abstract Function get_Parent (ByVal ParentProperty As Afx_ISpeechPhraseProperty Ptr Ptr) As HRESULT
-			Declare Abstract Function get_Children (ByVal Children AS Afx_ISpeechPhraseProperties Ptr Ptr) AS HRESULT
-		END Type
-		
-	#endif
-	
-	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpeechPhraseReplacement
-	' IID: {2890A410-53A7-4FB5-94EC-06D4998E3D02}
-	' Documentation string: Afx_ISpeechPhraseReplacement Interface
-	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
-	' Inherited interface = IDispatch
-	' Number of methods = 4
-	' ########################################################################################
-	
-	#ifndef __Afx_ISpeechPhraseReplacement_INTERFACE_DEFINED__
-		#define __Afx_ISpeechPhraseReplacement_INTERFACE_DEFINED__
-		
-		Type Afx_ISpeechPhraseReplacement_ Extends Afx_IDispatch
-			Declare Abstract Function get_DisplayAttributes (ByVal DisplayAttributes AS SpeechDisplayAttributes Ptr) AS HRESULT
-			Declare Abstract Function get_Text (ByVal Text AS Afx_BSTR Ptr) AS HRESULT
-			Declare Abstract Function get_FirstElement (ByVal FirstElement AS Long Ptr) AS HRESULT
-			Declare Abstract Function get_NumberOfElements (ByVal NumberOfElements AS Long Ptr) AS HRESULT
-		END Type
-		
-	#endif
-	
-	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpeechPhraseReplacements
-	' IID: {38BC662F-2257-4525-959E-2069D2596C05}
-	' Documentation string: Afx_ISpeechPhraseReplacements Interface
-	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
-	' Inherited interface = IDispatch
-	' Number of methods = 3
-	' ########################################################################################
-	
-	#ifndef __Afx_ISpeechPhraseReplacements_INTERFACE_DEFINED__
-		#define __Afx_ISpeechPhraseReplacements_INTERFACE_DEFINED__
-		
-		Type Afx_ISpeechPhraseReplacements_ Extends Afx_IDispatch
-			Declare Abstract Function get_Count (ByVal Count AS Long Ptr) AS HRESULT
-			Declare Abstract Function Item (ByVal Index AS Long, ByVal Reps AS Afx_ISpeechPhraseReplacement Ptr Ptr) AS HRESULT
-			Declare Abstract Function get__NewEnum (ByVal EnumVARIANT AS Afx_IUnknown Ptr Ptr) AS HRESULT
-		END Type
-		
-	#endif
-	
-	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpeechPhraseRule
-	' IID: {A7BFE112-A4A0-48D9-B602-C313843F6964}
-	' Documentation string: Afx_ISpeechPhraseRule Interface
-	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
-	' Inherited interface = IDispatch
-	' Number of methods = 8
-	' ########################################################################################
-	
-	#ifndef __Afx_ISpeechPhraseRule_INTERFACE_DEFINED__
-		#define __Afx_ISpeechPhraseRule_INTERFACE_DEFINED__
-		
-		Type Afx_ISpeechPhraseRule_ Extends Afx_IDispatch
-			Declare Abstract Function get_Name (ByVal Name AS Afx_BSTR Ptr) AS HRESULT
-			Declare Abstract Function get_Id (ByVal Id AS Long Ptr) AS HRESULT
-			Declare Abstract Function get_FirstElement (ByVal FirstElement AS Long Ptr) AS HRESULT
-			Declare Abstract Function get_NumberOfElements (ByVal NumberOfElements AS Long Ptr) AS HRESULT
-			Declare Abstract Function get_Parent (ByVal Parent AS Afx_ISpeechPhraseRule Ptr Ptr) AS HRESULT
-			Declare Abstract Function get_Children (ByVal Children AS Afx_ISpeechPhraseRules Ptr Ptr) AS HRESULT
-			Declare Abstract Function get_Confidence (ByVal ActualConfidence AS SpeechEngineConfidence Ptr) AS HRESULT
-			Declare Abstract Function get_EngineConfidence (ByVal EngineConfidence AS SINGLE Ptr) AS HRESULT
-		END Type
-		
-	#endif
-	
-	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpeechPhraseRules
-	' IID: {9047D593-01DD-4B72-81A3-E4A0CA69F407}
-	' Documentation string: Afx_ISpeechPhraseRules Interface
-	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
-	' Inherited interface = IDispatch
-	' Number of methods = 3
-	' ########################################################################################
-	
-	#ifndef __Afx_ISpeechPhraseRules_INTERFACE_DEFINED__
-		#define __Afx_ISpeechPhraseRules_INTERFACE_DEFINED__
-		
-		Type Afx_ISpeechPhraseRules_ Extends Afx_IDispatch
-			Declare Abstract Function get_Count (ByVal Count AS Long Ptr) AS HRESULT
-			Declare Abstract Function Item (ByVal Index AS Long, ByVal Rule AS Afx_ISpeechPhraseRule Ptr Ptr) AS HRESULT
-			Declare Abstract Function get__NewEnum (ByVal EnumVARIANT AS Afx_IUnknown Ptr Ptr) AS HRESULT
+			Declare Abstract Function get_Parent (ByVal ParentProperty As ISpeechPhraseProperty Ptr Ptr) As HRESULT
+			Declare Abstract Function get_Children (ByVal Children As ISpeechPhraseProperties Ptr Ptr) As HRESULT
 		End Type
 		
 	#endif
 	
 	' ########################################################################################
+	' Interface name: ISpeechPhraseReplacement
+	' IID: {2890A410-53A7-4FB5-94EC-06D4998E3D02}
+	' Documentation string: ISpeechPhraseReplacement Interface
+	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
+	' Inherited interface = IDispatch
+	' Number of methods = 4
+	' ########################################################################################
+	
+	#ifndef __ISpeechPhraseReplacement_INTERFACE_DEFINED__
+		#define __ISpeechPhraseReplacement_INTERFACE_DEFINED__
+		
+		Type ISpeechPhraseReplacement_ Extends Afx_IDispatch
+			Declare Abstract Function get_DisplayAttributes (ByVal DisplayAttributes AS SpeechDisplayAttributes Ptr) AS HRESULT
+			Declare Abstract Function get_Text (ByVal Text AS WString Ptr Ptr) AS HRESULT
+			Declare Abstract Function get_FirstElement (ByVal FirstElement AS Long Ptr) AS HRESULT
+			Declare Abstract Function get_NumberOfElements (ByVal NumberOfElements AS Long Ptr) AS HRESULT
+		END Type
+		
+	#endif
 	
 	' ########################################################################################
-	' Interface name: Afx_ISpeechRecoContext
+	' Interface name: ISpeechPhraseReplacements
+	' IID: {38BC662F-2257-4525-959E-2069D2596C05}
+	' Documentation string: ISpeechPhraseReplacements Interface
+	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
+	' Inherited interface = IDispatch
+	' Number of methods = 3
+	' ########################################################################################
+	
+	#ifndef __ISpeechPhraseReplacements_INTERFACE_DEFINED__
+		#define __ISpeechPhraseReplacements_INTERFACE_DEFINED__
+		
+		Type ISpeechPhraseReplacements_ Extends Afx_IDispatch
+			Declare Abstract Function get_Count (ByVal Count AS Long Ptr) AS HRESULT
+			Declare Abstract Function Item (ByVal Index AS Long, ByVal Reps AS ISpeechPhraseReplacement Ptr Ptr) AS HRESULT
+			Declare Abstract Function get__NewEnum (ByVal EnumVARIANT AS Afx_IUnknown Ptr Ptr) AS HRESULT
+		END Type
+		
+	#endif
+	
+	' ########################################################################################
+	' Interface name: ISpeechPhraseRule
+	' IID: {A7BFE112-A4A0-48D9-B602-C313843F6964}
+	' Documentation string: ISpeechPhraseRule Interface
+	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
+	' Inherited interface = IDispatch
+	' Number of methods = 8
+	' ########################################################################################
+	
+	#ifndef __ISpeechPhraseRule_INTERFACE_DEFINED__
+		#define __ISpeechPhraseRule_INTERFACE_DEFINED__
+		
+		Type ISpeechPhraseRule_ Extends Afx_IDispatch
+			Declare Abstract Function get_Name (ByVal Name As WString Ptr Ptr) As HRESULT
+			Declare Abstract Function get_Id (ByVal Id As Long Ptr) As HRESULT
+			Declare Abstract Function get_FirstElement (ByVal FirstElement As Long Ptr) As HRESULT
+			Declare Abstract Function get_NumberOfElements (ByVal NumberOfElements As Long Ptr) As HRESULT
+			Declare Abstract Function get_Parent (ByVal Parent As ISpeechPhraseRule Ptr Ptr) As HRESULT
+			Declare Abstract Function get_Children (ByVal Children As ISpeechPhraseRules Ptr Ptr) As HRESULT
+			Declare Abstract Function get_Confidence (ByVal ActualConfidence As SpeechEngineConfidence Ptr) As HRESULT
+			Declare Abstract Function get_EngineConfidence (ByVal EngineConfidence As Single Ptr) As HRESULT
+		End Type
+		
+	#endif
+	
+	' ########################################################################################
+	' Interface name: ISpeechPhraseRules
+	' IID: {9047D593-01DD-4B72-81A3-E4A0CA69F407}
+	' Documentation string: ISpeechPhraseRules Interface
+	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
+	' Inherited interface = IDispatch
+	' Number of methods = 3
+	' ########################################################################################
+	
+	#ifndef __ISpeechPhraseRules_INTERFACE_DEFINED__
+		#define __ISpeechPhraseRules_INTERFACE_DEFINED__
+		
+		Type ISpeechPhraseRules_ Extends Afx_IDispatch
+			Declare Abstract Function get_Count (ByVal Count As Long Ptr) As HRESULT
+			Declare Abstract Function Item (ByVal Index As Long, ByVal Rule As ISpeechPhraseRule Ptr Ptr) As HRESULT
+			Declare Abstract Function get__NewEnum (ByVal EnumVARIANT As Afx_IUnknown Ptr Ptr) As HRESULT
+		End Type
+		
+	#endif
+	
+	' ########################################################################################
+	' Interface name: ISpeechRecoContext
 	' IID: {580AA49D-7E1E-4809-B8E2-57DA806104B8}
-	' Documentation string: Afx_ISpeechRecoContext Interface
+	' Documentation string: ISpeechRecoContext Interface
 	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
 	' Inherited interface = IDispatch
 	' Number of methods = 25
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpeechRecoContext_INTERFACE_DEFINED__
-		#define __Afx_ISpeechRecoContext_INTERFACE_DEFINED__
+	#ifndef __ISpeechRecoContext_INTERFACE_DEFINED__
+		#define __ISpeechRecoContext_INTERFACE_DEFINED__
 		
-		Type Afx_ISpeechRecoContext_ Extends Afx_IDispatch
-			Declare Abstract Function get_Recognizer (ByVal Recognizer As Afx_ISpeechRecognizer Ptr Ptr) As HRESULT
+		Type ISpeechRecoContext_ Extends Afx_IDispatch
+			Declare Abstract Function get_Recognizer (ByVal Recognizer As ISpeechRecognizer Ptr Ptr) As HRESULT
 			Declare Abstract Function get_AudioInputInterferenceStatus (ByVal Interference As SpeechInterference Ptr) As HRESULT
-			Declare Abstract Function get_RequestedUIType (ByVal UIType As Afx_BSTR Ptr) As HRESULT
-			Declare Abstract Function putref_Voice (ByVal Voice As Afx_ISpeechVoice Ptr) As HRESULT
-			Declare Abstract Function get_Voice (ByVal Voice As Afx_ISpeechVoice Ptr Ptr) As HRESULT
+			Declare Abstract Function get_RequestedUIType (ByVal UIType As WString Ptr Ptr) As HRESULT
+			Declare Abstract Function putref_Voice (ByVal Voice As ISpeechVoice Ptr) As HRESULT
+			Declare Abstract Function get_Voice (ByVal Voice As ISpeechVoice Ptr Ptr) As HRESULT
 			Declare Abstract Function put_AllowVoiceFormatMatchingOnNextSet (ByVal pAllow As VARIANT_BOOL) As HRESULT
 			Declare Abstract Function get_AllowVoiceFormatMatchingOnNextSet (ByVal pAllow As VARIANT_BOOL Ptr) As HRESULT
 			Declare Abstract Function put_VoicePurgeEvent (ByVal EventInterest As SpeechRecoEvents) As HRESULT
@@ -4400,222 +4239,208 @@ Namespace Speech
 			Declare Abstract Function get_State (ByVal State As SpeechRecoContextState Ptr) As HRESULT
 			Declare Abstract Function put_RetainedAudio (ByVal Option As SpeechRetainedAudioOptions) As HRESULT
 			Declare Abstract Function get_RetainedAudio (ByVal Option As SpeechRetainedAudioOptions Ptr) As HRESULT
-			Declare Abstract Function putref_RetainedAudioFormat (ByVal Format As Afx_ISpeechAudioFormat Ptr) As HRESULT
-			Declare Abstract Function get_RetainedAudioFormat (ByVal Format As Afx_ISpeechAudioFormat Ptr Ptr) As HRESULT
-			Declare Abstract Function Pause () AS HRESULT
-			Declare Abstract Function Resume () AS HRESULT
-			Declare Abstract Function CreateGrammar (ByVal GrammarId AS VARIANT = Type<VARIANT>(VT_ERROR,0,0,0,DISP_E_PARAMNOTFOUND), ByVal Grammar AS Afx_ISpeechRecoGrammar Ptr Ptr) AS HRESULT
-			Declare Abstract Function CreateResultFromMemory (ByVal ResultBlock AS VARIANT Ptr, ByVal Result AS Afx_ISpeechRecoResult Ptr Ptr) AS HRESULT
-			Declare Abstract Function Bookmark (ByVal Options AS SpeechBookmarkOptions, ByVal StreamPos AS VARIANT, ByVal BookmarkId AS VARIANT) AS HRESULT
-			Declare Abstract Function SetAdaptationData (ByVal AdaptationString AS Afx_BSTR) AS HRESULT
-		END Type
+			Declare Abstract Function putref_RetainedAudioFormat (ByVal Format As ISpeechAudioFormat Ptr) As HRESULT
+			Declare Abstract Function get_RetainedAudioFormat (ByVal Format As ISpeechAudioFormat Ptr Ptr) As HRESULT
+			Declare Abstract Function Pause () As HRESULT
+			Declare Abstract Function Resume () As HRESULT
+			Declare Abstract Function CreateGrammar (ByVal GrammarId As VARIANT = Type<VARIANT>(VT_ERROR,0,0,0,DISP_E_PARAMNOTFOUND), ByVal Grammar As ISpeechRecoGrammar Ptr Ptr) As HRESULT
+			Declare Abstract Function CreateResultFromMemory (ByVal ResultBlock As VARIANT Ptr, ByVal Result As ISpeechRecoResult Ptr Ptr) As HRESULT
+			Declare Abstract Function Bookmark (ByVal Options As SpeechBookmarkOptions, ByVal StreamPos As VARIANT, ByVal BookmarkId As VARIANT) As HRESULT
+			Declare Abstract Function SetAdaptationData (ByVal AdaptationString As WString Ptr) As HRESULT
+		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpeechRecognizer
+	' Interface name: ISpeechRecognizer
 	' IID: {2D5F1C0C-BD75-4B08-9478-3B11FEA2586C}
-	' Documentation string: Afx_ISpeechRecognizer Interface
+	' Documentation string: ISpeechRecognizer Interface
 	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
 	' Inherited interface = IDispatch
 	' Number of methods = 26
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpeechRecognizer_INTERFACE_DEFINED__
-		#define __Afx_ISpeechRecognizer_INTERFACE_DEFINED__
+	#ifndef __ISpeechRecognizer_INTERFACE_DEFINED__
+		#define __ISpeechRecognizer_INTERFACE_DEFINED__
 		
-		Type Afx_ISpeechRecognizer_ Extends Afx_IDispatch
-			Declare Abstract Function putref_Recognizer (ByVal Recognizer AS Afx_ISpeechObjectToken Ptr) AS HRESULT
-			Declare Abstract Function get_Recognizer (ByVal Recognizer AS Afx_ISpeechObjectToken Ptr Ptr) AS HRESULT
-			Declare Abstract Function put_AllowAudioInputFormatChangesOnNextSet (ByVal Allow AS VARIANT_BOOL) AS HRESULT
-			Declare Abstract Function get_AllowAudioInputFormatChangesOnNextSet (ByVal Allow AS VARIANT_BOOL Ptr) AS HRESULT
-			Declare Abstract Function putref_AudioInput (ByVal AudioInput AS Afx_ISpeechObjectToken Ptr = 0) AS HRESULT
-			Declare Abstract Function get_AudioInput (ByVal AudioInput AS Afx_ISpeechObjectToken Ptr Ptr) AS HRESULT
-			Declare Abstract Function putref_AudioInputStream (ByVal AudioInputStream AS Afx_ISpeechBaseStream Ptr = 0) AS HRESULT
-			Declare Abstract Function get_AudioInputStream (ByVal AudioInputStream AS Afx_ISpeechBaseStream Ptr Ptr) AS HRESULT
-			Declare Abstract Function get_IsShared (ByVal Shared AS VARIANT_BOOL Ptr) AS HRESULT
-			Declare Abstract Function put_State (ByVal State AS SpeechRecognizerState) AS HRESULT
+		Type ISpeechRecognizer_ Extends Afx_IDispatch
+			Declare Abstract Function putref_Recognizer (ByVal Recognizer As ISpeechObjectToken Ptr) As HRESULT
+			Declare Abstract Function get_Recognizer (ByVal Recognizer As ISpeechObjectToken Ptr Ptr) As HRESULT
+			Declare Abstract Function put_AllowAudioInputFormatChangesOnNextSet (ByVal Allow As VARIANT_BOOL) As HRESULT
+			Declare Abstract Function get_AllowAudioInputFormatChangesOnNextSet (ByVal Allow As VARIANT_BOOL Ptr) As HRESULT
+			Declare Abstract Function putref_AudioInput (ByVal AudioInput As ISpeechObjectToken Ptr = 0) As HRESULT
+			Declare Abstract Function get_AudioInput (ByVal AudioInput As ISpeechObjectToken Ptr Ptr) As HRESULT
+			Declare Abstract Function putref_AudioInputStream (ByVal AudioInputStream As ISpeechBaseStream Ptr = 0) As HRESULT
+			Declare Abstract Function get_AudioInputStream (ByVal AudioInputStream As ISpeechBaseStream Ptr Ptr) As HRESULT
+			Declare Abstract Function get_IsShared (ByVal Shared As VARIANT_BOOL Ptr) As HRESULT
+			Declare Abstract Function put_State (ByVal State As SpeechRecognizerState) As HRESULT
 			Declare Abstract Function get_State (ByVal State AS SpeechRecognizerState Ptr) AS HRESULT
-			Declare Abstract Function get_Status (ByVal Status AS Afx_ISpeechRecognizerStatus Ptr Ptr) AS HRESULT
-			Declare Abstract Function putref_Profile (ByVal Profile AS Afx_ISpeechObjectToken Ptr = 0) AS HRESULT
-			Declare Abstract Function get_Profile (ByVal Profile AS Afx_ISpeechObjectToken Ptr Ptr) AS HRESULT
-			Declare Abstract Function EmulateRecognition (ByVal TextElements AS VARIANT, ByVal ElementDisplayAttributes AS VARIANT Ptr, ByVal LanguageId AS Long = 0) AS HRESULT
-			Declare Abstract Function CreateRecoContext (ByVal NewContext AS Afx_ISpeechRecoContext Ptr Ptr) AS HRESULT
-			Declare Abstract Function GetFormat (ByVal Type AS SpeechFormatType, ByVal Format AS Afx_ISpeechAudioFormat Ptr Ptr) AS HRESULT
-			Declare Abstract Function SetPropertyNumber (ByVal Name AS Afx_BSTR, ByVal Value AS Long, ByVal Supported AS VARIANT_BOOL Ptr) AS HRESULT
-			Declare Abstract Function GetPropertyNumber (ByVal Name AS Afx_BSTR, ByVal Value AS Long Ptr, ByVal Supported AS VARIANT_BOOL Ptr) AS HRESULT
-			Declare Abstract Function SetPropertyString (ByVal Name AS Afx_BSTR, ByVal Value AS Afx_BSTR, ByVal Supported AS VARIANT_BOOL Ptr) AS HRESULT
-			Declare Abstract Function GetPropertyString (ByVal Name AS Afx_BSTR, ByVal Value AS Afx_BSTR Ptr, ByVal Supported AS VARIANT_BOOL Ptr) AS HRESULT
-			Declare Abstract Function IsUISupported (ByVal TypeOfUI AS Afx_BSTR, ByVal ExtraData AS VARIANT Ptr, ByVal Supported AS VARIANT_BOOL Ptr) AS HRESULT
-			Declare Abstract Function DisplayUI (ByVal hWndParent AS Long, ByVal Title AS Afx_BSTR, ByVal TypeOfUI AS Afx_BSTR, ByVal ExtraData AS VARIANT Ptr) AS HRESULT
-			Declare Abstract Function GetRecognizers (ByVal RequiredAttributes AS Afx_BSTR, ByVal OptionalAttributes AS Afx_BSTR, ByVal ObjectTokens AS Afx_ISpeechObjectTokens Ptr Ptr) AS HRESULT
-			Declare Abstract Function GetAudioInputs (ByVal RequiredAttributes AS Afx_BSTR, ByVal OptionalAttributes AS Afx_BSTR, ByVal ObjectTokens AS Afx_ISpeechObjectTokens Ptr Ptr) AS HRESULT
-			Declare Abstract Function GetProfiles (ByVal RequiredAttributes AS Afx_BSTR, ByVal OptionalAttributes AS Afx_BSTR, ByVal ObjectTokens AS Afx_ISpeechObjectTokens Ptr Ptr) AS HRESULT
-		END Type
+			Declare Abstract Function get_Status (ByVal Status AS ISpeechRecognizerStatus Ptr Ptr) AS HRESULT
+			Declare Abstract Function putref_Profile (ByVal Profile AS ISpeechObjectToken Ptr = 0) AS HRESULT
+			Declare Abstract Function get_Profile (ByVal Profile AS ISpeechObjectToken Ptr Ptr) AS HRESULT
+			Declare Abstract Function EmulateRecognition (ByVal TextElements As VARIANT, ByVal ElementDisplayAttributes As VARIANT Ptr, ByVal LanguageId As Long = 0) As HRESULT
+			Declare Abstract Function CreateRecoContext (ByVal NewContext As ISpeechRecoContext Ptr Ptr) As HRESULT
+			Declare Abstract Function GetFormat (ByVal Type As SpeechFormatType, ByVal Format As ISpeechAudioFormat Ptr Ptr) As HRESULT
+			Declare Abstract Function SetPropertyNumber (ByVal Name As WString Ptr, ByVal Value As Long, ByVal Supported As VARIANT_BOOL Ptr) As HRESULT
+			Declare Abstract Function GetPropertyNumber (ByVal Name As WString Ptr, ByVal Value As Long Ptr, ByVal Supported As VARIANT_BOOL Ptr) As HRESULT
+			Declare Abstract Function SetPropertyString (ByVal Name As WString Ptr, ByVal Value As WString Ptr, ByVal Supported As VARIANT_BOOL Ptr) As HRESULT
+			Declare Abstract Function GetPropertyString (ByVal Name As WString Ptr, ByVal Value As WString Ptr Ptr, ByVal Supported As VARIANT_BOOL Ptr) As HRESULT
+			Declare Abstract Function IsUISupported (ByVal TypeOfUI As WString Ptr, ByVal ExtraData As VARIANT Ptr, ByVal Supported As VARIANT_BOOL Ptr) As HRESULT
+			Declare Abstract Function DisplayUI (ByVal hWndParent As Long, ByVal Title As WString Ptr, ByVal TypeOfUI As WString Ptr, ByVal ExtraData As VARIANT Ptr) As HRESULT
+			Declare Abstract Function GetRecognizers (ByVal RequiredAttributes As WString Ptr, ByVal OptionalAttributes As WString Ptr, ByVal ObjectTokens As ISpeechObjectTokens Ptr Ptr) As HRESULT
+			Declare Abstract Function GetAudioInputs (ByVal RequiredAttributes As WString Ptr, ByVal OptionalAttributes As WString Ptr, ByVal ObjectTokens As ISpeechObjectTokens Ptr Ptr) As HRESULT
+			Declare Abstract Function GetProfiles (ByVal RequiredAttributes As WString Ptr, ByVal OptionalAttributes As WString Ptr, ByVal ObjectTokens As ISpeechObjectTokens Ptr Ptr) As HRESULT
+		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpeechRecognizerStatus
+	' Interface name: ISpeechRecognizerStatus
 	' IID: {BFF9E781-53EC-484E-BB8A-0E1B5551E35C}
-	' Documentation string: Afx_ISpeechRecognizerStatus Interface
+	' Documentation string: ISpeechRecognizerStatus Interface
 	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
 	' Inherited interface = IDispatch
 	' Number of methods = 6
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpeechRecognizerStatus_INTERFACE_DEFINED__
-		#define __Afx_ISpeechRecognizerStatus_INTERFACE_DEFINED__
+	#ifndef __ISpeechRecognizerStatus_INTERFACE_DEFINED__
+		#define __ISpeechRecognizerStatus_INTERFACE_DEFINED__
 		
-		Type Afx_ISpeechRecognizerStatus_ Extends Afx_IDispatch
-			Declare Abstract Function get_AudioStatus (ByVal AudioStatus AS Afx_ISpeechAudioStatus Ptr Ptr) AS HRESULT
-			Declare Abstract Function get_CurrentStreamPosition (ByVal pCurrentStreamPos AS VARIANT Ptr) AS HRESULT
-			Declare Abstract Function get_CurrentStreamNumber (ByVal StreamNumber AS Long Ptr) AS HRESULT
-			Declare Abstract Function get_NumberOfActiveRules (ByVal NumberOfActiveRules AS Long Ptr) AS HRESULT
-			Declare Abstract Function get_ClsidEngine (ByVal ClsidEngine AS Afx_BSTR Ptr) AS HRESULT
-			Declare Abstract Function get_SupportedLanguages (ByVal SupportedLanguages AS VARIANT Ptr) AS HRESULT
-		END Type
+		Type ISpeechRecognizerStatus_ Extends Afx_IDispatch
+			Declare Abstract Function get_AudioStatus (ByVal AudioStatus As ISpeechAudioStatus Ptr Ptr) As HRESULT
+			Declare Abstract Function get_CurrentStreamPosition (ByVal pCurrentStreamPos As VARIANT Ptr) As HRESULT
+			Declare Abstract Function get_CurrentStreamNumber (ByVal StreamNumber As Long Ptr) As HRESULT
+			Declare Abstract Function get_NumberOfActiveRules (ByVal NumberOfActiveRules As Long Ptr) As HRESULT
+			Declare Abstract Function get_ClsidEngine (ByVal ClsidEngine As WString Ptr Ptr) As HRESULT
+			Declare Abstract Function get_SupportedLanguages (ByVal SupportedLanguages As VARIANT Ptr) As HRESULT
+		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpeechRecoGrammar
+	' Interface name: ISpeechRecoGrammar
 	' IID: {B6D6F79F-2158-4E50-B5BC-9A9CCD852A09}
-	' Documentation string: Afx_ISpeechRecoGrammar Interface
+	' Documentation string: ISpeechRecoGrammar Interface
 	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
 	' Inherited interface = IDispatch
 	' Number of methods = 19
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpeechRecoGrammar_INTERFACE_DEFINED__
-		#define __Afx_ISpeechRecoGrammar_INTERFACE_DEFINED__
+	#ifndef __ISpeechRecoGrammar_INTERFACE_DEFINED__
+		#define __ISpeechRecoGrammar_INTERFACE_DEFINED__
 		
-		Type Afx_ISpeechRecoGrammar_ Extends Afx_IDispatch
-			Declare Abstract Function get_Id (ByVal Id AS VARIANT Ptr) AS HRESULT
-			Declare Abstract Function get_RecoContext (ByVal RecoContext AS Afx_ISpeechRecoContext Ptr Ptr) AS HRESULT
-			Declare Abstract Function put_State (ByVal State AS SpeechGrammarState) AS HRESULT
-			Declare Abstract Function get_State (ByVal State AS SpeechGrammarState Ptr) AS HRESULT
-			Declare Abstract Function get_Rules (ByVal Rules AS Afx_ISpeechGrammarRules Ptr Ptr) AS HRESULT
-			Declare Abstract Function Reset (ByVal NewLanguage AS Long = 0) AS HRESULT
-			Declare Abstract Function CmdLoadFromFile (ByVal FileName AS Afx_BSTR, ByVal LoadOption AS SpeechLoadOption = 0) AS HRESULT
-			Declare Abstract Function CmdLoadFromObject (ByVal ClassId AS Afx_BSTR, ByVal GrammarName AS Afx_BSTR, ByVal LoadOption AS SpeechLoadOption = 0) AS HRESULT
-			Declare Abstract Function CmdLoadFromResource (ByVal hModule AS Long, ByVal ResourceName AS VARIANT, ByVal ResourceType AS VARIANT, ByVal LanguageId AS Long, ByVal LoadOption AS SpeechLoadOption = 0) AS HRESULT
-			Declare Abstract Function CmdLoadFromMemory (ByVal GrammarData AS VARIANT, ByVal LoadOption AS SpeechLoadOption = 0) AS HRESULT
-			Declare Abstract Function CmdLoadFromProprietaryGrammar (ByVal ProprietaryGuid AS Afx_BSTR, ByVal ProprietaryString AS Afx_BSTR, ByVal ProprietaryData AS VARIANT, ByVal LoadOption AS SpeechLoadOption = 0) AS HRESULT
-			Declare Abstract Function CmdSetRuleState (ByVal Name AS Afx_BSTR, ByVal State AS SpeechRuleState) AS HRESULT
-			Declare Abstract Function CmdSetRuleIdState (ByVal RuleId AS Long, ByVal State AS SpeechRuleState) AS HRESULT
-			Declare Abstract Function DictationLoad (ByVal TopicName AS Afx_BSTR, ByVal LoadOption AS SpeechLoadOption = 0) AS HRESULT
-			Declare Abstract Function DictationUnload () AS HRESULT
-			Declare Abstract Function DictationSetState (ByVal State AS SpeechRuleState) AS HRESULT
-			Declare Abstract Function SetWordSequenceData (ByVal Text AS Afx_BSTR, ByVal TextLength AS Long, ByVal Info AS Afx_ISpeechTextSelectionInformation Ptr) AS HRESULT
-			Declare Abstract Function SetTextSelection (ByVal Info AS Afx_ISpeechTextSelectionInformation Ptr) AS HRESULT
-			Declare Abstract Function IsPronounceable (ByVal Word AS Afx_BSTR, ByVal WordPronounceable AS SpeechWordPronounceable Ptr) AS HRESULT
-		END Type
+		Type ISpeechRecoGrammar_ Extends Afx_IDispatch
+			Declare Abstract Function get_Id (ByVal Id As VARIANT Ptr) As HRESULT
+			Declare Abstract Function get_RecoContext (ByVal RecoContext As ISpeechRecoContext Ptr Ptr) As HRESULT
+			Declare Abstract Function put_State (ByVal State As SpeechGrammarState) As HRESULT
+			Declare Abstract Function get_State (ByVal State As SpeechGrammarState Ptr) As HRESULT
+			Declare Abstract Function get_Rules (ByVal Rules As ISpeechGrammarRules Ptr Ptr) As HRESULT
+			Declare Abstract Function Reset (ByVal NewLanguage As Long = 0) As HRESULT
+			Declare Abstract Function CmdLoadFromFile (ByVal FileName As WString Ptr, ByVal LoadOption As SpeechLoadOption = 0) As HRESULT
+			Declare Abstract Function CmdLoadFromObject (ByVal ClassId As WString Ptr, ByVal GrammarName As WString Ptr, ByVal LoadOption As SpeechLoadOption = 0) As HRESULT
+			Declare Abstract Function CmdLoadFromResource (ByVal hModule As Long, ByVal ResourceName As VARIANT, ByVal ResourceType As VARIANT, ByVal LanguageId As Long, ByVal LoadOption As SpeechLoadOption = 0) As HRESULT
+			Declare Abstract Function CmdLoadFromMemory (ByVal GrammarData As VARIANT, ByVal LoadOption As SpeechLoadOption = 0) As HRESULT
+			Declare Abstract Function CmdLoadFromProprietaryGrammar (ByVal ProprietaryGuid As WString Ptr, ByVal ProprietaryString As WString Ptr, ByVal ProprietaryData As VARIANT, ByVal LoadOption As SpeechLoadOption = 0) As HRESULT
+			Declare Abstract Function CmdSetRuleState (ByVal Name As WString Ptr, ByVal State As SpeechRuleState) As HRESULT
+			Declare Abstract Function CmdSetRuleIdState (ByVal RuleId As Long, ByVal State As SpeechRuleState) As HRESULT
+			Declare Abstract Function DictationLoad (ByVal TopicName As WString Ptr, ByVal LoadOption As SpeechLoadOption = 0) As HRESULT
+			Declare Abstract Function DictationUnload () As HRESULT
+			Declare Abstract Function DictationSetState (ByVal State As SpeechRuleState) As HRESULT
+			Declare Abstract Function SetWordSequenceData (ByVal Text As WString Ptr, ByVal TextLength As Long, ByVal Info As ISpeechTextSelectionInformation Ptr) As HRESULT
+			Declare Abstract Function SetTextSelection (ByVal Info As ISpeechTextSelectionInformation Ptr) As HRESULT
+			Declare Abstract Function IsPronounceable (ByVal Word As WString Ptr, ByVal WordPronounceable As SpeechWordPronounceable Ptr) As HRESULT
+		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpeechRecoResult
+	' Interface name: ISpeechRecoResult
 	' IID: {ED2879CF-CED9-4EE6-A534-DE0191D5468D}
-	' Documentation string: Afx_ISpeechRecoResult Interface
+	' Documentation string: ISpeechRecoResult Interface
 	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
 	' Inherited interface = IDispatch
 	' Number of methods = 10
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpeechRecoResult_INTERFACE_DEFINED__
-		#define __Afx_ISpeechRecoResult_INTERFACE_DEFINED__
+	#ifndef __ISpeechRecoResult_INTERFACE_DEFINED__
+		#define __ISpeechRecoResult_INTERFACE_DEFINED__
 		
-		Type Afx_ISpeechRecoResult_ Extends Afx_IDispatch
-			Declare Abstract Function get_RecoContext (ByVal RecoContext AS Afx_ISpeechRecoContext Ptr Ptr) AS HRESULT
-			Declare Abstract Function get_Times (ByVal Times AS Afx_ISpeechRecoResultTimes Ptr Ptr) AS HRESULT
-			Declare Abstract Function putref_AudioFormat (ByVal Format AS Afx_ISpeechAudioFormat Ptr) AS HRESULT
-			Declare Abstract Function get_AudioFormat (ByVal Format AS Afx_ISpeechAudioFormat Ptr Ptr) AS HRESULT
-			Declare Abstract Function get_PhraseInfo (ByVal PhraseInfo AS Afx_ISpeechPhraseInfo Ptr Ptr) AS HRESULT
-			Declare Abstract Function Alternates (ByVal RequestCount AS Long, ByVal StartElement AS Long = 0, ByVal Elements AS Long = -1, ByVal Alternates AS Afx_ISpeechPhraseAlternates Ptr Ptr) AS HRESULT
-			Declare Abstract Function Audio (ByVal StartElement AS Long = 0, ByVal Elements AS Long = -1, ByVal Stream AS Afx_ISpeechMemoryStream Ptr Ptr) AS HRESULT
-			Declare Abstract Function SpeakAudio (ByVal StartElement AS Long = 0, ByVal Elements AS Long = -1, ByVal Flags AS SpeechVoiceSpeakFlags = 0, ByVal StreamNumber AS Long Ptr) AS HRESULT
-			Declare Abstract Function SaveToMemory (ByVal ResultBlock AS VARIANT Ptr) AS HRESULT
-			Declare Abstract Function DiscardResultInfo (ByVal ValueTypes AS SpeechDiscardType) AS HRESULT
-		END Type
+		Type ISpeechRecoResult_ Extends Afx_IDispatch
+			Declare Abstract Function get_RecoContext (ByVal RecoContext As ISpeechRecoContext Ptr Ptr) As HRESULT
+			Declare Abstract Function get_Times (ByVal Times As ISpeechRecoResultTimes Ptr Ptr) As HRESULT
+			Declare Abstract Function putref_AudioFormat (ByVal Format As ISpeechAudioFormat Ptr) As HRESULT
+			Declare Abstract Function get_AudioFormat (ByVal Format As ISpeechAudioFormat Ptr Ptr) As HRESULT
+			Declare Abstract Function get_PhraseInfo (ByVal PhraseInfo As ISpeechPhraseInfo Ptr Ptr) As HRESULT
+			Declare Abstract Function Alternates (ByVal RequestCount As Long, ByVal StartElement As Long = 0, ByVal Elements As Long = -1, ByVal Alternates As ISpeechPhraseAlternates Ptr Ptr) As HRESULT
+			Declare Abstract Function Audio (ByVal StartElement As Long = 0, ByVal Elements As Long = -1, ByVal Stream As ISpeechMemoryStream Ptr Ptr) As HRESULT
+			Declare Abstract Function SpeakAudio (ByVal StartElement As Long = 0, ByVal Elements As Long = -1, ByVal Flags As SpeechVoiceSpeakFlags = 0, ByVal StreamNumber As Long Ptr) As HRESULT
+			Declare Abstract Function SaveToMemory (ByVal ResultBlock As VARIANT Ptr) As HRESULT
+			Declare Abstract Function DiscardResultInfo (ByVal ValueTypes As SpeechDiscardType) As HRESULT
+		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpeechRecoResult2
+	' Interface name: ISpeechRecoResult2
 	' IID: {8E0A246D-D3C8-45DE-8657-04290C458C3C}
-	' Documentation string: Afx_ISpeechRecoResult2 Interface
+	' Documentation string: ISpeechRecoResult2 Interface
 	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
-	' Inherited interface = Afx_ISpeechRecoResult
+	' Inherited interface = ISpeechRecoResult
 	' Number of methods = 1
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpeechRecoResult2_INTERFACE_DEFINED__
-		#define __Afx_ISpeechRecoResult2_INTERFACE_DEFINED__
+	#ifndef __ISpeechRecoResult2_INTERFACE_DEFINED__
+		#define __ISpeechRecoResult2_INTERFACE_DEFINED__
 		
-		Type Afx_ISpeechRecoResult2_ Extends Afx_ISpeechRecoResult
-			Declare Abstract Function SetTextFeedback (ByVal Feedback AS Afx_BSTR, ByVal WasSuccessful AS VARIANT_BOOL) AS HRESULT
+		Type ISpeechRecoResult2_ Extends ISpeechRecoResult
+			Declare Abstract Function SetTextFeedback (ByVal Feedback AS WString Ptr, ByVal WasSuccessful AS VARIANT_BOOL) AS HRESULT
 		END Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpeechRecoResultDispatch
+	' Interface name: ISpeechRecoResultDispatch
 	' IID: {6D60EB64-ACED-40A6-BBF3-4E557F71DEE2}
-	' Documentation string: Afx_ISpeechRecoResultDispatch Interface
+	' Documentation string: ISpeechRecoResultDispatch Interface
 	' Attributes =  4432 [&h00001150] [Hidden] [Dual] [Oleautomation] [Dispatchable]
 	' Inherited interface = IDispatch
 	' Number of methods = 13
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpeechRecoResultDispatch_INTERFACE_DEFINED__
-		#define __Afx_ISpeechRecoResultDispatch_INTERFACE_DEFINED__
+	#ifndef __ISpeechRecoResultDispatch_INTERFACE_DEFINED__
+		#define __ISpeechRecoResultDispatch_INTERFACE_DEFINED__
 		
-		Type Afx_ISpeechRecoResultDispatch_ Extends Afx_IDispatch
-			Declare Abstract Function get_RecoContext (ByVal RecoContext AS Afx_ISpeechRecoContext Ptr Ptr) AS HRESULT
-			Declare Abstract Function get_Times (ByVal Times AS Afx_ISpeechRecoResultTimes Ptr Ptr) AS HRESULT
-			Declare Abstract Function putref_AudioFormat (ByVal Format AS Afx_ISpeechAudioFormat Ptr) AS HRESULT
-			Declare Abstract Function get_AudioFormat (ByVal Format AS Afx_ISpeechAudioFormat Ptr Ptr) AS HRESULT
-			Declare Abstract Function get_PhraseInfo (ByVal PhraseInfo AS Afx_ISpeechPhraseInfo Ptr Ptr) AS HRESULT
-			Declare Abstract Function Alternates (ByVal RequestCount AS Long, ByVal StartElement AS Long = 0, ByVal Elements AS Long = -1, ByVal Alternates AS Afx_ISpeechPhraseAlternates Ptr Ptr) AS HRESULT
-			Declare Abstract Function Audio (ByVal StartElement AS Long = 0, ByVal Elements AS Long = -1, ByVal Stream AS Afx_ISpeechMemoryStream Ptr Ptr) AS HRESULT
+		Type ISpeechRecoResultDispatch_ Extends Afx_IDispatch
+			Declare Abstract Function get_RecoContext (ByVal RecoContext AS ISpeechRecoContext Ptr Ptr) AS HRESULT
+			Declare Abstract Function get_Times (ByVal Times AS ISpeechRecoResultTimes Ptr Ptr) AS HRESULT
+			Declare Abstract Function putref_AudioFormat (ByVal Format AS ISpeechAudioFormat Ptr) AS HRESULT
+			Declare Abstract Function get_AudioFormat (ByVal Format AS ISpeechAudioFormat Ptr Ptr) AS HRESULT
+			Declare Abstract Function get_PhraseInfo (ByVal PhraseInfo AS ISpeechPhraseInfo Ptr Ptr) AS HRESULT
+			Declare Abstract Function Alternates (ByVal RequestCount AS Long, ByVal StartElement AS Long = 0, ByVal Elements AS Long = -1, ByVal Alternates AS ISpeechPhraseAlternates Ptr Ptr) AS HRESULT
+			Declare Abstract Function Audio (ByVal StartElement AS Long = 0, ByVal Elements AS Long = -1, ByVal Stream AS ISpeechMemoryStream Ptr Ptr) AS HRESULT
 			Declare Abstract Function SpeakAudio (ByVal StartElement AS Long = 0, ByVal Elements AS Long = -1, ByVal Flags AS SpeechVoiceSpeakFlags = 0, ByVal StreamNumber AS Long Ptr) AS HRESULT
 			Declare Abstract Function SaveToMemory (ByVal ResultBlock AS VARIANT Ptr) AS HRESULT
 			Declare Abstract Function DiscardResultInfo (ByVal ValueTypes AS SpeechDiscardType) AS HRESULT
-			Declare Abstract Function GetXMLResult (ByVal Options AS SPXMLRESULTOPTIONS, ByVal pResult AS Afx_BSTR Ptr) AS HRESULT
-			Declare Abstract Function GetXMLErrorInfo (ByVal LineNumber AS Long Ptr, ByVal ScriptLine AS Afx_BSTR Ptr, ByVal Source AS Afx_BSTR Ptr, ByVal Description AS Afx_BSTR Ptr, ByVal ResultCode AS HRESULT Ptr, ByVal IsError AS VARIANT_BOOL Ptr) AS HRESULT
-			Declare Abstract Function SetTextFeedback (ByVal Feedback AS Afx_BSTR, ByVal WasSuccessful AS VARIANT_BOOL) AS HRESULT
+			Declare Abstract Function GetXMLResult (ByVal Options AS SPXMLRESULTOPTIONS, ByVal pResult AS WString Ptr Ptr) AS HRESULT
+			Declare Abstract Function GetXMLErrorInfo (ByVal LineNumber AS Long Ptr, ByVal ScriptLine AS WString Ptr Ptr, ByVal Source AS WString Ptr Ptr, ByVal Description AS WString Ptr Ptr, ByVal ResultCode AS HRESULT Ptr, ByVal IsError AS VARIANT_BOOL Ptr) AS HRESULT
+			Declare Abstract Function SetTextFeedback (ByVal Feedback AS WString Ptr, ByVal WasSuccessful AS VARIANT_BOOL) AS HRESULT
 		END Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpeechRecoResultTimes
+	' Interface name: ISpeechRecoResultTimes
 	' IID: {62B3B8FB-F6E7-41BE-BDCB-056B1C29EFC0}
-	' Documentation string: Afx_ISpeechRecoResultTimes Interface
+	' Documentation string: ISpeechRecoResultTimes Interface
 	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
 	' Inherited interface = IDispatch
 	' Number of methods = 4
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpeechRecoResultTimes_INTERFACE_DEFINED__
-		#define __Afx_ISpeechRecoResultTimes_INTERFACE_DEFINED__
+	#ifndef __ISpeechRecoResultTimes_INTERFACE_DEFINED__
+		#define __ISpeechRecoResultTimes_INTERFACE_DEFINED__
 		
-		Type Afx_ISpeechRecoResultTimes_ Extends Afx_IDispatch
+		Type ISpeechRecoResultTimes_ Extends Afx_IDispatch
 			Declare Abstract Function get_StreamTime (ByVal Time AS VARIANT Ptr) AS HRESULT
 			Declare Abstract Function get_Length (ByVal Length AS VARIANT Ptr) AS HRESULT
 			Declare Abstract Function get_TickCount (ByVal TickCount AS Long Ptr) AS HRESULT
@@ -4625,341 +4450,311 @@ Namespace Speech
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpeechResourceLoader
+	' Interface name: ISpeechResourceLoader
 	' IID: {B9AC5783-FCD0-4B21-B119-B4F8DA8FD2C3}
-	' Documentation string: Afx_ISpeechResourceLoader Interface
+	' Documentation string: ISpeechResourceLoader Interface
 	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
 	' Inherited interface = IDispatch
 	' Number of methods = 3
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpeechResourceLoader_INTERFACE_DEFINED__
-		#define __Afx_ISpeechResourceLoader_INTERFACE_DEFINED__
+	#ifndef __ISpeechResourceLoader_INTERFACE_DEFINED__
+		#define __ISpeechResourceLoader_INTERFACE_DEFINED__
 		
-		Type Afx_ISpeechResourceLoader_ Extends Afx_IDispatch
-			Declare Abstract Function LoadResource (ByVal bstrResourceUri As Afx_BSTR, ByVal fAlwaysReload As VARIANT_BOOL, ByVal pStream As Afx_IUnknown Ptr Ptr, ByVal pbstrMIMEType As Afx_BSTR Ptr, ByVal pfModified As VARIANT_BOOL Ptr, ByVal pbstrRedirectUrl As Afx_BSTR Ptr) As HRESULT
-			Declare Abstract Function GetLocalCopy (ByVal bstrResourceUri As Afx_BSTR, ByVal pbstrLocalPath As Afx_BSTR Ptr, ByVal pbstrMIMEType As Afx_BSTR Ptr, ByVal pbstrRedirectUrl As Afx_BSTR Ptr) As HRESULT
-			Declare Abstract Function ReleaseLocalCopy (ByVal pbstrLocalPath As Afx_BSTR) As HRESULT
+		Type ISpeechResourceLoader_ Extends Afx_IDispatch
+			Declare Abstract Function LoadResource (ByVal bstrResourceUri As WString Ptr, ByVal fAlwaysReload As VARIANT_BOOL, ByVal pStream As Afx_IUnknown Ptr Ptr, ByVal pbstrMIMEType As WString Ptr Ptr, ByVal pfModified As VARIANT_BOOL Ptr, ByVal pbstrRedirectUrl As WString Ptr Ptr) As HRESULT
+			Declare Abstract Function GetLocalCopy (ByVal bstrResourceUri As WString Ptr, ByVal pbstrLocalPath As WString Ptr Ptr, ByVal pbstrMIMEType As WString Ptr Ptr, ByVal pbstrRedirectUrl As WString Ptr Ptr) As HRESULT
+			Declare Abstract Function ReleaseLocalCopy (ByVal pbstrLocalPath As WString Ptr) As HRESULT
 		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpeechTextSelectionInformation
+	' Interface name: ISpeechTextSelectionInformation
 	' IID: {3B9C7E7A-6EEE-4DED-9092-11657279ADBE}
-	' Documentation string: Afx_ISpeechTextSelectionInformation Interface
+	' Documentation string: ISpeechTextSelectionInformation Interface
 	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
 	' Inherited interface = IDispatch
 	' Number of methods = 8
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpeechTextSelectionInformation_INTERFACE_DEFINED__
-		#define __Afx_ISpeechTextSelectionInformation_INTERFACE_DEFINED__
+	#ifndef __ISpeechTextSelectionInformation_INTERFACE_DEFINED__
+		#define __ISpeechTextSelectionInformation_INTERFACE_DEFINED__
 		
-		Type Afx_ISpeechTextSelectionInformation_ Extends Afx_IDispatch
-			Declare Abstract Function put_ActiveOffset (ByVal ActiveOffset AS Long) AS HRESULT
-			Declare Abstract Function get_ActiveOffset (ByVal ActiveOffset AS Long Ptr) AS HRESULT
-			Declare Abstract Function put_ActiveLength (ByVal ActiveLength AS Long) AS HRESULT
-			Declare Abstract Function get_ActiveLength (ByVal ActiveLength AS Long Ptr) AS HRESULT
-			Declare Abstract Function put_SelectionOffset (ByVal SelectionOffset AS Long) AS HRESULT
-			Declare Abstract Function get_SelectionOffset (ByVal SelectionOffset AS Long Ptr) AS HRESULT
-			Declare Abstract Function put_SelectionLength (ByVal SelectionLength AS Long) AS HRESULT
-			Declare Abstract Function get_SelectionLength (ByVal SelectionLength AS Long Ptr) AS HRESULT
-		END Type
+		Type ISpeechTextSelectionInformation_ Extends Afx_IDispatch
+			Declare Abstract Function put_ActiveOffset (ByVal ActiveOffset As Long) As HRESULT
+			Declare Abstract Function get_ActiveOffset (ByVal ActiveOffset As Long Ptr) As HRESULT
+			Declare Abstract Function put_ActiveLength (ByVal ActiveLength As Long) As HRESULT
+			Declare Abstract Function get_ActiveLength (ByVal ActiveLength As Long Ptr) As HRESULT
+			Declare Abstract Function put_SelectionOffset (ByVal SelectionOffset As Long) As HRESULT
+			Declare Abstract Function get_SelectionOffset (ByVal SelectionOffset As Long Ptr) As HRESULT
+			Declare Abstract Function put_SelectionLength (ByVal SelectionLength As Long) As HRESULT
+			Declare Abstract Function get_SelectionLength (ByVal SelectionLength As Long Ptr) As HRESULT
+		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpeechVoice
+	' Interface name: ISpeechVoice
 	' IID: {269316D8-57BD-11D2-9EEE-00C04F797396}
-	' Documentation string: Afx_ISpeechVoice Interface
+	' Documentation string: ISpeechVoice Interface
 	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
 	' Inherited interface = IDispatch
 	' Number of methods = 32
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpeechVoice_INTERFACE_DEFINED__
-		#define __Afx_ISpeechVoice_INTERFACE_DEFINED__
+	#ifndef __ISpeechVoice_INTERFACE_DEFINED__
+		#define __ISpeechVoice_INTERFACE_DEFINED__
 		
-		Type Afx_ISpeechVoice_ Extends Afx_IDispatch
-			Declare Abstract Function get_Status (ByVal Status AS Afx_ISpeechVoiceStatus Ptr Ptr) AS HRESULT
-			Declare Abstract Function get_Voice (ByVal Voice AS Afx_ISpeechObjectToken Ptr Ptr) AS HRESULT
-			Declare Abstract Function putref_Voice (ByVal Voice AS Afx_ISpeechObjectToken Ptr) AS HRESULT
-			Declare Abstract Function get_AudioOutput (ByVal AudioOutput AS Afx_ISpeechObjectToken Ptr Ptr) AS HRESULT
-			Declare Abstract Function putref_AudioOutput (ByVal AudioOutput AS Afx_ISpeechObjectToken Ptr) AS HRESULT
-			Declare Abstract Function get_AudioOutputStream (ByVal AudioOutputStream AS Afx_ISpeechBaseStream Ptr Ptr) AS HRESULT
-			Declare Abstract Function putref_AudioOutputStream (ByVal AudioOutputStream AS Afx_ISpeechBaseStream Ptr) AS HRESULT
-			Declare Abstract Function get_Rate (ByVal Rate AS Long Ptr) AS HRESULT
-			Declare Abstract Function put_Rate (ByVal Rate AS Long) AS HRESULT
-			Declare Abstract Function get_Volume (ByVal Volume AS Long Ptr) AS HRESULT
-			Declare Abstract Function put_Volume (ByVal Volume AS Long) AS HRESULT
-			Declare Abstract Function put_AllowAudioOutputFormatChangesOnNextSet (ByVal Allow AS VARIANT_BOOL) AS HRESULT
-			Declare Abstract Function get_AllowAudioOutputFormatChangesOnNextSet (ByVal Allow AS VARIANT_BOOL Ptr) AS HRESULT
-			Declare Abstract Function get_EventInterests (ByVal EventInterestFlags AS SpeechVoiceEvents Ptr) AS HRESULT
-			Declare Abstract Function put_EventInterests (ByVal EventInterestFlags AS SpeechVoiceEvents) AS HRESULT
-			Declare Abstract Function put_Priority (ByVal Priority AS SpeechVoicePriority) AS HRESULT
-			Declare Abstract Function get_Priority (ByVal Priority AS SpeechVoicePriority Ptr) AS HRESULT
-			Declare Abstract Function put_AlertBoundary (ByVal Boundary AS SpeechVoiceEvents) AS HRESULT
-			Declare Abstract Function get_AlertBoundary (ByVal Boundary AS SpeechVoiceEvents Ptr) AS HRESULT
-			Declare Abstract Function put_SynchronousSpeakTimeout (ByVal msTimeout AS Long) AS HRESULT
-			Declare Abstract Function get_SynchronousSpeakTimeout (ByVal msTimeout AS Long Ptr) AS HRESULT
-			Declare Abstract Function Speak (ByVal Text AS Afx_BSTR, ByVal Flags AS SpeechVoiceSpeakFlags = 0, ByVal StreamNumber AS Long Ptr) AS HRESULT
-			Declare Abstract Function SpeakStream (ByVal Stream AS Afx_ISpeechBaseStream Ptr, ByVal Flags AS SpeechVoiceSpeakFlags = 0, ByVal StreamNumber AS Long Ptr) AS HRESULT
-			Declare Abstract Function Pause () AS HRESULT
-			Declare Abstract Function Resume () AS HRESULT
-			Declare Abstract Function Skip (ByVal Type AS Afx_BSTR, ByVal NumItems AS Long, ByVal NumSkipped AS Long Ptr) AS HRESULT
-			Declare Abstract Function GetVoices (ByVal RequiredAttributes AS Afx_BSTR, ByVal OptionalAttributes AS Afx_BSTR, ByVal ObjectTokens AS Afx_ISpeechObjectTokens Ptr Ptr) AS HRESULT
-			Declare Abstract Function GetAudioOutputs (ByVal RequiredAttributes AS Afx_BSTR, ByVal OptionalAttributes AS Afx_BSTR, ByVal ObjectTokens AS Afx_ISpeechObjectTokens Ptr Ptr) AS HRESULT
-			Declare Abstract Function WaitUntilDone (ByVal msTimeout AS Long, ByVal Done AS VARIANT_BOOL Ptr) AS HRESULT
-			Declare Abstract Function SpeakCompleteEvent (ByVal Handle AS Long Ptr) AS HRESULT
-			Declare Abstract Function IsUISupported (ByVal TypeOfUI AS Afx_BSTR, ByVal ExtraData AS VARIANT Ptr, ByVal Supported AS VARIANT_BOOL Ptr) AS HRESULT
-			Declare Abstract Function DisplayUI (ByVal hWndParent AS Long, ByVal Title AS Afx_BSTR, ByVal TypeOfUI AS Afx_BSTR, ByVal ExtraData AS VARIANT Ptr) AS HRESULT
-		END Type
+		Type ISpeechVoice_ Extends Afx_IDispatch
+			Declare Abstract Function get_Status (ByVal Status As ISpeechVoiceStatus Ptr Ptr) As HRESULT
+			Declare Abstract Function get_Voice (ByVal Voice As ISpeechObjectToken Ptr Ptr) As HRESULT
+			Declare Abstract Function putref_Voice (ByVal Voice As ISpeechObjectToken Ptr) As HRESULT
+			Declare Abstract Function get_AudioOutput (ByVal AudioOutput As ISpeechObjectToken Ptr Ptr) As HRESULT
+			Declare Abstract Function putref_AudioOutput (ByVal AudioOutput As ISpeechObjectToken Ptr) As HRESULT
+			Declare Abstract Function get_AudioOutputStream (ByVal AudioOutputStream As ISpeechBaseStream Ptr Ptr) As HRESULT
+			Declare Abstract Function putref_AudioOutputStream (ByVal AudioOutputStream As ISpeechBaseStream Ptr) As HRESULT
+			Declare Abstract Function get_Rate (ByVal Rate As Long Ptr) As HRESULT
+			Declare Abstract Function put_Rate (ByVal Rate As Long) As HRESULT
+			Declare Abstract Function get_Volume (ByVal Volume As Long Ptr) As HRESULT
+			Declare Abstract Function put_Volume (ByVal Volume As Long) As HRESULT
+			Declare Abstract Function put_AllowAudioOutputFormatChangesOnNextSet (ByVal Allow As VARIANT_BOOL) As HRESULT
+			Declare Abstract Function get_AllowAudioOutputFormatChangesOnNextSet (ByVal Allow As VARIANT_BOOL Ptr) As HRESULT
+			Declare Abstract Function get_EventInterests (ByVal EventInterestFlags As SpeechVoiceEvents Ptr) As HRESULT
+			Declare Abstract Function put_EventInterests (ByVal EventInterestFlags As SpeechVoiceEvents) As HRESULT
+			Declare Abstract Function put_Priority (ByVal Priority As SpeechVoicePriority) As HRESULT
+			Declare Abstract Function get_Priority (ByVal Priority As SpeechVoicePriority Ptr) As HRESULT
+			Declare Abstract Function put_AlertBoundary (ByVal Boundary As SpeechVoiceEvents) As HRESULT
+			Declare Abstract Function get_AlertBoundary (ByVal Boundary As SpeechVoiceEvents Ptr) As HRESULT
+			Declare Abstract Function put_SynchronousSpeakTimeout (ByVal msTimeout As Long) As HRESULT
+			Declare Abstract Function get_SynchronousSpeakTimeout (ByVal msTimeout As Long Ptr) As HRESULT
+			Declare Abstract Function Speak (ByVal Text As WString Ptr, ByVal Flags As SpeechVoiceSpeakFlags = 0, ByVal StreamNumber As Long Ptr) As HRESULT
+			Declare Abstract Function SpeakStream (ByVal Stream As ISpeechBaseStream Ptr, ByVal Flags As SpeechVoiceSpeakFlags = 0, ByVal StreamNumber As Long Ptr) As HRESULT
+			Declare Abstract Function Pause () As HRESULT
+			Declare Abstract Function Resume () As HRESULT
+			Declare Abstract Function Skip (ByVal Type As WString Ptr, ByVal NumItems As Long, ByVal NumSkipped As Long Ptr) As HRESULT
+			Declare Abstract Function GetVoices (ByVal RequiredAttributes As WString Ptr, ByVal OptionalAttributes As WString Ptr, ByVal ObjectTokens As ISpeechObjectTokens Ptr Ptr) As HRESULT
+			Declare Abstract Function GetAudioOutputs (ByVal RequiredAttributes As WString Ptr, ByVal OptionalAttributes As WString Ptr, ByVal ObjectTokens As ISpeechObjectTokens Ptr Ptr) As HRESULT
+			Declare Abstract Function WaitUntilDone (ByVal msTimeout As Long, ByVal Done As VARIANT_BOOL Ptr) As HRESULT
+			Declare Abstract Function SpeakCompleteEvent (ByVal Handle As Long Ptr) As HRESULT
+			Declare Abstract Function IsUISupported (ByVal TypeOfUI As WString Ptr, ByVal ExtraData As VARIANT Ptr, ByVal Supported As VARIANT_BOOL Ptr) As HRESULT
+			Declare Abstract Function DisplayUI (ByVal hWndParent As Long, ByVal Title As WString Ptr, ByVal TypeOfUI As WString Ptr, ByVal ExtraData As VARIANT Ptr) As HRESULT
+		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpeechVoiceStatus
+	' Interface name: ISpeechVoiceStatus
 	' IID: {8BE47B07-57F6-11D2-9EEE-00C04F797396}
-	' Documentation string: Afx_ISpeechVoiceStatus Interface
+	' Documentation string: ISpeechVoiceStatus Interface
 	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
 	' Inherited interface = IDispatch
 	' Number of methods = 12
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpeechVoiceStatus_INTERFACE_DEFINED__
-		#define __Afx_ISpeechVoiceStatus_INTERFACE_DEFINED__
+	#ifndef __ISpeechVoiceStatus_INTERFACE_DEFINED__
+		#define __ISpeechVoiceStatus_INTERFACE_DEFINED__
 		
-		Type Afx_ISpeechVoiceStatus_ Extends Afx_IDispatch
-			Declare Abstract Function get_CurrentStreamNumber (ByVal StreamNumber AS Long Ptr) AS HRESULT
-			Declare Abstract Function get_LastStreamNumberQueued (ByVal StreamNumber AS Long Ptr) AS HRESULT
-			Declare Abstract Function get_LastHResult (ByVal HResult AS Long Ptr) AS HRESULT
-			Declare Abstract Function get_RunningState (ByVal State AS SpeechRunState Ptr) AS HRESULT
-			Declare Abstract Function get_InputWordPosition (ByVal Position AS Long Ptr) AS HRESULT
-			Declare Abstract Function get_InputWordLength (ByVal Length AS Long Ptr) AS HRESULT
-			Declare Abstract Function get_InputSentencePosition (ByVal Position AS Long Ptr) AS HRESULT
-			Declare Abstract Function get_InputSentenceLength (ByVal Length AS Long Ptr) AS HRESULT
-			Declare Abstract Function get_LastBookmark (ByVal Bookmark AS Afx_BSTR Ptr) AS HRESULT
-			Declare Abstract Function get_LastBookmarkId (ByVal BookmarkId AS Long Ptr) AS HRESULT
-			Declare Abstract Function get_PhonemeId (ByVal PhoneId AS SHORT Ptr) AS HRESULT
-			Declare Abstract Function get_VisemeId (ByVal VisemeId AS SHORT Ptr) AS HRESULT
-		END Type
+		Type ISpeechVoiceStatus_ Extends Afx_IDispatch
+			Declare Abstract Function get_CurrentStreamNumber (ByVal StreamNumber As Long Ptr) As HRESULT
+			Declare Abstract Function get_LastStreamNumberQueued (ByVal StreamNumber As Long Ptr) As HRESULT
+			Declare Abstract Function get_LastHResult (ByVal HResult As Long Ptr) As HRESULT
+			Declare Abstract Function get_RunningState (ByVal State As SpeechRunState Ptr) As HRESULT
+			Declare Abstract Function get_InputWordPosition (ByVal Position As Long Ptr) As HRESULT
+			Declare Abstract Function get_InputWordLength (ByVal Length As Long Ptr) As HRESULT
+			Declare Abstract Function get_InputSentencePosition (ByVal Position As Long Ptr) As HRESULT
+			Declare Abstract Function get_InputSentenceLength (ByVal Length As Long Ptr) As HRESULT
+			Declare Abstract Function get_LastBookmark (ByVal Bookmark As WString Ptr Ptr) As HRESULT
+			Declare Abstract Function get_LastBookmarkId (ByVal BookmarkId As Long Ptr) As HRESULT
+			Declare Abstract Function get_PhonemeId (ByVal PhoneId As Short Ptr) As HRESULT
+			Declare Abstract Function get_VisemeId (ByVal VisemeId As Short Ptr) As HRESULT
+		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpeechWaveFormatEx
+	' Interface name: ISpeechWaveFormatEx
 	' IID: {7A1EF0D5-1581-4741-88E4-209A49F11A10}
-	' Documentation string: Afx_ISpeechWaveFormatEx Interface
+	' Documentation string: ISpeechWaveFormatEx Interface
 	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
 	' Inherited interface = IDispatch
 	' Number of methods = 14
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpeechWaveFormatEx_INTERFACE_DEFINED__
-		#define __Afx_ISpeechWaveFormatEx_INTERFACE_DEFINED__
+	#ifndef __ISpeechWaveFormatEx_INTERFACE_DEFINED__
+		#define __ISpeechWaveFormatEx_INTERFACE_DEFINED__
 		
-		Type Afx_ISpeechWaveFormatEx_ Extends Afx_IDispatch
-			Declare Abstract Function get_FormatTag (ByVal FormatTag AS SHORT Ptr) AS HRESULT
-			Declare Abstract Function put_FormatTag (ByVal FormatTag AS SHORT) AS HRESULT
-			Declare Abstract Function get_Channels (ByVal Channels AS SHORT Ptr) AS HRESULT
-			Declare Abstract Function put_Channels (ByVal Channels AS SHORT) AS HRESULT
-			Declare Abstract Function get_SamplesPerSec (ByVal SamplesPerSec AS Long Ptr) AS HRESULT
-			Declare Abstract Function put_SamplesPerSec (ByVal SamplesPerSec AS Long) AS HRESULT
-			Declare Abstract Function get_AvgBytesPerSec (ByVal AvgBytesPerSec AS Long Ptr) AS HRESULT
-			Declare Abstract Function put_AvgBytesPerSec (ByVal AvgBytesPerSec AS Long) AS HRESULT
-			Declare Abstract Function get_BlockAlign (ByVal BlockAlign AS SHORT Ptr) AS HRESULT
-			Declare Abstract Function put_BlockAlign (ByVal BlockAlign AS SHORT) AS HRESULT
-			Declare Abstract Function get_BitsPerSample (ByVal BitsPerSample AS SHORT Ptr) AS HRESULT
-			Declare Abstract Function put_BitsPerSample (ByVal BitsPerSample AS SHORT) AS HRESULT
-			Declare Abstract Function get_ExtraData (ByVal ExtraData AS VARIANT Ptr) AS HRESULT
-			Declare Abstract Function put_ExtraData (ByVal ExtraData AS VARIANT) AS HRESULT
-		END Type
+		Type ISpeechWaveFormatEx_ Extends Afx_IDispatch
+			Declare Abstract Function get_FormatTag (ByVal FormatTag As Short Ptr) As HRESULT
+			Declare Abstract Function put_FormatTag (ByVal FormatTag As Short) As HRESULT
+			Declare Abstract Function get_Channels (ByVal Channels As Short Ptr) As HRESULT
+			Declare Abstract Function put_Channels (ByVal Channels As Short) As HRESULT
+			Declare Abstract Function get_SamplesPerSec (ByVal SamplesPerSec As Long Ptr) As HRESULT
+			Declare Abstract Function put_SamplesPerSec (ByVal SamplesPerSec As Long) As HRESULT
+			Declare Abstract Function get_AvgBytesPerSec (ByVal AvgBytesPerSec As Long Ptr) As HRESULT
+			Declare Abstract Function put_AvgBytesPerSec (ByVal AvgBytesPerSec As Long) As HRESULT
+			Declare Abstract Function get_BlockAlign (ByVal BlockAlign As Short Ptr) As HRESULT
+			Declare Abstract Function put_BlockAlign (ByVal BlockAlign As Short) As HRESULT
+			Declare Abstract Function get_BitsPerSample (ByVal BitsPerSample As Short Ptr) As HRESULT
+			Declare Abstract Function put_BitsPerSample (ByVal BitsPerSample As Short) As HRESULT
+			Declare Abstract Function get_ExtraData (ByVal ExtraData As VARIANT Ptr) As HRESULT
+			Declare Abstract Function put_ExtraData (ByVal ExtraData As VARIANT) As HRESULT
+		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpeechXMLRecoResult
+	' Interface name: ISpeechXMLRecoResult
 	' IID: {AAEC54AF-8F85-4924-944D-B79D39D72E19}
-	' Documentation string: Afx_ISpeechXMLRecoResult Interface
+	' Documentation string: ISpeechXMLRecoResult Interface
 	' Attributes =  4416 [&h00001140] [Dual] [Oleautomation] [Dispatchable]
-	' Inherited interface = Afx_ISpeechRecoResult
+	' Inherited interface = ISpeechRecoResult
 	' Number of methods = 2
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpeechXMLRecoResult_INTERFACE_DEFINED__
-		#define __Afx_ISpeechXMLRecoResult_INTERFACE_DEFINED__
+	#ifndef __ISpeechXMLRecoResult_INTERFACE_DEFINED__
+		#define __ISpeechXMLRecoResult_INTERFACE_DEFINED__
 		
-		Type Afx_ISpeechXMLRecoResult_ Extends Afx_ISpeechRecoResult
-			Declare Abstract Function GetXMLResult (ByVal Options As SPXMLRESULTOPTIONS, ByVal pResult As Afx_BSTR Ptr) As HRESULT
-			Declare Abstract Function GetXMLErrorInfo (ByVal LineNumber As Long Ptr, ByVal ScriptLine As Afx_BSTR Ptr, ByVal Source As Afx_BSTR Ptr, ByVal Description As Afx_BSTR Ptr, ByVal ResultCode As Long Ptr, ByVal IsError As VARIANT_BOOL Ptr) As HRESULT
+		Type ISpeechXMLRecoResult_ Extends ISpeechRecoResult
+			Declare Abstract Function GetXMLResult (ByVal Options As SPXMLRESULTOPTIONS, ByVal pResult As WString Ptr Ptr) As HRESULT
+			Declare Abstract Function GetXMLErrorInfo (ByVal LineNumber As Long Ptr, ByVal ScriptLine As WString Ptr Ptr, ByVal Source As WString Ptr Ptr, ByVal Description As WString Ptr Ptr, ByVal ResultCode As Long Ptr, ByVal IsError As VARIANT_BOOL Ptr) As HRESULT
 		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpContainerLexicon
+	' Interface name: ISpContainerLexicon
 	' IID = {8565572F-C094-41CC-B56E-10BD9C3FF044}
-	' Inherited interface = Afx_ISpLexicon
+	' Inherited interface = ISpLexicon
 	' Number of methods = 1
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpContainerLexicon_INTERFACE_DEFINED__
-		#define __Afx_ISpContainerLexicon_INTERFACE_DEFINED__
+	#ifndef __ISpContainerLexicon_INTERFACE_DEFINED__
+		#define __ISpContainerLexicon_INTERFACE_DEFINED__
 		
-		Type Afx_ISpContainerLexicon_ Extends Afx_ISpLexicon
-			Declare Abstract Function AddLexicon (ByVal pAddLexicon As Afx_ISpLexicon Ptr, ByVal dwFlags As DWORD) As HRESULT
+		Type ISpContainerLexicon_ Extends ISpLexicon
+			Declare Abstract Function AddLexicon (ByVal pAddLexicon As ISpLexicon Ptr, ByVal dwFlags As DWORD) As HRESULT
 		End Type
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name: Afx_ISpEnginePronunciation
+	' Interface name: ISpEnginePronunciation
 	' IID = C360CE4B-76D1-4214-AD68-52657D5083DA
 	' Inherited interface = IUnknown
 	' Number of methods = 2
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpEnginePronunciation_INTERFACE_DEFINED__
-		#define __Afx_ISpEnginePronunciation_INTERFACE_DEFINED__
+	#ifndef __ISpEnginePronunciation_INTERFACE_DEFINED__
+		#define __ISpEnginePronunciation_INTERFACE_DEFINED__
 		
-		Type Afx_ISpEnginePronunciation_ Extends Afx_IUnknown
-			Declare Abstract Function Normalize (ByVal pszWord AS LPCWStr, ByVal pszLeftContext AS LPCWStr, ByVal LangID AS WORD, ByVal pNormalizationList AS SPNORMALIZATIONLIST Ptr) AS HRESULT
-			Declare Abstract Function GetPronunciations (ByVal pszWord AS LPCWStr, ByVal pszLeftContext AS LPCWStr, ByVal LangID AS WORD, ByVal pEnginePronunciationList AS SPWORDPRONUNCIATIONLIST Ptr) AS HRESULT
-		END Type
+		Type ISpEnginePronunciation_ Extends Afx_IUnknown
+			Declare Abstract Function Normalize (ByVal pszWord As LPCWSTR, ByVal pszLeftContext As LPCWSTR, ByVal LangID As WORD, ByVal pNormalizationList As SPNORMALIZATIONLIST Ptr) As HRESULT
+			Declare Abstract Function GetPronunciations (ByVal pszWord As LPCWSTR, ByVal pszLeftContext As LPCWSTR, ByVal LangID As WORD, ByVal pEnginePronunciationList As SPWORDPRONUNCIATIONLIST Ptr) As HRESULT
+		End Type
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name = Afx_ISpEventSource2
+	' Interface name = ISpEventSource2
 	' IID = 2373A435-6A4B-429E-A6AC-D4231A61975B
-	' Inherited interface = Afx_ISpEventSource
+	' Inherited interface = ISpEventSource
 	' Number of methods = 1
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpEventSource2_INTERFACE_DEFINED__
-		#define __Afx_ISpEventSource2_INTERFACE_DEFINED__
+	#ifndef __ISpEventSource2_INTERFACE_DEFINED__
+		#define __ISpEventSource2_INTERFACE_DEFINED__
 		
-		Type Afx_ISpEventSource2_ Extends Afx_ISpEventSource
-			Declare Abstract Function GetEventsEx (ByVal ulCount AS ULong, ByVal pEventArray AS SPEVENTEX Ptr, ByVal pulFetched AS ULong Ptr) AS HRESULT
-		END Type
+		Type ISpEventSource2_ Extends ISpEventSource
+			Declare Abstract Function GetEventsEx (ByVal ulCount As ULong, ByVal pEventArray As SPEVENTEX Ptr, ByVal pulFetched As ULong Ptr) As HRESULT
+		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name = Afx_ISpGrammarBuilder2
+	' Interface name = ISpGrammarBuilder2
 	' IID = 8AB10026-20CC-4B20-8C22-A49C9BA78F60
 	' Inherited interface = IUnknown
 	' Number of methods = 2
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpGrammarBuilder2_INTERFACE_DEFINED__
-		#define __Afx_ISpGrammarBuilder2_INTERFACE_DEFINED__
+	#ifndef __ISpGrammarBuilder2_INTERFACE_DEFINED__
+		#define __ISpGrammarBuilder2_INTERFACE_DEFINED__
 		
-		Type Afx_ISpGrammarBuilder2_ Extends Afx_IUnknown
-			Declare Abstract Function AddTextSubset (ByVal hFromState AS SPSTATEHANDLE, ByVal hToState AS SPSTATEHANDLE, ByVal psz AS LPCWStr, ByVal eMatchMode AS SPMATCHINGMODE) AS HRESULT
-			Declare Abstract Function SetPhoneticAlphabet (ByVal phoneticALphabet AS PHONETICALPHABET) AS HRESULT
-		END Type
+		Type ISpGrammarBuilder2_ Extends Afx_IUnknown
+			Declare Abstract Function AddTextSubset (ByVal hFromState As SPSTATEHANDLE, ByVal hToState As SPSTATEHANDLE, ByVal psz As LPCWSTR, ByVal eMatchMode As SPMATCHINGMODE) As HRESULT
+			Declare Abstract Function SetPhoneticAlphabet (ByVal phoneticALphabet As PHONETICALPHABET) As HRESULT
+		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name = Afx_ISpObjectTokenInit
+	' Interface name = ISpObjectTokenInit
 	' IID = {B8AAB0CF-346F-49D8-9499-C8B03F161D51}
 	' Attributes = 512 [&H200] [Restricted]
-	' Inherited interface = Afx_ISpObjectToken
+	' Inherited interface = ISpObjectToken
 	' Number of methods = 1
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpObjectTokenInit_INTERFACE_DEFINED__
-		#define __Afx_ISpObjectTokenInit_INTERFACE_DEFINED__
+	#ifndef __ISpObjectTokenInit_INTERFACE_DEFINED__
+		#define __ISpObjectTokenInit_INTERFACE_DEFINED__
 		
-		Type Afx_ISpObjectTokenInit_ Extends Afx_ISpObjectToken
-			Declare Abstract Function InitFromDataKey (ByVal pszCategoryId AS LPCWStr, ByVal pszTokenId AS LPCWStr, ByVal pDataKey AS Afx_ISpDataKey Ptr) AS HRESULT
-		END Type
+		Type ISpObjectTokenInit_ Extends ISpObjectToken
+			Declare Abstract Function InitFromDataKey (ByVal pszCategoryId As LPCWSTR, ByVal pszTokenId As LPCWSTR, ByVal pDataKey As ISpDataKey Ptr) As HRESULT
+		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name = Afx_ISpPhrase2
+	' Interface name = ISpPhrase2
 	' IID = F264DA52-E457-4696-B856-A737B717AF79
-	' Inherited interface = Afx_ISpPhrase
+	' Inherited interface = ISpPhrase
 	' Number of methods = 3
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpPhrase2_INTERFACE_DEFINED__
-		#define __Afx_ISpPhrase2_INTERFACE_DEFINED__
+	#ifndef __ISpPhrase2_INTERFACE_DEFINED__
+		#define __ISpPhrase2_INTERFACE_DEFINED__
 		
-		Type Afx_ISpPhrase2_ Extends Afx_ISpPhrase
-			Declare Abstract Function GetXMLResult (ByVal ppszCoMemXMLResult As LPWStr Ptr, ByVal Options As SPXMLRESULTOPTIONS) As HRESULT
+		Type ISpPhrase2_ Extends ISpPhrase
+			Declare Abstract Function GetXMLResult (ByVal ppszCoMemXMLResult As LPWSTR Ptr, ByVal Options As SPXMLRESULTOPTIONS) As HRESULT
 			Declare Abstract Function GetXMLErrorInfo (ByVal pSemanticErrorInfo As SPSEMANTICERRORINFO Ptr) As HRESULT
-			Declare Abstract Function GetAudio (ByVal ulStartElement As ULong, ByVal cElements As ULong, ByVal ppStream As Afx_ISpStreamFormat Ptr Ptr) As HRESULT
+			Declare Abstract Function GetAudio (ByVal ulStartElement As ULong, ByVal cElements As ULong, ByVal ppStream As ISpStreamFormat Ptr Ptr) As HRESULT
 		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name = Afx_ISpRecoResult2
+	' Interface name = ISpRecoResult2
 	' IID = 27CAC6C4-88F2-41F2-8817-0C95E59F1E6E
-	' Inherited interface = Afx_ISpRecoResult
+	' Inherited interface = ISpRecoResult
 	' Number of methods = 3
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpRecoResult2_INTERFACE_DEFINED__
-		#define __Afx_ISpRecoResult2_INTERFACE_DEFINED__
+	#ifndef __ISpRecoResult2_INTERFACE_DEFINED__
+		#define __ISpRecoResult2_INTERFACE_DEFINED__
 		
-		Type Afx_ISpRecoResult2_ Extends Afx_ISpRecoResult
-			Declare Abstract Function CommitAlternate (ByVal pPhraseAlt As Afx_ISpPhraseAlt Ptr, ByVal ppNewResult As Afx_ISpRecoResult Ptr Ptr) As HRESULT
-			Declare Abstract Function CommitText (ByVal ulStartElement As ULong, ByVal cElements As ULong, ByVal pszCorrectedData As LPCWStr, ByVal eCommitFlags As DWORD) As HRESULT
-			Declare Abstract Function SetTextFeedback (ByVal pszFeedback As LPCWStr, ByVal fSuccessful As WINBOOL) As HRESULT
+		Type ISpRecoResult2_ Extends ISpRecoResult
+			Declare Abstract Function CommitAlternate (ByVal pPhraseAlt As ISpPhraseAlt Ptr, ByVal ppNewResult As ISpRecoResult Ptr Ptr) As HRESULT
+			Declare Abstract Function CommitText (ByVal ulStartElement As ULong, ByVal cElements As ULong, ByVal pszCorrectedData As LPCWSTR, ByVal eCommitFlags As DWORD) As HRESULT
+			Declare Abstract Function SetTextFeedback (ByVal pszFeedback As LPCWSTR, ByVal fSuccessful As WINBOOL) As HRESULT
 		End Type
 		
 	#endif
 	
 	' ########################################################################################
-	
-	' ########################################################################################
-	' Interface name = Afx_ISpRegDataKey
+	' Interface name = ISpRegDataKey
 	' IID = {92A66E2B-C830-4149-83DF-6FC2BA1E7A5B}
 	' Attributes = 512 [&H200] [Restricted]
-	' Inherited interface = Afx_ISpDataKey
+	' Inherited interface = ISpDataKey
 	' Number of methods = 1
 	' ########################################################################################
 	
-	#ifndef __Afx_ISpRegDataKey_INTERFACE_DEFINED__
-		#define __Afx_ISpRegDataKey_INTERFACE_DEFINED__
+	#ifndef __ISpRegDataKey_INTERFACE_DEFINED__
+		#define __ISpRegDataKey_INTERFACE_DEFINED__
 		
-		Type Afx_ISpRegDataKey_ Extends Afx_ISpDataKey
+		Type ISpRegDataKey_ Extends ISpDataKey
 			Declare Abstract Function SetKey (ByVal hkey As HKEY, ByVal fReadOnly As WINBOOL) As HRESULT
 		End Type
 		
 	#endif
-	
-	' ########################################################################################
 	
 	' ########################################################################################
 	' Interface name = ISPtranscript
@@ -4968,14 +4763,18 @@ Namespace Speech
 	' Number of methods = 2
 	' ########################################################################################
 	
-	#ifndef __Afx_ISPtranscript_INTERFACE_DEFINED__
-		#define __Afx_ISPtranscript_INTERFACE_DEFINED__
+	#ifndef __ISptranscript_INTERFACE_DEFINED__
+		#define __ISptranscript_INTERFACE_DEFINED__
 		
-		Type Afx_ISPtranscript_ Extends Afx_IUnknown
-			Declare Abstract Function GetTranscript (ByVal ppszTranscript As LPWStr Ptr) As HRESULT
-			Declare Abstract Function AppendTranscript (ByVal pszTranscript As LPCWStr) As HRESULT
+		Type ISptranscript_ Extends Afx_IUnknown
+			Declare Abstract Function GetTranscript (ByVal ppszTranscript As LPWSTR Ptr) As HRESULT
+			Declare Abstract Function AppendTranscript (ByVal pszTranscript As LPCWSTR) As HRESULT
 		End Type
 		
+	#endif
+	
+	#ifndef __USE_MAKE__
+		#include once "Speech.bas"
 	#endif
 	
 End Namespace
